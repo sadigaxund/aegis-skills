@@ -616,7 +616,7 @@ Audit-time traps that make readiness LOOK present:
 
 ## References
 
-- NIST SP 800-61r2, *Computer Security Incident Handling Guide* — the Preparation/Detection/Containment/Eradication/Recovery/Lessons-Learned lifecycle this module follows: https://csrc.nist.gov/pubs/sp/800/61/r2/final
+- NIST SP 800-61 (Rev. 3 current, April 2025; Rev. 2 historically cited), *Computer Security Incident Handling Guide* — the Preparation/Detection/Containment/Eradication/Recovery/Lessons-Learned lifecycle this module follows: https://csrc.nist.gov/pubs/sp/800/61/r3/final
 - NIST Cybersecurity Framework — Respond/Recover function mapping stated in frontmatter: https://www.nist.gov/cyberframework
 - SANS *Incident Handler's Handbook* (SANS IR handbook) — phase checklists and handler discipline: https://www.sans.org/white-papers/incident-handlers-handbook/
 - CISA #StopRansomware Guide / ransomware checklist — scenario-specific response checklist pattern (containment-before-recovery ordering): https://www.cisa.gov/stopransomware

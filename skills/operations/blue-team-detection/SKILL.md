@@ -756,7 +756,7 @@ Tuning guidance:
 Standards and cheat sheets:
 
 - OWASP Cheat Sheet Series — Logging Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
-- OWASP Top 10 2021 A09:2021 – Security Logging and Monitoring Failures — https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
+- OWASP Top 10 2021 A09:2021 – Security Logging and Monitoring Failures — https://owasp.org/Top10/2021/A09_2021-Security_Logging_and_Monitoring_Failures/
 - NIST SP 800-61, Computer Security Incident Handling Guide (incident-response lifecycle this module's triage SLOs feed)
 - CWE-778: Insufficient Logging of Errors
 - Sigma rule format project — detection-as-code standard for encoding tuned rules portably — https://github.com/SigmaHQ/sigma
