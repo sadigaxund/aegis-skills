@@ -23,6 +23,20 @@ This module deviates from the red-team template on purpose. It is not vulnerabil
 
 Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. Cross-references assume sibling modules by slug: TOK (`skills/server/api-token-security/SKILL.md`), SUPPLY (`skills/code/supply-chain/SKILL.md`), DR (`skills/server/backup-dr/SKILL.md`), LOGMON (`skills/server/logging-monitoring/SKILL.md`), DETECT (`skills/operations/blue-team-detection/SKILL.md`). The host-forensics deep-dive (DFIR) is a planned companion; until it exists in your copy, treat this module's evidence-preservation steps plus the sweep scripts under `tools/sweeps/` as authoritative for triage-time forensics.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **containment**: stopping the spread while preserving evidence (isolate hosts, revoke access, block routes)
+- **eradication**: removing attacker access and artifacts once containment holds
+- **tabletop**: a walk-through exercise of a scenario where no systems are touched
+- **SEV1–SEV4**: impact-ranked urgency levels that drive how fast and how loudly the organization responds
+- **break-glass**: a pre-approved emergency access procedure for use during crises
+- **postmortem**: the blameless written review after an incident, feeding fixes back into the loop
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function (remapped here to escalation/communication chains)
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Scope & Objectives
 
 Two halves, one lifecycle:

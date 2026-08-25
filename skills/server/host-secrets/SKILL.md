@@ -29,6 +29,21 @@ Operating rules:
 - Run `cat /etc/os-release` first; Debian/Ubuntu vs RHEL paths and groups differ (`ssl-cert`, `shadow`, `ssh_keys`) and are called out inline.
 - Deliverable: findings table (location | observed owner:mode | expected | severity | evidence snippet redacted per rule above) plus a separate Needs-Review list for rotation-culture indicators.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **DAC bits**: the Unix owner/group/other permission triple deciding who may read or write each file
+- **loosest-link rule**: a secret's protection equals the weakest directory permission anywhere on its path
+- **world-readable**: any local account can read it — the classic secret-file defect
+- **process environment**: the variables a running program received; they leak via child processes, dumps, and debuggers
+- **rotation**: periodically replacing credentials so old ones stop working
+- **/etc/shadow shape**: root-owned, readable by one narrow system group, nothing to others — the model for every secret file
+- **redaction**: reports show only the first four characters plus `…REDACTED`, never full values
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 - A secret at rest exists in three states: **file bytes**, **process environment**, and **memory**. This module owns files and environments; memory forensics belongs to incident response, not a hardening audit.

@@ -139,8 +139,9 @@ them in the agent chat instead of installing.
 | DFIR | dfir-triage.md | First-hours triage of a compromised host |
 | VULN | vuln-mgmt-process.md | Prioritization, SLAs, exception register, metrics cadence |
 
-Every module follows the same 12-section contract, from ripgrep-ready signatures through
-curl-based reproduction steps to remediation diffs and fix-verification plans. See
+Every module opens with a zero-background Prerequisites & Vocabulary primer, then follows
+the same 12-section audit contract, from ripgrep-ready signatures through curl-based
+reproduction steps to remediation diffs and fix-verification plans. See
 [SKILL-CODE.md §Registry](SKILL-CODE.md) for trigger conditions and priorities, and
 [GUIDE.md](GUIDE.md) for plain-language explanations of each class.
 
@@ -247,7 +248,7 @@ time. Current: v1.2.0.
 
 ## Extending
 
-New modules follow the 12-section skeleton and register in their orchestrator's registry;
+New modules follow the 13-section skeleton and register in their orchestrator's registry;
 see Appendix B in `SKILL-CODE.md` for the authoring spec. New sweeps must satisfy
 `tools/README.md`. Design rule for additions: a basic agent following the letter of the
 module must still produce a correct result, so prefer literal commands over prose and

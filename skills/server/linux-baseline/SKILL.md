@@ -25,6 +25,20 @@ Operating rules:
 - All inspection is read-only; mutating commands appear only under Remediation (Phase 6 approval). Prefer **effective-state evidence** (`sshd -T`, `sysctl -n KEY`) over config files — drop-in dirs (`sshd_config.d/`, `sysctl.d/`) make file text misleading.
 - Commands needing root are tagged `[ROOT]`; without root, audit world-readable state plus the config repo. Repo-only access: judge the *rendered* config (Ansible templates, cloud-init user-data) using Patterns & Signatures. Distro variance is called out inline — never assume Ubuntu values on RHEL or Alpine; detect first (`cat /etc/os-release`).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **privesc**: the local steps that turn a low-level account into root
+- **sudo NOPASSWD:ALL**: password-free full-root command rights for an account
+- **sysctl**: kernel tunables closing redirection and information-leak paths
+- **SUID binary**: a program that runs as its file's owner (often root) no matter who starts it
+- **sticky bit / noexec mount**: shared-directory protections against planted trojans
+- **ptrace_scope**: kernel restriction on one process debugging another user's processes
+- **PAM**: the pluggable login-policy layer (lockouts, password quality, expiry)
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 Attackers do not attack "the baseline" — they chain specific gaps into a path:

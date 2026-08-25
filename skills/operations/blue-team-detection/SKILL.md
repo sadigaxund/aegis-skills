@@ -29,6 +29,20 @@ Operating rules:
 
 Out of scope (cross-references, no duplication): sshd/sudo/auditd/host-integrity telemetry → the server skillset's `skills/server/logging-monitoring/SKILL.md`; writing the vulnerabilities themselves → the corresponding red module per class; secret-redaction implementation detail → `skills/code/secrets-data-exposure/SKILL.md`.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **detection rule**: a log pattern or threshold that raises an alert when matched
+- **purple-team replay**: an authorized re-enactment of an attack proving the detection actually fires
+- **alert urgency**: here, severity means who gets woken up — not a vulnerability score
+- **EVENT / AGGREGATE / INDICATOR tiers**: single security decisions vs patterns across many requests vs success signals
+- **false positive**: an alert for harmless activity; wasted pages erode on-call trust
+- **correlation fields**: identifiers like `request_id`, `src_ip`, and actor that join events into one story
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Every exploit casts two shadows, and detection engineering instruments BOTH:

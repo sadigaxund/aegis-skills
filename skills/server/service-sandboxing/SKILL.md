@@ -22,6 +22,21 @@ Constraints for the executing agent:
 - Service restarts require orchestrator-approved change windows. Propose them; never perform them during the audit.
 - This module audits presence, mode, and configuration of containment. Deep SELinux/AppArmor policy authoring and k8s pod security review are specialist follow-ups flagged in Remediation, not performed here.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **systemd sandboxing directives**: per-service limits on identity, filesystem, kernel calls, and network
+- **NoNewPrivileges**: blocks the service and its children from gaining new privileges
+- **capability**: one slice of root power granted separately instead of running as full root
+- **ProtectSystem / PrivateTmp**: filesystem walls around what the service may touch
+- **seccomp (SystemCallFilter)**: an allowlist of the kernel operations a process may request
+- **SELinux / AppArmor**: mandatory policies that constrain processes independently of file permissions
+- **privileged container / docker.sock**: container setups that amount to host-root control
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Containment is layered. Each layer removes a capability an attacker would otherwise inherit from the service process they compromised. Read findings top-down: an attacker who lands inside the process holds everything not explicitly revoked below it.

@@ -15,6 +15,21 @@ Inventory all native code in the repository, rank it by attacker reachability, t
 - Out of scope (cross-reference): regex/engine-level resource exhaustion patterns (DOS module, including NSRegularExpression input blowup); injection via interpreted languages (INJECTION); secrets in native binaries (SECRETS); dependency version auditing for known-vulnerable vendored libraries (track separately under A06:2021 – Vulnerable and Outdated Components).
 - Objective: produce findings a maintainer can verify by reading two or three files — sink location, length origin, the missing or insufficient bound check, and worst-case attacker-controlled value — without requiring dynamic tooling.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **buffer overflow**: writing past the end of a fixed-size memory block, corrupting neighboring data
+- **out-of-bounds read**: reading beyond the allocated bytes, leaking whatever sits next in memory
+- **use-after-free (UAF)**: using memory after it was released; an attacker may have replaced its contents
+- **integer truncation**: size math that wraps around, so a huge length suddenly looks small
+- **format string flaw**: passing attacker text where a print template is expected, leaking or overwriting memory
+- **bounds check**: verifying index and length match the allocation before touching memory
+- **sanitizer (ASAN)**: test-build instrumentation that catches these bugs at runtime instead of silently corrupting
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Reduce every memory-safety bug to a failure on one of three axes. When reading any candidate line, identify which axis is under stress:

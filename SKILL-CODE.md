@@ -401,12 +401,16 @@ understand the danger (Impact), fix it (Remediation), and prove the fix
 ## Appendix B — Maintainer Guide: Adding a New Check Module
 
 1. Copy the section skeleton used by every existing module (H2 titles, exact order):
+   Prerequisites & Vocabulary (zero-background term primer, ≤14 lines) /
    Scope & Objectives / Mental Model / What To Check / Where To Look /
    Patterns & Signatures / Taint Tracing Guidance / Exploitation & Reproduction /
    Remediation / Verification & Validation / Severity Assessment / Common False
    Positives / References.
 2. Frontmatter keys required: `name`, `description`, `category_slug` (the SLUG),
    `cwe` list, `owasp`.
+3. Optional `references/` subfolder next to SKILL.md: `background.md` (expanded
+   primer for zero-background agents) and `further-reading.md` (stable external
+   resources — verify every URL is live before committing it).
 3. Polyglot sink/source tables (JS/TS, Python, Java/Kotlin, C#, PHP, Ruby, Go,
    Rust, C/C++ where meaningful); ripgrep-compatible regexes in ```regex fences;
    VULNERABLE/FIXED labeled snippets.

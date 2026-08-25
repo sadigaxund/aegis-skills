@@ -20,6 +20,21 @@ owasp: A05:2021 – Security Misconfiguration
 - This module's findings are usually **configuration-level**, not code-level: the fix is almost always proxy/LB/cache configuration hardening, not application refactoring. Frame every deliverable accordingly.
 - Code-audit posture: you normally cannot send live probes against production. The core method is therefore: build a front-end map from deployment artifacts, identify both sides of each hop, apply known desync-matrix reasoning per stack pair, and document ambiguity pairs as findings with config fixes. Dynamic payloads in Exploitation & Reproduction are for authorized lab verification only.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **request smuggling**: sneaking a second request past a proxy by exploiting two parsers disagreeing on where one message ends
+- **Content-Length vs Transfer-Encoding**: the two ways HTTP marks a body's end; conflicts between them enable smuggling
+- **keep-alive connection**: a reused network connection — required for a smuggled request to land on the next victim
+- **cache key**: the request parts a cache uses to say "same request as before"
+- **unkeyed header**: an input that changes the response but not the cache key, so one poisoned response is served to everyone
+- **host-header poisoning**: the server building links or redirects from the attacker-chosen `Host` value
+- **HPP (parameter pollution)**: sending the same parameter twice and layers disagreeing over which value counts
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### The framing ambiguity

@@ -39,6 +39,21 @@ Audit every code path where the server issues an outbound network request whose 
 
 Read-only access to the repository; no running instance is guaranteed. Dynamic reproduction is optional and permissible only against explicitly authorized environments. Static confirmation — tracing `param -> validation -> client.execute(...)` — is sufficient evidence for reporting; dynamic procedures in this module are written so they never print live secrets unredacted.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **SSRF**: tricking the server into sending requests the attacker chooses, from inside its own network
+- **metadata endpoint**: an address reachable only from the server itself that hands out cloud role credentials
+- **redirect chain**: a fetch following redirect hops; every hop needs fresh validation
+- **DNS rebinding**: a hostname resolving to a safe IP during checks and to an internal IP at connect time
+- **blind SSRF**: the response stays hidden but reachability is still provable via timing, errors, or callbacks
+- **open redirect**: the server sending users to attacker-chosen URLs built from request input
+- **egress filtering**: network rules limiting which outside destinations the server may contact
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### The Fetch Is a New Trust Boundary

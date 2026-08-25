@@ -25,6 +25,20 @@ owasp: A01:2021 – Broken Access Control
 - Assume code-read access only. The curl procedures below are for authorized lab verification against systems you are explicitly permitted to test; never fire payloads at production during a static audit.
 - Out of scope here: stored XSS served from uploaded SVG/HTML payloads (cross-ref WEB), zip-bomb resource math (cross-ref DOS), bucket policies/IAM (cross-ref CONFIG), business-logic consequences of TOCTOU (cross-ref LOGIC).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **path traversal**: escaping the intended directory using sequences like `../`
+- **LFI / RFI**: steering `include`/`import`-style statements to load attacker-chosen local or remote files
+- **Zip Slip**: archive entry names containing `../` so extraction writes outside the target folder
+- **magic bytes**: file-start signatures revealing the true type regardless of its extension
+- **polyglot file**: a single file that is valid as two formats at once (an image AND a script)
+- **symlink race (TOCTOU)**: swapping the path via a symbolic link between the safety check and the file open
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Every file-handling bug answers two questions:

@@ -21,6 +21,20 @@ In scope:
 
 Out of scope (other modules): authentication strength, session fixation, injection, SSRF, crypto. Only audit *post-authentication decision logic* here; flag unauthenticated reachability of privileged actions as BFLA.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **BFLA**: reaching an admin-only action because the route never checks your role
+- **BOLA / IDOR**: changing an identifier in the request (order 1042 → 1043) to touch another user's object
+- **horizontal escalation**: acting on someone else's data while staying at your own privilege level
+- **vertical escalation**: doing things reserved for a higher role (ordinary user → admin)
+- **tenant**: one customer's isolated slice of a shared multi-customer system
+- **deny-by-absence**: when no explicit allow rule exists, the answer must be deny — a missing check is a finding, not "probably fine"
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Evaluate every route along two independent axes; a route is safe only if BOTH pass.

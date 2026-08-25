@@ -33,6 +33,20 @@ CWE set kept deliberately small and defensible: CWE-352 (login CSRF via missing/
 
 Out of scope (cross-references): baseline authN design -> `authn-session.md`; injection sinks found en route (kid into SQL/path) -> `injection.md`; deserialization of IdP payloads -> `deserialization.md`; browser-storage mechanics detail -> `web-client.md`; generic outbound fetch validation -> `ssrf-url-security.md`.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **front channel vs back channel**: browser-visible redirects versus direct server-to-server calls — only the back channel is trustworthy
+- **redirect_uri**: the exact registered callback URL; loose matching lets login codes be stolen
+- **PKCE**: per-login secret pair that stops code interception even over visible redirects
+- **state**: a random per-login value proving the callback answers the request that started it
+- **id_token**: the provider's signed identity statement; issuer, audience, and expiry must all be verified
+- **email linking**: merging accounts by email address is unsafe unless the provider vouches it is verified
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Two roles exist and are audited differently. The **RP/client** is application code that must treat everything arriving from the browser as attacker-touchable. The **IdP** (if its config/code is in scope) is the trust anchor whose policy mistakes become everyone's vulnerabilities.

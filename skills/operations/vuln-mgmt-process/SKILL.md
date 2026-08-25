@@ -26,6 +26,20 @@ other module produces. Section meanings are remapped as follows:
 
 Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. It sits downstream of both orchestrators — `SKILL-CODE.md` (code slugs) and `SKILL-SERVER.md` (host slugs) — and borrows incident-side vocabulary from IR (`skills/operations/incident-response/SKILL.md`). It produces findings only about the program itself.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **SLA**: the promised maximum fix time for each priority level
+- **triage**: deciding the priority and clock for each newly arrived finding
+- **MTTR**: average time from discovery to verified closure
+- **exception register**: a documented list of findings consciously deferred, each with an owner and expiry date
+- **mitigation vs fix**: a risk-reducing workaround versus an actual repair — records must always say which
+- **acceptance-with-expiry**: formally keeping a known issue for a stated period, then re-reviewing
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function (remapped here to how findings propagate through loop stages)
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Scope & Objectives
 
 Two halves, one lifecycle:

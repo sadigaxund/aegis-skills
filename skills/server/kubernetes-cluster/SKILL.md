@@ -25,6 +25,20 @@ Operating rules:
 - The live cluster and its Git repo are **two views of one system**. Audit both; reconcile drift (repo says restricted, cluster says privileged → someone applied out-of-band).
 - On managed clusters (GKE/EKS/AKS), control-plane flags and EncryptionConfiguration are provider-managed and invisible from workload context. Audit what is auditable from your identity and record the limitation explicitly in the report — absence of evidence is not evidence of safety there.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **namespace**: a cluster partition grouping workloads and their policies
+- **RBAC**: rules binding identities to allowed verbs on resources (`get`, `list`, `exec`, …)
+- **ServiceAccount token**: the identity file mounted into every pod; whoever can run commands in a pod holds it
+- **automount**: the default-ON behavior of mounting that token into pods
+- **admission**: policies that validate or modify objects before they are created
+- **NetworkPolicy**: a per-namespace firewall; where none exists, any pod can reach any pod
+- **etcd**: the cluster's database holding all Secrets, base64-encoded unless encryption-at-rest is enabled
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 Every capability in Kubernetes is an API request: *verb on resource in apiGroup, scoped to a namespace*. The request path is the audit map:

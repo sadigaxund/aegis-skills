@@ -45,6 +45,20 @@ Out of scope (cross-references, no duplication):
 
 Objectives: produce findings with `file:line` evidence; classify each hit Benign-explained / Suspicious-needs-human / Likely-malicious-evidence; preserve any likely-malicious artifact plus hash before removal; never auto-delete.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **IOC (indicator of compromise)**: an artifact hinting at intrusion — an odd domain, an encoded blob, a scheduled call-home
+- **obfuscation**: deliberate code-hiding via encoding chains, look-alike names, or minified blobs committed as "source"
+- **provenance**: the traceable origin story (author, commit, vendor documentation) explaining why code exists
+- **typosquat**: a look-alike package name published to catch misspellings
+- **install-script implant**: malicious logic running automatically at package install or build time, outside reviewed source
+- **quarantine hand-off**: preserve the artifact plus its hash for specialists instead of deleting it
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Judge malice as a triangle — capability, concealment, purpose:

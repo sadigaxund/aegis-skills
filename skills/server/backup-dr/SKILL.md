@@ -28,6 +28,21 @@ Operating rules:
 - Absence of evidence is its own evidence class: "no runbook found" is not "runbook impossible". Record WHERE you searched, then ask the operator where docs live before crediting or condemning.
 - Tool mentions (restic, borg, rclone, S3-compatible storage) are examples, not endorsements, unless the site already runs them.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **3-2-1-1-0**: three copies, two media types, one offsite, one offline/immutable, zero errors on restore tests
+- **RPO / RTO**: maximum tolerable data loss and downtime — business answers an auditor collects, never invents
+- **logical dump**: an engine-consistent export (`pg_dump` style) instead of copying live data files mid-write
+- **immutable/offline copy**: a versioned write-protected or disconnected archive that ransomware cannot delete
+- **key separation**: decryption keys stored neither beside the archives nor only on the backed-up host
+- **restore drill**: a timed practice recovery proving backups work; last-tested date beats last-run date
+- **coverage gap**: data that exists but which no job captures
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 A backup is a system with four planes. A failure in ANY plane makes the other three worthless:

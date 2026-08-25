@@ -40,6 +40,21 @@ Workflow bypasses with no client-set field map to OWASP A04:2021 (design weaknes
 
 Read-only repository access; no running instance guaranteed. Static confirmation grounded in documented framework semantics (transaction scopes, lock modes, database constraint behavior) is sufficient evidence for reporting. Dynamic reproduction only against explicitly authorized environments; the concurrent-request recipes in this module assume written authorization.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **state machine**: the set of legal moves an order or account may make (cart → paid → shipped)
+- **workflow bypass**: calling a later step directly, skipping required ones
+- **TOCTOU (check-then-act)**: a time gap between a safety check and the action it guards, exploitable by racing requests
+- **race condition**: two requests interleaving so checks and writes happen out of order
+- **idempotency key**: client-supplied marker letting the server recognize repeats and ignore duplicates
+- **atomic update**: one database operation that checks and writes in a single indivisible step
+- **tampering**: accepting client-supplied amounts, counts, or statuses instead of recomputing them server-side
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### Every Business Flow Is a Server-Side State Machine

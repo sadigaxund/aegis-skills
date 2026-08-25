@@ -28,6 +28,19 @@ Operating rules:
 - Distro variance is called out inline; detect first (`cat /etc/os-release`). Debian/Ubuntu and RHEL-family differ in file names, package names, and AIDE workflow.
 - Absence-of-telemetry findings are scored by EXPOSURE (see Severity Assessment): the same gap on an internet host outranks the gap on an internal one.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **journald Storage=**: the setting deciding whether system logs survive a reboot (volatile-only means they do not)
+- **auditd**: kernel-level recording of sensitive actions — identity changes, sudo use, clock shifts
+- **AIDE / file-integrity monitoring**: a baseline-and-compare watch that detects modified or planted files
+- **off-host shipping**: forwarding log copies off the machine before an attacker can erase them
+- **retention floor**: the minimum number of days logs stay available
+- **out-of-band alerting**: paging infrastructure the monitored host itself cannot silence
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 Attackers do not attack "the logs" — they exploit the fact that nobody can see them. Each missing layer converts a detectable step into a silent one:

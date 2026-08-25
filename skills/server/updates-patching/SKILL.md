@@ -27,6 +27,20 @@ Operating rules:
 - Commands needing root are tagged `[ROOT]`; without root, audit world-readable state plus the config repo.
 - Distro variance is called out inline — detect first (`cat /etc/os-release`), never assume Debian values on RHEL or Alpine.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **EOL**: software past vendor support — no further patches will ever exist for it
+- **backporting**: vendors shipping fixes inside the original version number, so version numbers lie about vulnerability
+- **reboot debt**: newer kernels installed on disk than the one running; those fixes stay dormant until reboot
+- **unattended-upgrades**: automation, properly armed, that applies security fixes without a human remembering
+- **attack surface**: listening services multiplied by their flaws by who can reach them; removing a daemon shrinks it permanently
+- **enabled vs active**: "starts at boot" and "running now" are independent service states
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Two clocks tick on every server:

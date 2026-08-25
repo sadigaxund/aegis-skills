@@ -38,6 +38,21 @@ Audit every code path and repository artifact that sends mail or SMS, receives m
 
 Read-only access to the repository; no running instance is guaranteed. The sending domain's live DNS is usually outside the repo: treat Terraform/Ansible/DNS-zone files, runbooks, and docs as evidence and mark every DNS conclusion requires-network until confirmed with `dig`. Dynamic tests are permissible only against explicitly authorized environments and mailboxes you own. Static confirmation of source-to-sink flow is sufficient evidence for reporting.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **SPF**: DNS record listing which servers may send mail claiming to be from your domain
+- **DKIM**: cryptographic signature attached to outgoing mail, published and checked via DNS
+- **DMARC**: DNS policy telling receivers what to do when those checks fail (monitor, spam-folder, reject)
+- **header injection**: smuggling line breaks plus new recipients or headers through user input into mail fields
+- **OTP**: a short one-time code proving control of an email address or phone number
+- **SMS pumping**: fraud that triggers texts to premium numbers the attacker profits from
+- **entropy**: how unpredictable a code or token is; six digits means one million possibilities
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### Email Trust Is Three Independent Records Plus One Glue Rule

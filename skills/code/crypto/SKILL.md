@@ -13,6 +13,20 @@ Scan application source, configuration, and dependency manifests for cryptograph
 - In scope: weak/legacy primitives; ECB/CBC/CTR/GCM misuse; IV/nonce generation; key derivation and cross-purpose reuse; hardcoded keys and peppers at usage sites; password hashing parameters and comparisons; PRNG choice; hash-based MAC/signature constructions and domain separation; TLS client verification; JWT/JWE crypto parameters; base64/XOR/ROT13 pseudo-encryption; webhook signature validation and replay windows.
 - Out of scope (cross-reference): credential/key storage sprawl and committed `.env` files (SECRETS); auth-flow logic and the JWT HS/RS confusion walkthrough (AUTHN); server TLS termination, HSTS, and header hardening (CONFIG); network-level infra scanning.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **nonce**: "number used once" in encryption; repeating it under the same key silently breaks both secrecy and tamper-proofing
+- **AEAD**: an encryption mode providing secrecy and tamper detection together (GCM is the common one)
+- **ECB mode**: block-cipher setting that encrypts identical chunks identically, leaking patterns
+- **KDF**: slow password-to-key hashing that makes guessing expensive
+- **CSPRNG**: a randomness source suitable for secrets; `Math.random()` is not one
+- **constant-time compare**: equality check taking identical time regardless of where a mismatch occurs, so timing leaks nothing
+- **integrity check (MAC/signature)**: verifying data was not altered before decrypting or trusting it
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 Evaluate every cryptographic operation along one pipeline and interrogate six decision points:

@@ -25,6 +25,20 @@ JavaScript prototype pollution. Out of scope (cross-referenced): mass
 assignment (API), SSRF from URL fetchers (SSRF), decompression/entity-bomb
 resource math (DOS), JWT/token integrity (AUTHN).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **deserialization**: turning raw bytes (network data, files, cookies) back into live program objects
+- **gadget chain**: a sequence of ordinary classes an attacker chains so object construction ends up running their code
+- **XXE**: an XML feature that resolves external references, reading local files or calling internal URLs
+- **prototype pollution**: JavaScript trick adding keys like `__proto__` that change object behavior across the whole app
+- **integrity check before parse**: verifying a signature on the blob BEFORE handing it to the parser
+- **type confusion**: bytes parsed as the wrong structure, so the program reasons about the wrong thing
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Deserialization bugs follow one shape:

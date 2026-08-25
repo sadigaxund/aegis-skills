@@ -32,6 +32,21 @@ Audit every hostname the organization claims — as evidenced by repository arti
 
 Read-only access to the repository; no live DNS access is guaranteed or required for the static phase. Static evidence alone never proves a record is dangling — it proves a *candidate* that requires authorized live verification (`Needs-Review`). Every dynamic command in this module is marked with its requirement: network egress plus written authorization from the zone owner.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **CNAME**: a DNS alias pointing a hostname at another name, often a cloud-provider endpoint
+- **dangling record**: an alias whose destination service was deleted, leaving it claimable by anyone
+- **subdomain takeover**: registering that freed service to serve attacker content under your domain
+- **TTL**: how long DNS answers are cached; sets both the vulnerable window and the fix window
+- **CAA record**: DNS entry limiting which certificate authorities may issue certificates for the name
+- **registrar lock**: registrar setting that blocks unauthorized transfers of the domain itself
+- **blast radius**: everything else trusting the hijacked name (cookies, login callbacks, script allowlists)
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### The Takeover Chain

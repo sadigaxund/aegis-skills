@@ -28,6 +28,21 @@ Operating rules:
 - Perform static review first; dynamic probes only against targets the engagement scope explicitly authorizes.
 - Record the *effective* configuration for the production deploy target, not the first suspicious line you meet. Repos routinely ship `settings/base.py` plus `settings/dev.py`; resolve which profile boots before judging any flag.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **CORS**: browser rules deciding which websites may read another site's responses
+- **origin reflection**: echoing back whatever website asked, which effectively allows all sites
+- **security headers**: response flags instructing browsers to add protections (script limits, frame-blocking)
+- **CSP**: page policy listing which script and style sources the browser may load
+- **cookie flags**: attributes like `HttpOnly`/`Secure` restricting what scripts and the network can do with cookies
+- **actuator/debug endpoint**: built-in diagnostics URL that exposes internals when left enabled in production
+- **profile**: settings variant chosen at startup (dev vs prod); judge only the one production actually boots
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Read the repository as five stacked layers; a hardening gap at any layer becomes externally observable at the edge:

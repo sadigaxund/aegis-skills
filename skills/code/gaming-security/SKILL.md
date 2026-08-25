@@ -42,6 +42,20 @@ Audit the server-side code of video games and multiplayer services for every pla
 
 Read access to the repository; no running instance guaranteed. Static confirmation is sufficient evidence: a handler that persists a client-supplied outcome without recomputation IS the finding, whether or not dynamic testing is authorized. Dynamic procedures in this module are test vectors for systems you own or have written authorization to test.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **server authority**: the rule that only the server decides outcomes; client displays are suggestions
+- **client prediction**: the game client guessing results locally for responsiveness; legitimate only if the server later corrects it
+- **dupe (duplication glitch)**: racing claims so one grant of items or currency is created twice
+- **receipt validation**: confirming an app-store purchase with the store, server-to-server, before granting goods
+- **ESP/wallhack**: seeing hidden state because the server broadcast it — fixed by sending less, not by client tools
+- **ledger**: append-only record of currency changes used instead of trusting client-posted counts
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### One Rule: The Server Owns Truth

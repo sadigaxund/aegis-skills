@@ -38,6 +38,20 @@ Audit the HTTP-facing surface of the target repository for API-specific design a
 
 Read-only access to the repository; no running instance is guaranteed. Treat dynamic reproduction as optional and permissible only against explicitly authorized environments. Static confirmation grounded in documented framework semantics is sufficient evidence for reporting.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **mass assignment**: the framework copying a whole request body into an object, letting clients set fields like `is_admin`
+- **BOLA**: changing identifiers in requests to touch other users' objects (detailed in the AUTHZ module)
+- **rate limit**: a cap on requests per client per time window
+- **pagination cap**: maximum page size preventing million-row dumps in one call
+- **introspection / playground**: GraphQL self-documentation features that hand attackers a map of your API
+- **resolver**: the per-field function answering each GraphQL query; every one needs its own permission check
+- **shadow API**: a live endpoint missing from documentation, so it also missed review
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 ### One Endpoint, Four Implicit Contracts

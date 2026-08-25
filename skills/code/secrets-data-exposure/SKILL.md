@@ -14,6 +14,21 @@ owasp: A02:2021 – Cryptographic Failures
 - Inspect API responses and logging paths for over-exposed fields, secrets, and PII; inspect storage patterns for cleartext sensitive data.
 - Objectives: produce findings with `file:line` evidence, classify each via the severity rubric, mark every uncertain item `Needs-Review`. Never exfiltrate or bulk-download live data during validation; validate minimally per Exploitation & Reproduction.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **secret sprawl**: credentials copied across configs, git history, build output, and logs until nobody can track them all
+- **entropy**: statistical unpredictability that separates machine-generated keys from human-chosen words — a signal, never a verdict
+- **encoding vs encryption**: Base64 and hex are readable rewrites, not protection; anyone can reverse them
+- **rotation**: replacing a leaked credential everywhere it is used — the only cure after exposure
+- **source map**: a `.map` file that rebuilds original code (with any embedded constants) from minified JavaScript
+- **redaction**: printing only a short prefix plus `…REDACTED` instead of full secret values in reports
+- **PII over-exposure**: personal data returned by APIs or logs beyond what the feature needs
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Secrets leak by hopping trust boundaries. Each hop widens the audience permanently:

@@ -28,6 +28,21 @@ Objectives, keyed to OWASP Top 10 for LLM Applications category NAMES (numbers d
 7. **Supply Chain Vulnerabilities** — pinned model versions, vetted plugin ecosystems, dataset provenance for training pipelines.
 8. **Guardrail theater identification** — single-layer string-matching defenses are flagged; layered architecture is required instead.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **prompt injection**: user text phrased as instructions that the model obeys over its real rules
+- **indirect prompt injection**: the same attack arriving inside fetched content — web pages, tickets, PDFs, retrieved passages
+- **completion**: raw model output; treat it as attacker-writable until a validator or human checks it
+- **tool schema**: the declared contract (name, arguments, limits) for functions the model is allowed to call
+- **RAG**: retrieval step fetching documents into prompts; access rules must live inside the retrieval query itself
+- **system-prompt leak**: tricking the model into revealing its hidden instructions
+- **guardrail theater**: relying on string-matching filters instead of real architecture limits
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Read the model as an UNTRUSTED INTERPRETER fed by mixed-trust text. Anything that influences prompt bytes can steer behavior. The trust boundary does NOT sit at your HTTP ingress — it dissolves inside the prompt string. Two taint directions exist and BOTH must be traced:

@@ -43,6 +43,21 @@ AWS is primary: Terraform, CloudFormation, CDK-synthesized templates, Terraform 
 - Runtime cloud enumeration, live API calls against real accounts: out of scope unless the auditor has explicitly authorized read-only CLI access; see Exploitation & Reproduction for the single sanctioned verification command shape.
 - Kubernetes RBAC quality -> CONFIG/AUTHZ modules; this module reads only the IRSA annotation that binds a service account to an AWS role.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **principal**: any cloud identity that can act — a user, role, or service
+- **trust policy**: the document stating who is allowed to adopt a cloud role
+- **confused deputy**: a trusted service tricked into spending its authority on an attacker's behalf
+- **iam:PassRole**: permission to attach a role to compute, i.e., run code carrying that role's powers
+- **wildcard policy**: permissions written as `"*"`, meaning every action on every resource
+- **permission boundary**: a cap on the maximum authority an identity can ever hold
+- **OIDC federation**: CI/cloud login via short-lived tokens instead of long-lived keys
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 ### The identity plane is a directed graph

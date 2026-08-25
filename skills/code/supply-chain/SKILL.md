@@ -19,6 +19,21 @@ owasp: A06:2021 – Vulnerable and Outdated Components
 
 Out of scope: runtime container escape, secrets storage hygiene itself (cross-reference `skills/code/secrets-data-exposure/SKILL.md` for leaked credentials, including creds echoed into CI logs), and application-level injection sinks (`skills/code/injection/SKILL.md` covers reachable sinks used by the severity rubric below).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **lockfile drift**: the manifest and lockfile disagreeing, so builds resolve different dependency versions
+- **install/lifecycle script**: package-defined commands that run automatically at install or build time
+- **dependency confusion**: unscoped internal names letting attackers publish a fake public package that wins resolution
+- **SCA (software composition analysis)**: scanning declared dependencies for versions with known vulnerabilities
+- **SBOM**: a machine-generated inventory of every component shipped in the artifact
+- **provenance/attestation**: signed evidence of where and how an artifact was built
+- **workflow injection**: untrusted text (a PR title, for example) interpolated into CI shell commands
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 A build moves code through three layers, and every supply-chain attack injects at one boundary:

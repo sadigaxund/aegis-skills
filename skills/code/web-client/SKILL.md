@@ -30,6 +30,19 @@ owasp: A03:2021 – Injection
 | Deep cookie attribute matrix, CORS `Access-Control-Allow-*` reflection logic, cookie name inventory | CONFIG module |
 | SVG upload validation, file-content sanitization, upload-path traversal | FILE module |
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **XSS**: injecting script into pages that other users' browsers then execute
+- **output encoding**: rewriting user data so the browser displays it instead of executing it, matched to the surrounding context (HTML, attribute, JS string, URL)
+- **DOM sink**: a browser API where data becomes code or markup (`innerHTML`, `eval`, `location=`)
+- **CSP**: a page policy restricting which scripts and styles the browser may load
+- **CSRF**: the victim's browser silently sending authenticated requests they never intended
+- **CSRF token**: a random per-session value the server requires on state-changing requests
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 ### Source-Sink Model

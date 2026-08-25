@@ -16,6 +16,21 @@ owasp: A03:2021 – Injection
 - Assume code-read access only. Dynamic payloads in Exploitation & Reproduction are for authorized lab verification, never for production systems during a static audit.
 - Out of scope: DOM-only XSS, unsafe-deserialization gadget chains (separate module), SSRF (unless reached through command/template injection).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **source**: where attacker-supplied data enters the program (URL params, body fields, headers)
+- **sink**: the dangerous function attacker data must never reshape (query executor, shell runner, template renderer)
+- **parameterized query**: database call that keeps the SQL text fixed and passes values separately, so input cannot change its meaning
+- **allowlist**: a fixed list of permitted values; anything not on it is rejected
+- **stacked queries**: two SQL statements smuggled into one call, letting an attacker run extra statements
+- **second-order injection**: data stored safely today that turns harmful when reused later in another query or template
+- **payload**: crafted input submitted to prove whether a suspected bug is real
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Every injection is one bug class: **attacker-controlled data crosses a language boundary and changes the meaning of a program artifact** (a query, a command line, a template, an expression, a header block). Trace three roles:

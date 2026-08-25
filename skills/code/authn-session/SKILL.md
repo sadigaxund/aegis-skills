@@ -15,6 +15,21 @@ owasp: A07:2021 – Identification and Authentication Failures
 - Detect enumeration, brute-force enablement, default/seeded credentials, mass assignment at registration, MFA bypasses, and JWT algorithm/validation flaws.
 - Out of scope (cross-references): throttling depth and API abuse metrics -> `api.md`; object-level IDOR beyond reset-flow specifics -> `authz.md`; cookie attribute deep matrix -> `config.md`; hardcoded secret inventory -> `secrets.md`; redirect validation depth -> `ssrf.md`.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **session**: the server-side record plus browser cookie that keeps a user logged in after one successful login
+- **session fixation**: tricking a victim into using a session identifier the attacker already knows
+- **credential stuffing**: replaying username/password pairs stolen from other sites against this login
+- **JWT claim**: a field inside a signed token stating something like "this is user 42"; every claim must be verified, not just read
+- **MFA**: a second proof of identity beyond the password (app prompt, code, hardware key)
+- **enumeration**: responses that reveal whether an account exists, letting attackers harvest usernames
+- **KDF**: deliberately slow password-hashing that makes offline guessing expensive
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Authentication is a state machine; every transition must be guarded:

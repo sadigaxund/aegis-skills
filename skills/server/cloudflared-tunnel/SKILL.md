@@ -30,6 +30,20 @@ Operating rules:
 - Restarting the cloudflared unit is service-affecting; propose restarts only under explicit approval (see Verification & Validation).
 - Dashboard-side settings cannot be verified from here. Report them as "confirmed/unconfirmed — interview" rather than guessing.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **cloudflared / tunnel**: an outbound-only daemon relaying visitor traffic from Cloudflare's edge to local services
+- **ingress rules**: the config table mapping which hostnames reach which local services
+- **origin**: the real application behind the tunnel
+- **direct-to-origin bypass**: reaching the app's own public port, skipping every Cloudflare protection
+- **edge controls**: WAF, rate-limiting, and Access policies configured in the dashboard — invisible from this host
+- **CF-Connecting-IP**: the header carrying the real visitor IP; trust it only from Cloudflare's addresses
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 cloudflared is an **outbound-only** daemon. It dials out to Cloudflare's edge network (QUIC over UDP/7844 to regional edge addresses, with an HTTP/2-over-TCP fallback) and keeps those connections alive. Public visitors hit a Cloudflare-hosted hostname; the edge relays each request back down the already-established connection to your daemon, which forwards it to a local origin service per the ingress rules. The host needs **no inbound ports opened for the tunnel** — the classic "open 80/443 and harden the web server" problem is replaced by a different one: whoever controls the daemon (or its credentials) has an always-on relay INTO your internal network that you deliberately punched through every perimeter.

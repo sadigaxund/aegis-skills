@@ -32,6 +32,20 @@ This module audits the managed platforms where modern products actually run. It 
 5. Verify CMS update posture and hardening constants.
 6. Mark every live-data probe `requires-db-credentials` or `authorized-only`; prefer static evidence from repo artifacts first because console or database access is often unavailable to the auditor.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **RLS (Row Level Security)**: database feature deciding which rows each user may read or write
+- **anon key**: the public Supabase key shipped in every browser bundle; safe only while RLS guards every table
+- **service_role key**: master key that bypasses RLS entirely; must never reach client code
+- **security rules**: Firebase's configuration file deciding who may read or write each collection and file
+- **preview deployment**: auto-generated public URL per branch that can leak staging data and variables
+- **webhook signature verification**: checking the payment provider cryptographically signed a callback before granting anything
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Five invariants drive every check in this module:

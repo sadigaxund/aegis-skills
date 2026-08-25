@@ -47,6 +47,20 @@ Objectives for the executor:
 3. Confirm the highest-value candidates with MODEST live probes (single requests, seconds-long differentials) inside an authorized window.
 4. Report with CWE, reproduction steps, remediation, and a bounded verification plan.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **amplification**: a tiny request forcing huge work; the work-to-input ratio is the weapon
+- **catastrophic backtracking**: a pattern-matching engine retrying exponentially many splits on crafted input
+- **ReDoS**: a server hang caused by such a regular expression
+- **decompression bomb**: a small compressed upload that expands to gigabytes when processed
+- **unbounded allocation**: a parser reserving memory straight from attacker-supplied sizes or counts
+- **clamp**: any cap (bytes, items, depth, dollars) between input and expensive work
+- **event-loop blocking**: one slow synchronous task freezing all request handling in a shared worker
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+
 ## Mental Model
 
 Everything in this module is an **amplification attack**: the attacker sends N bytes and forces the server to spend M units of work, where M/N is the weapon. Your job is to find the largest achievable M/N per endpoint.

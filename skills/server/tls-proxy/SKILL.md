@@ -23,6 +23,21 @@ Secondary coverage: Caddy automatic-HTTPS model, HAProxy bind-line TLS defaults,
 
 Out of scope (sibling modules): volumetric denial-of-service defense and rate-limit tuning depth (DOS module), application authorization logic (AUTHZ module), HTTP protocol abuse such as host-header poisoning payloads (code-audit http-protocol module). Every command in What To Check / Where To Look / Exploitation is non-mutating inspection; mutating steps appear only under Remediation and Verification.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **reverse proxy**: the front service that accepts visitor connections and forwards them to applications
+- **TLS termination**: the point where encrypted traffic is decrypted (this proxy)
+- **protocol/cipher floor**: the oldest encryption version and strength still accepted; legacy settings allow downgrade pressure
+- **HSTS**: a response header telling browsers to use HTTPS only for the domain from now on
+- **default_server / catch-all**: which site answers requests with unknown hostnames; first-match surprises live here
+- **add_header inheritance trap**: declaring one header inside a location erases all server-level headers for it
+- **ACME / certbot**: automated certificate issuance and renewal, which needs its challenge path left reachable
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Two trust boundaries meet at the proxy:

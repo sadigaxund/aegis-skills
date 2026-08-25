@@ -29,6 +29,21 @@ Operating rules:
 - Commands needing root are tagged `[ROOT]`; commands needing read credentials for the application database are tagged `[APP-DB]`. Without those privileges, audit from the config-as-code repo and report the gap as "not verified on host".
 - Judge effective state: middleware code that runs, schema that is deployed, logs that are being written. Config intent is secondary evidence.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **bearer token**: a credential meaning "whoever holds this string is logged in"
+- **entropy**: unpredictability measured in bits; minted tokens need at least 128 bits from a CSPRNG
+- **hash-only storage**: keeping only a cryptographic hash of each token, so a database leak yields no usable logins
+- **scoped key**: a token limited to named actions and read-or-write levels, versus a god token that grants everything
+- **revocation latency**: the delay between "revoke" and the token actually stopping working (any cache TTL in between)
+- **rotation overlap**: old and new tokens both valid during a changeover, so clients update without downtime
+- **per-key rate limit**: an independent request quota enforced per token
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 An attacker needs exactly one valid token. Every lifecycle weakness is a different place to get one:

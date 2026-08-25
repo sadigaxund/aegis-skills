@@ -28,6 +28,21 @@ Operating rules:
 - Commands needing root are tagged `[ROOT]`. Without root, audit world-readable state plus the config repo and judge rendered configs using Patterns & Signatures.
 - External probing (connecting to services from outside the host) requires written authorization naming the source host and target range. Where absent, rely on in-host evidence per Exploitation & Reproduction.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **default-deny**: dropping all traffic except what is explicitly allowed
+- **listener binding**: the address a service accepts connections on; `0.0.0.0` means every interface
+- **security group (SG)**: a cloud-level firewall in front of the host
+- **Docker DNAT bypass**: published container ports forwarding around normal host firewall rules
+- **egress filtering**: restricting outbound destinations so stolen access cannot call home or exfiltrate
+- **IPv6 parity**: filtering IPv6 at least as strictly as IPv4
+- **fail2ban jail**: automatic IP bans after repeated failed logins
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Exposure is decided by four independent layers; a hole in any one is enough:

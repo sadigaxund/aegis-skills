@@ -27,6 +27,21 @@ Operating rules:
 - Connecting to a database from outside the host (even read-only `PING`s) requires written authorization naming source and target; where absent, use in-host binding evidence only (Exploitation & Reproduction gates this).
 - Distro variance is called out inline; detect first (`cat /etc/os-release`). Managed cloud DBs are audited differently — see Common False Positives before flagging.
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **bind address**: which network interface a database listens on; loopback-only is the safe default
+- **pg_hba.conf**: PostgreSQL's ordered list of who may connect from where and how
+- **first-match-wins**: the first matching rule wins, so a permissive line placed above voids stricter ones below
+- **SCRAM vs md5**: new versus legacy password verifier formats; old md5 hashes persist until each user resets
+- **FILE privilege**: a MySQL right letting queries read and write server files
+- **protected-mode**: Redis's refusal of remote commands when no password or bind is configured
+- **PUBLIC grants**: rights every database role inherits unless explicitly revoked
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 Attackers do not attack "the database" — they chain one misconfigured layer into full compromise:

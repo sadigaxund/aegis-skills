@@ -22,6 +22,21 @@ Objectives, in order:
 
 Out of scope: full forensic disk analysis, malware reverse engineering, Windows/macOS hosts, formal legal chain of custody (this module provides LITE responder logging only).
 
+## Prerequisites & Vocabulary
+
+Zero-background primer: the terms this module uses, one line each. Deeper plain-language
+explanations for every class live in the repository GUIDE.md glossary.
+
+- **order of volatility**: capture RAM and network state first, because they die first
+- **chain of custody**: a timestamped log of who touched which evidence and when
+- **preserve before remediate**: collect evidence before cleanup, or you destroy the ability to prove what happened
+- **webshell**: an attacker-planted script on the server granting remote commands
+- **persistence mechanism**: anything keeping attacker access alive across reboots (cron jobs, SSH keys, timers)
+- **externalize**: copy evidence to a remote collector — never write onto the suspect disk
+- **nuke-vs-investigate**: the rebuild-from-clean versus deeper-forensics decision
+- **taint flow / source→sink**: path untrusted data travels from entry point to dangerous function
+- **finding status**: Confirmed > Probable > Needs-Review; evidence rules in templates/finding-report.md
+
 ## Mental Model
 
 GOLDEN RULES - memorize before touching anything:
