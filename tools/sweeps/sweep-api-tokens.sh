@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-api-tokens.sh — evidence sweep for checks/server/api-token-security.md (TOK)
+# sweep-api-tokens.sh — evidence sweep for skills/server/api-token-security.md (TOK)
 # STRICTLY READ-ONLY. Token-bearing surfaces pipe through redact; log hits print
 # COUNTS per file, never values. DB introspection needs owner-supplied read
 # creds — emitted as [APP-DB] notes, never executed here.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-logging.sh — evidence sweep for checks/server/logging-monitoring.md (LOGMON)
+# sweep-logging.sh — evidence sweep for skills/server/logging-monitoring.md (LOGMON)
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 . "$HERE/sweep-lib.sh"

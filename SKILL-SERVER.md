@@ -19,7 +19,7 @@ missing hardening measure; report each with location (file/line/config key),
 risk, exact remediation config, and a verification command proving the fix.
 
 This file is the conductor. Detection/hardening knowledge lives in
-`checks/server/*.md`. Load a module only when about to run it. Report formats,
+`skills/server/*.md`. Load a module only when about to run it. Report formats,
 severity rubric, and status labels are shared with the code-audit skillset —
 use `templates/finding-report.md` verbatim (locations = absolute file paths or
 `config-file:key` references instead of code lines).
@@ -75,20 +75,20 @@ Finding IDs use slug prefix `SRV-<MODULE>` e.g. `SRV-FW-001`, `SRV-TLS-003`.
 
 | Slug | Module | Covers | Default priority |
 |---|---|---|---|
-| BASE | checks/server/linux-baseline.md | Users/sudo/PAM, sshd hardening, sysctl network stack, SUID/perms audit, time sync | P1 |
-| FW | checks/server/firewall-edge.md | Default-deny firewall incl. egress, IPv6 parity, fail2ban, binding/exposure audit, admin-plane isolation | P1 |
-| TLS | checks/server/tls-proxy.md | Reverse proxy + TLS termination hardening, HSTS, limits/timeouts, admin-path shielding | P1 |
-| TOK | checks/server/api-token-security.md | API-token auth lifecycle: design, hashed storage, transport, scoping, rotation, revocation, rate limits, leak runbook | P1 when token auth present |
-| SANDBOX | checks/server/service-sandboxing.md | systemd hardening directives, seccomp/AppArmor, non-root services, docker.sock risks | P2 |
-| PATCH | checks/server/updates-patching.md | Unattended upgrades, EOL detection, package/service minimization | P2 |
-| LOGMON | checks/server/logging-monitoring.md | auditd rules, log shipping/integrity, integrity monitoring, alert thresholds, triage quickstart | P2 |
-| HSECRET | checks/server/host-secrets.md | Env files, /etc perms, world-readable keys/certs, creds in unit files, backup encryption | P1 |
-| K8S | checks/server/kubernetes-cluster.md | RBAC/escalation primitives, PSA labels, NetworkPolicy posture, securityContext sweeps, NodePort/ingress exposure | P1 when Kubernetes present |
-| DB | checks/server/db-server-hardening.md | PostgreSQL pg_hba/scram/TLS, MySQL auth+FILE-priv, Redis ACL/binding, MongoDB auth, app-user least privilege | P1 when database engines present |
-| TUNNEL | checks/server/cloudflared-tunnel.md | Tunnel token/creds protection, ingress precision, origin double-binding bypass, edge WAF/Access checklist, real-IP trust | P1 when cloudflared present |
-| DR | checks/server/backup-dr.md | Backup inventory gaps, destination tiering 3-2-1-1-0, encryption/key custody, restore drills, RTO/RPO worksheets | P2 |
-| DFIR | checks/dfir-triage.md | First-60–120-minute triage of a suspected-compromised Linux host/K8s node: volatile capture off-host, session forensics, persistence sweep (cron/units/init hooks), webshell & malware hunting, containment gates | Reactive — load during incidents; not part of routine audit flow |
-| IR | checks/incident-response.md | Organization-level IR capability audit: playbooks, roles & on-call, severity/paging matrix, asset-inventory currency, tabletop/drill evidence, recovery gates reusing run-all-sweeps | P3 |
+| BASE | skills/server/linux-baseline.md | Users/sudo/PAM, sshd hardening, sysctl network stack, SUID/perms audit, time sync | P1 |
+| FW | skills/server/firewall-edge.md | Default-deny firewall incl. egress, IPv6 parity, fail2ban, binding/exposure audit, admin-plane isolation | P1 |
+| TLS | skills/server/tls-proxy.md | Reverse proxy + TLS termination hardening, HSTS, limits/timeouts, admin-path shielding | P1 |
+| TOK | skills/server/api-token-security.md | API-token auth lifecycle: design, hashed storage, transport, scoping, rotation, revocation, rate limits, leak runbook | P1 when token auth present |
+| SANDBOX | skills/server/service-sandboxing.md | systemd hardening directives, seccomp/AppArmor, non-root services, docker.sock risks | P2 |
+| PATCH | skills/server/updates-patching.md | Unattended upgrades, EOL detection, package/service minimization | P2 |
+| LOGMON | skills/server/logging-monitoring.md | auditd rules, log shipping/integrity, integrity monitoring, alert thresholds, triage quickstart | P2 |
+| HSECRET | skills/server/host-secrets.md | Env files, /etc perms, world-readable keys/certs, creds in unit files, backup encryption | P1 |
+| K8S | skills/server/kubernetes-cluster.md | RBAC/escalation primitives, PSA labels, NetworkPolicy posture, securityContext sweeps, NodePort/ingress exposure | P1 when Kubernetes present |
+| DB | skills/server/db-server-hardening.md | PostgreSQL pg_hba/scram/TLS, MySQL auth+FILE-priv, Redis ACL/binding, MongoDB auth, app-user least privilege | P1 when database engines present |
+| TUNNEL | skills/server/cloudflared-tunnel.md | Tunnel token/creds protection, ingress precision, origin double-binding bypass, edge WAF/Access checklist, real-IP trust | P1 when cloudflared present |
+| DR | skills/server/backup-dr.md | Backup inventory gaps, destination tiering 3-2-1-1-0, encryption/key custody, restore drills, RTO/RPO worksheets | P2 |
+| DFIR | skills/operations/dfir-triage.md | First-60–120-minute triage of a suspected-compromised Linux host/K8s node: volatile capture off-host, session forensics, persistence sweep (cron/units/init hooks), webshell & malware hunting, containment gates | Reactive — load during incidents; not part of routine audit flow |
+| IR | skills/operations/incident-response.md | Organization-level IR capability audit: playbooks, roles & on-call, severity/paging matrix, asset-inventory currency, tabletop/drill evidence, recovery gates reusing run-all-sweeps | P3 |
 
 Skip rules mirror the code skillset: skip only with recorded reason in HOST-PROFILE.md.
 
@@ -111,7 +111,7 @@ the host (SSH? only repo of configs?). Record scope.
 **Phase 2 — Prioritization.** Internet-reachable listeners first (FW/TLS/BASE),
 then identity plane (TOK), then containment (SANDBOX/HSECRET), then hygiene (PATCH/LOGMON).
 
-**Phase 3 — Execute modules.** Same delegation protocol as SKILL.md Section 8
+**Phase 3 — Execute modules.** Same delegation protocol as SKILL-CODE.md Section 8
 (subagent prompt template applies with module path swapped). Each finding =
 one report file per template incl. Reproduction (the exact command showing the
 weak state) and Fix Verification Plan (the exact command that must show the
@@ -136,12 +136,13 @@ out-of-band access confirmation before reloading remote firewall rules.
 - Every fix includes both the config change AND the verify command
 - Lockout-risk operations flagged inline (sshd, firewall, sudo)
 - IPv6 checked wherever IPv4 is (parity is a common silent gap)
+- Coverage re-checked against COVERAGE.md rows applicable to this host
 
 ---
 
 ## Appendix — Determinism Protocol (normative)
 
-Identical rules to SKILL.md Appendix C, with host-audit specifics:
+Identical rules to SKILL-CODE.md Appendix C, with host-audit specifics:
 
 1. **Evidence rule:** every weak-state claim cites the exact read-only command
    run and interprets its captured output. No output → `Needs-Review`.

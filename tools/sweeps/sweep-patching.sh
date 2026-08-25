@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-patching.sh — evidence sweep for checks/server/updates-patching.md (PATCH)
+# sweep-patching.sh — evidence sweep for skills/server/updates-patching.md (PATCH)
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 . "$HERE/sweep-lib.sh"

@@ -137,6 +137,11 @@ Target this baseline on every response from the layer that actually reaches clie
 | `X-Frame-Options` | `DENY` or `SAMEORIGIN` as legacy-UA fallback beside CSP `frame-ancestors` | absent (cross-ref WEB clickjacking) |
 | `Referrer-Policy` | `no-referrer` or `strict-origin-when-cross-origin` | absent |
 | `Permissions-Policy` | deny unused powerful features, e.g. `camera=(), microphone=(), geolocation=()` | absent |
+| `Cross-Origin-Opener-Policy` | `same-origin` (isolates window references from cross-origin popups) | absent on pages that open/authenticate via popups |
+| `Cross-Origin-Embedder-Policy` | `credentialless` or `require-corp` when the page needs cross-origin isolation | absent where isolation features are used |
+| `Cross-Origin-Resource-Policy` | `same-origin`/`same-site` on sensitive resources | absent (allows embedding by foreign sites) |
+
+HTTP method restriction: reject methods the app never uses (`TRACE`, `TRACK`, WebDAV verbs) at the server/proxy layer rather than returning 405s from app code.
 
 Where each stack sets them — verify presence in the effective path:
 

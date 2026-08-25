@@ -23,11 +23,11 @@ Deliverables of an audit run with this module:
 Operating rules:
 
 - Code-read access is assumed; auditing the CURRENT logging/alerting state is read-only (ripgrep evidence, config inspection). Mutating additions belong to the Remediation section and require change approval.
-- Dynamic replay runs ONLY against authorized staging, mirroring the constraint in checks/injection.md. The goal is validating detections, not re-exploiting production.
+- Dynamic replay runs ONLY against authorized staging, mirroring the constraint in skills/code/injection.md. The goal is validating detections, not re-exploiting production.
 - Absence of telemetry is scored as a finding in its own right (CWE-778): an undetected exploit class is a control gap even when the underlying bug is patched.
 - Severity here means ALERT URGENCY (who gets woken up), not vulnerability CVSS; see the explicit note atop Severity Assessment.
 
-Out of scope (cross-references, no duplication): sshd/sudo/auditd/host-integrity telemetry → the server skillset's `checks/server/logging-monitoring.md`; writing the vulnerabilities themselves → the corresponding red module per class; secret-redaction implementation detail → `checks/secrets-data-exposure.md`.
+Out of scope (cross-references, no duplication): sshd/sudo/auditd/host-integrity telemetry → the server skillset's `skills/server/logging-monitoring.md`; writing the vulnerabilities themselves → the corresponding red module per class; secret-redaction implementation detail → `skills/code/secrets-data-exposure.md`.
 
 ## Mental Model
 
@@ -126,7 +126,7 @@ rg -n 'jwt\.verify|decode\(.*token|verify_token|TokenError|ExpiredSignature' src
 
 - Sample five representative security log lines from staging. Are they parseable JSON (or key=value)? Do they carry `request_id`, `src_ip`, actor id, outcome?
 - Trace one request end-to-end: does the SAME `request_id` appear in web access log AND app event log? If nginx generates it, is it passed upstream (`proxy_set_header X-Request-ID $request_id`)?
-- Grep for forbidden payloads in current logs: raw tokens, passwords, full request bodies, session cookies. Redaction gaps cross-reference `checks/secrets-data-exposure.md`; fix by hashing/truncation, never by deleting the event.
+- Grep for forbidden payloads in current logs: raw tokens, passwords, full request bodies, session cookies. Redaction gaps cross-reference `skills/code/secrets-data-exposure.md`; fix by hashing/truncation, never by deleting the event.
 
 ### 5. Probe pipeline health, not just emission
 
@@ -214,7 +214,7 @@ Log three independent signal families; an attacker suppressing one usually trips
    ```
 3. **Latency fingerprint for time-based blind** — time-based payloads inject `SLEEP(5)`/`pg_sleep(5)`/`WAITFOR DELAY`; the footprint is p95 latency multiplying ONLY on routes taking free-text params (search, sort columns), while other routes hold steady. Track per-route p95 as a metric series; alert on the divergence, not on absolute slowness.
 
-Audit honesty note: full-query-text logging makes every query greppable but costs real volume (queries repeat millions of times daily), inflates storage spend, drags latency at high QPS, and vacuums user data INTO logs (PII tension — resolve via hashing/truncation per Verification & Validation, cross-reference `checks/secrets-data-exposure.md`). Prefer: capture query text only on ERROR, or sample at a fixed small rate.
+Audit honesty note: full-query-text logging makes every query greppable but costs real volume (queries repeat millions of times daily), inflates storage spend, drags latency at high QPS, and vacuums user data INTO logs (PII tension — resolve via hashing/truncation per Verification & Validation, cross-reference `skills/code/secrets-data-exposure.md`). Prefer: capture query text only on ERROR, or sample at a fixed small rate.
 
 #### Authentication attack detection
 
@@ -406,16 +406,16 @@ PURPLE-TEAM REPLAY procedures: the purpose is proving DETECTIONS FIRE, not re-pr
 
 | Class | PoC source module | Replay below |
 |---|---|---|
-| INJ | checks/injection.md | R1 |
-| AUTHN | checks/authn-session.md | R2, R3 |
-| AUTHZ | checks/authz-access-control.md | R4 |
-| SSRF | checks/ssrf-url-security.md | R5 |
-| DESER | checks/deserialization.md | R6 |
-| TOK/API | checks/server/api-token-security.md | R7 |
+| INJ | skills/code/injection.md | R1 |
+| AUTHN | skills/code/authn-session.md | R2, R3 |
+| AUTHZ | skills/code/authz-access-control.md | R4 |
+| SSRF | skills/code/ssrf-url-security.md | R5 |
+| DESER | skills/code/deserialization.md | R6 |
+| TOK/API | skills/server/api-token-security.md | R7 |
 
 Generic loop for EVERY replay: deploy candidate detection on staging observability → replay the PoC → grep central store for expected events → assert alert fired within its configured window → record the checklist row.
 
-**R1 — SQLi error-burst detection.** Replay the boolean-differential pair from checks/injection.md against staging `/search`:
+**R1 — SQLi error-burst detection.** Replay the boolean-differential pair from skills/code/injection.md against staging `/search`:
 
 ```bash
 curl -s -o /dev/null -w '%{http_code}\n' -G https://staging.example/search \
@@ -457,7 +457,7 @@ for id in $(seq 88400 88430); do curl -s -o /dev/null -w '%{http_code} ' \
 
 Expected events: a stream of `authz.deny` rows (actor u_A, resource invoice:N). Assert: IDOR-probe alert (≥20 denies/user/hour starter) fires within window; each deny row shows tenant mismatch fields where applicable.
 
-**R5 — SSRF metadata touch.** Replay the fetch-parameter PoC from checks/ssrf-url-security.md pointing at the metadata address:
+**R5 — SSRF metadata touch.** Replay the fetch-parameter PoC from skills/code/ssrf-url-security.md pointing at the metadata address:
 
 ```bash
 curl -s -G https://staging.example/fetch --data-urlencode "url=http://169.254.169.254/latest/meta-data/"
@@ -621,7 +621,7 @@ def pseudonymize(value: str) -> str:
     return "sha256:" + hashlib.sha256(value.encode()).hexdigest()[:16]
 ```
 
-Apply to emails/usernames when policy requires; NEVER log raw tokens, passwords, cookies, or full request bodies. Truncation beats omission; hashing beats truncation for fields you must still group by. Full redaction rules: `checks/secrets-data-exposure.md`.
+Apply to emails/usernames when policy requires; NEVER log raw tokens, passwords, cookies, or full request bodies. Truncation beats omission; hashing beats truncation for fields you must still group by. Full redaction rules: `skills/code/secrets-data-exposure.md`.
 
 ### Alert-config starter blocks — top five highest-value detections
 
@@ -702,7 +702,7 @@ Filled example (ssrf-metadata-touch): first checks — confirm which app host an
 **Regression notes.**
 
 - **Log volume/cost blowups**: new emitters can multiply ingest overnight. Watch GB/day per source; alert on 2× jump. Chatty event types get sampled AT THE SHIPPER (keep every high-severity event type unsampled). Ingest caps that silently discard during spikes defeat the entire module — configure overage behavior consciously.
-- **PII-in-logs tension**: detection wants actor identity; privacy wants less PII. Resolution is hashing/truncation, NOT omission — pseudonymize emails/usernames (joinable), truncate UAs and tokens, never emit raw secrets or bodies. Cross-reference the redaction rules in `checks/secrets-data-exposure.md`; when that module's redaction changes, re-run this module's replay suite because hashed fields must remain groupable.
+- **PII-in-logs tension**: detection wants actor identity; privacy wants less PII. Resolution is hashing/truncation, NOT omission — pseudonymize emails/usernames (joinable), truncate UAs and tokens, never emit raw secrets or bodies. Cross-reference the redaction rules in `skills/code/secrets-data-exposure.md`; when that module's redaction changes, re-run this module's replay suite because hashed fields must remain groupable.
 - **Clock drift regression**: windowed alerts assume emitter/store clocks agree within ~2 min; verify NTP/chrony sync on hosts (server skillset covers host config) after infrastructure changes.
 - **Field-name drift**: alerts key on `event_type` strings; a renamed field kills rules silently. Keep the taxonomy in version control next to the alert configs; add a store-side query asserting each expected `event_type` appears at least once daily (dead-man check per class).
 
@@ -749,9 +749,9 @@ Standards and cheat sheets:
 
 Companion modules in this playbook:
 
-- Host-side telemetry (sshd/sudo/auditd/integrity/shipping survival): server skillset `checks/server/logging-monitoring.md` — authoritative for everything below the application layer; this module deliberately does not duplicate it.
-- Red-team counterparts feeding the coverage matrix rows: `checks/injection.md` (INJ), `checks/web-client.md` (WEB), `checks/authn-session.md` (AUTHN), `checks/authz-access-control.md` (AUTHZ), `checks/ssrf-url-security.md` (SSRF), `checks/file-handling.md` (FILE), `checks/deserialization.md` (DESER), `checks/api-security.md` (API), `checks/business-logic-races.md` (LOGIC), `checks/denial-of-service.md` (DOS), `checks/server/api-token-security.md` (TOK), `checks/llm-ai.md` (LLM).
-- Redaction rules resolving the PII-in-logs tension: `checks/secrets-data-exposure.md`.
+- Host-side telemetry (sshd/sudo/auditd/integrity/shipping survival): server skillset `skills/server/logging-monitoring.md` — authoritative for everything below the application layer; this module deliberately does not duplicate it.
+- Red-team counterparts feeding the coverage matrix rows: `skills/code/injection.md` (INJ), `skills/code/web-client.md` (WEB), `skills/code/authn-session.md` (AUTHN), `skills/code/authz-access-control.md` (AUTHZ), `skills/code/ssrf-url-security.md` (SSRF), `skills/code/file-handling.md` (FILE), `skills/code/deserialization.md` (DESER), `skills/code/api-security.md` (API), `skills/code/business-logic-races.md` (LOGIC), `skills/code/denial-of-service.md` (DOS), `skills/server/api-token-security.md` (TOK), `skills/code/llm-ai.md` (LLM).
+- Redaction rules resolving the PII-in-logs tension: `skills/code/secrets-data-exposure.md`.
 
 
 

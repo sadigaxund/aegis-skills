@@ -24,7 +24,7 @@ other module produces. Section meanings are remapped as follows:
 | Remediation | Building missing stages, in dependency order |
 | Severity Assessment | The priority-adjustment bands and SLA table themselves |
 
-Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. It sits downstream of both orchestrators — `SKILL.md` (code slugs) and `SKILL-SERVER.md` (host slugs) — and borrows incident-side vocabulary from IR (`checks/incident-response.md`). It produces findings only about the program itself.
+Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. It sits downstream of both orchestrators — `SKILL-CODE.md` (code slugs) and `SKILL-SERVER.md` (host slugs) — and borrows incident-side vocabulary from IR (`skills/operations/incident-response.md`). It produces findings only about the program itself.
 
 ## Scope & Objectives
 
@@ -49,7 +49,7 @@ Operating rules:
 - **Honesty about mitigation.** Records always say which happened: fixed, mitigated-and-clock-stopped, or accepted-on-paper-with-expiry. Silent blurring of the three is the classic small-team failure.
 - **Every stage emits an artifact.** An unrecorded triage, unarchived sweep, or undated review did not happen.
 
-Out of scope: executing audits themselves (SKILL.md / SKILL-SERVER.md), incident response (IR), paging thresholds (DETECT), patch mechanics (PATCH), backup drills (DR). This module wires their outputs together.
+Out of scope: executing audits themselves (SKILL-CODE.md / SKILL-SERVER.md), incident response (IR), paging thresholds (DETECT), patch mechanics (PATCH), backup drills (DR). This module wires their outputs together.
 
 ## Mental Model
 
@@ -63,7 +63,7 @@ The loop, with this skillset mapped onto each stage:
     what exists?   DBs, third-party SaaS with data access, DNS names  │
             │                                                         │
             ▼                                                         │
-   [2 FIND]       <- SKILL.md / SKILL-SERVER.md audits on cadence;    │
+   [2 FIND]       <- SKILL-CODE.md / SKILL-SERVER.md audits on cadence;    │
     hunt for      dependency scanners (commands per SUPPLY module);   │
     weaknesses    sweep-patching.sh host state; distro security       │
                   trackers; pentest/bug-bounty intakes                │
@@ -105,7 +105,7 @@ Audit each loop stage; grade PRESENT / PARTIAL / ABSENT and record the artifact 
 
 ### V1. Stage 1 — inventory exists and is attested-fresh
 
-The inventory covers ALL surface classes: code repos, hosts, cloudflare tunnels and their hostnames, k8s clusters/namespaces, databases, third-party SaaS with data access (payment, email, analytics, error-tracking), and all DNS names. Evidence: one named artifact with per-entry `last-reviewed` dates, re-attested within 90 days (quarterly minimum). Inventory-as-code principle: derive entries from IaC/manifests where possible so currency is automatic. Cross-check both directions: two random inventory rows must exist in reality; one live service or DNS name must appear in inventory — the newest service missing fails this item. Living artifacts: `sweep-code-recon.sh` output archives plus latest TARGET-PROFILE.md / HOST-PROFILE.md (cross-ref SKILL.md Phase 1 / SKILL-SERVER.md Phase 1).
+The inventory covers ALL surface classes: code repos, hosts, cloudflare tunnels and their hostnames, k8s clusters/namespaces, databases, third-party SaaS with data access (payment, email, analytics, error-tracking), and all DNS names. Evidence: one named artifact with per-entry `last-reviewed` dates, re-attested within 90 days (quarterly minimum). Inventory-as-code principle: derive entries from IaC/manifests where possible so currency is automatic. Cross-check both directions: two random inventory rows must exist in reality; one live service or DNS name must appear in inventory — the newest service missing fails this item. Living artifacts: `sweep-code-recon.sh` output archives plus latest TARGET-PROFILE.md / HOST-PROFILE.md (cross-ref SKILL-CODE.md Phase 1 / SKILL-SERVER.md Phase 1).
 
 ### V2. Stage 2 — FIND sources are wired, not aspirational
 
@@ -119,6 +119,7 @@ Check each source for an actual trigger, not a stated intention:
 | Host patch state | sweep-patching.sh output archived per host, reviewed | dated evidence dirs from `tools/run-all-sweeps.sh` |
 | Advisory watch | Weekly glance habit over distro security trackers (Ubuntu Security Notices / Debian tracker / Fedora errata qualitatively) plus dependency advisory feeds (RustSec, npm/GitHub advisories) | recurring calendar entry + dated notes file |
 | External inputs | Pentest reports / bug-bounty reports have a named intake path (even if "forward to triage" placeholder) | documented route into the tracker |
+| Dynamic scanning (DAST) | OWASP ZAP (or equivalent) baseline-scans reachable environments on a schedule; findings flow into the same tracker | scan config + dated reports. Note: dynamic testing is outside this kit's static scope — ZAP-style tooling is the bridge, and its findings still enter Stage 3 identically |
 
 ### V3. Stage 3 — triage rules written down and actually applied
 
@@ -248,7 +249,7 @@ Rules: a row missing owner or expiry is INVALID — treat that finding as OPEN a
 
 | Activity | Trigger | Cadence |
 |---|---|---|
-| Full audit, all applicable slugs (SKILL.md + SKILL-SERVER.md) | scheduled OR major change (new service, auth overhaul, migration) | quarterly minimum |
+| Full audit, all applicable slugs (SKILL-CODE.md + SKILL-SERVER.md) | scheduled OR major change (new service, auth overhaul, migration) | quarterly minimum |
 | Targeted audits | event-driven: new endpoint / service / dependency class introduced | within the introducing sprint |
 | Host sweeps (`tools/run-all-sweeps.sh`) | scheduled | weekly |
 | Dependency scans | push to main + scheduled | per CI, weekly floor |
@@ -300,7 +301,7 @@ reach a sink; inputs that evaporate mid-flow are the loop's leak.
 ```
 SOURCES (entry points):                SANITIZERS (legal transformations):
  - finding file, any slug of             - dedup merge onto existing finding
-   SKILL.md / SKILL-SERVER.md              (SKILL.md Phase 4; cross-ref line,
+   SKILL-CODE.md / SKILL-SERVER.md              (SKILL-CODE.md Phase 4; cross-ref line,
  - dependency-scanner output               not duplicate file)
    (SUPPLY-module commands)              - documented compensating control
  - sweep-patching.sh evidence              (holds band, never deletes)
@@ -459,7 +460,7 @@ Program-audit traps that make maturity LOOK present:
 - CISA Known Exploited Vulnerabilities (KEV) Catalog — authoritative known-exploited list; consult current entries via https://www.cisa.gov
 - FIRST Exploit Prediction Scoring System (EPSS) — published probability-of-exploitation scores: https://www.first.org
 - FIRST Common Vulnerability Scoring System (CVSS) specification — the base-severity vocabulary used by finding reports: https://www.first.org
-- Orchestrators: `SKILL.md` Section 4 registry (code slugs, Phase 4 dedup rule, Phase 6 fix protocol); `SKILL-SERVER.md` Section 3 registry (SRV slugs, Phase 6 hardening application)
-- Sibling modules: SUPPLY `checks/supply-chain.md` (dependency-scanner command matrix — pointer only, not duplicated here), PATCH `checks/server/updates-patching.md`, DETECT `checks/blue-team-detection.md` (P1–P4 paging rubric: alert urgency, distinct from this module's remediation priority), IR `checks/incident-response.md` (when a tracked finding becomes a live incident), DR `checks/server/backup-dr.md` (drill-cadence model)
+- Orchestrators: `SKILL-CODE.md` Section 4 registry (code slugs, Phase 4 dedup rule, Phase 6 fix protocol); `SKILL-SERVER.md` Section 3 registry (SRV slugs, Phase 6 hardening application)
+- Sibling modules: SUPPLY `skills/code/supply-chain.md` (dependency-scanner command matrix — pointer only, not duplicated here), PATCH `skills/server/updates-patching.md`, DETECT `skills/operations/blue-team-detection.md` (P1–P4 paging rubric: alert urgency, distinct from this module's remediation priority), IR `skills/operations/incident-response.md` (when a tracked finding becomes a live incident), DR `skills/server/backup-dr.md` (drill-cadence model)
 - Templates: `templates/finding-report.md` (severity rubric, statuses, Fix Verification Plan mandate, `Fix Status` transitions); `templates/target-profile.md` (inventory seed artifact)
 - Tooling: `tools/run-all-sweeps.sh`, `tools/sweeps/sweep-code-recon.sh`, `tools/sweeps/sweep-patching.sh`, `tools/README.md` sweep contract

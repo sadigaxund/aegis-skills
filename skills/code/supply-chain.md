@@ -17,7 +17,7 @@ owasp: A06:2021 – Vulnerable and Outdated Components
 - Check build integrity: SBOM generation absent, artifacts unsigned, stale base images, unpinned package installs inside images.
 - Objectives: produce findings with `file:line` evidence, classify via the severity rubric, mark every uncertain item `Needs-Review`, and clearly separate offline-static conclusions from conclusions that require the network-gated scanners.
 
-Out of scope: runtime container escape, secrets storage hygiene itself (cross-reference `checks/secrets-data-exposure.md` for leaked credentials, including creds echoed into CI logs), and application-level injection sinks (`checks/injection.md` covers reachable sinks used by the severity rubric below).
+Out of scope: runtime container escape, secrets storage hygiene itself (cross-reference `skills/code/secrets-data-exposure.md` for leaked credentials, including creds echoed into CI logs), and application-level injection sinks (`skills/code/injection.md` covers reachable sinks used by the severity rubric below).
 
 ## Mental Model
 
@@ -182,10 +182,11 @@ Read every file under `.github/workflows/` end-to-end:
 ### Build Integrity Gaps
 
 - SBOM: search CI for SBOM generation (syft, cyclonedx-cli, ecosystem-native). None found = provenance gap finding.
+  Concrete invocation shapes: `syft packages dir:. -o cyclonedx-json > sbom.json` for a repo/filesystem scan or `syft <image>` for an image; npm projects can use `npx @cyclonedx/cyclonedx-npm` instead. Verify the flag set against `--help` — CLI surfaces churn.
 - Signing: artifacts/images unsigned (no cosign usage anywhere) = integrity gap finding; mention cosign by name in remediation.
 - Base image staleness: apply the EOL list from Version Risk Without Network to all `FROM` lines collected earlier.
 - In-image installs: flag `apt-get install pkg...` / `apk add pkg...` without version pins in release images, and any `pip install` without constraints inside images.
-- CI logs: grep workflows for `echo $SECRET`, `-v` flags on curl, `set -x` around secret-bearing steps — leaked credentials belong to `checks/secrets-data-exposure.md`; record cross-reference only.
+- CI logs: grep workflows for `echo $SECRET`, `-v` flags on curl, `set -x` around secret-bearing steps — leaked credentials belong to `skills/code/secrets-data-exposure.md`; record cross-reference only.
 - Attestation verification: check deploy steps for sigstore/cosign signature verification and in-toto attestations (SLSA provenance levels as the build-integrity maturity vocabulary); consuming unsigned/unattested artifacts extends the signing gap above.
 - New-dependency screening gate: newly added dependency names in PR diffs get edit-distance screening against popular packages before merge (a typosquat gate beyond the eyeball rules above).
 
@@ -381,7 +382,7 @@ Emphasize static/local proof; network-gated steps are marked explicitly.
    2. Registry metadata lookup (npm view, pip index versions) is requires network + authorization; otherwise mark `Needs-Review`.
 5. Network-gated scanner sweep — requires network + authorization:
    1. Run the matrix column commands per ecosystem at repo root (`npm audit --omit=dev`, `pip-audit`, `govulncheck ./...`, `cargo audit`, `bundler-audit check`, `composer audit`, `dotnet list package --vulnerable`, `mvn org.owasp:dependency-check-maven:check`, `osv-scanner -r .`; where a CLI has evolved, run base form and consult `--help`).
-   2. Attach raw scanner output; do not paraphrase severities. Cross-check Critical/High advisories against reachable sinks via `checks/injection.md` before final severity.
+   2. Attach raw scanner output; do not paraphrase severities. Cross-check Critical/High advisories against reachable sinks via `skills/code/injection.md` before final severity.
 
 ## Remediation
 
@@ -506,7 +507,13 @@ policy:
     composer.json|composer.lock|Gemfile*|Cargo.*
   then:
     - CODEOWNERS assigns @security-reviewers to the PR (path-based rule)
-    - branch protection requires their approval before merge
+     - branch protection requires their approval before merge
+
+   - commit-signing verification: branch protection (or server-side hooks) marks
+     unsigned commits as untrusted for protected branches. GPG/SSH-signed commits
+     with `Require signed commits` enabled means a stolen token pushing directly
+     still fails the gate; absent verification = every CI secret-holder is also an
+     identity-forger.
     - an advisory CI job posts the dep-name diff (comm -23 old new) for reviewer context
   enforcement lives in GitHub branch protection + CODEOWNERS; the CI job informs, it does not gate alone
 ```
@@ -532,7 +539,7 @@ rg -n '(curl|wget)[^|]*\|\s*(sudo\s+)?(ba)?sh' .github/workflows/ Dockerfile* sc
 
 | Finding | Band | Notes |
 |---|---|---|
-| Known-exploited/vulnerable dependency with reachable sink | Critical–High | Confirm reachability with `checks/injection.md` (or govulncheck symbol output for Go) before assigning Critical |
+| Known-exploited/vulnerable dependency with reachable sink | Critical–High | Confirm reachability with `skills/code/injection.md` (or govulncheck symbol output for Go) before assigning Critical |
 | Vulnerable dependency, sink unreachable / unused codepath | Medium–Low | Honest downgrade; still file and track — reachability can change with one commit |
 | CI secret exposure via `pull_request_target` or injection, prod credentials in scope | Critical | Fork-triggered authenticated execution + prod secrets = account takeover path |
 | Same but non-prod/scoped tokens only | High–Medium | Scope by blast radius of exposed values |

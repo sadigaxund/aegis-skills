@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-db.sh — evidence sweep for checks/server/db-server-hardening.md (DB)
+# sweep-db.sh — evidence sweep for skills/server/db-server-hardening.md (DB)
 # STRICTLY READ-ONLY. Sole network action in this entire sweep: the DB-RD
 # localhost redis PING / ACL LIST attempt. Everything else is offline files.
 set -u

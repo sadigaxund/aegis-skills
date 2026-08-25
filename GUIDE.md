@@ -1,7 +1,7 @@
 # Aegis Skills Guide: understanding what the toolkit hunts and why
 
 This repository contains security-audit playbooks written to be executed by AI coding agents: point an agent at
-`SKILL.md`, hand it a codebase you own, and it walks a fixed method (recon, module dispatch, evidence capture, severity
+`SKILL-CODE.md`, hand it a codebase you own, and it walks a fixed method (recon, module dispatch, evidence capture, severity
 rubrics, remediation plans) and hands back findings you can act on. A sibling orchestrator (`SKILL-SERVER.md`) does the
 same for Linux hosts over SSH.
 
@@ -40,7 +40,7 @@ correctly: the moat is a change in privilege rather than geography, and every cr
 what it claims, because nothing upstream has proven it already. Nearly every vulnerability class in this kit is a story
 about data crossing a boundary while lying about what it is: SQL text pretending to be a value, a URL pretending to be
 internal-safe, a serialized blob pretending to be inert. The first productive question about any system is therefore *where
-are my boundaries and what crosses them*, which is exactly what the recon phase of `SKILL.md` formalizes.
+are my boundaries and what crosses them*, which is exactly what the recon phase of `SKILL-CODE.md` formalizes.
 
 ### Attack surface: every door, including ones you forgot
 
@@ -48,7 +48,7 @@ The attack surface is every place an attacker can send input or trigger behavior
 plus the loading docks people forget, meaning dependencies, DNS records, CI pipelines, SSH tunnels, admin panels, health endpoints,
 webhooks, that staging environment someone exposed in a hurry two years ago. The productive discipline is enumerating doors
 as a burglar would, asking "which entrances open" rather than "which entrances do we use." A deprecated-but-still-deployed API is a
-door; a subdomain pointing at a deleted bucket is a door someone else can own, which is the whole game in `checks/dns-takeover.md`.
+door; a subdomain pointing at a deleted bucket is a door someone else can own, which is the whole game in `skills/code/dns-takeover.md`.
 Surfaces grow silently with every dependency, record, and tunnel, which is why audits must recur rather than happen once.
 The toolkit attacks this directly: recon produces an inventory (`templates/target-profile.md` code-side, `HOST-PROFILE.md`
 host-side) precisely so doors stop being forgotten.
@@ -69,10 +69,10 @@ Give every process, credential, and person exactly the permissions its job requi
 arithmetic, not paranoia: compromises are normal, but a compromised component with narrow rights is an incident, while one
 holding admin rights is an extinction event. The database user behind your web app rarely needs DROP; the CI job building
 docs rarely needs cloud-admin; the container serving static files rarely needs to write anywhere. Least privilege turns
-"attacker got in" into "attacker got into a small room." The kit enforces it app-side in `checks/authz-access-control.md`
-and `checks/cloud-iam.md`, host-side in `checks/server/service-sandboxing.md` and `checks/server/api-token-security.md`. Its
+"attacker got in" into "attacker got into a small room." The kit enforces it app-side in `skills/code/authz-access-control.md`
+and `skills/code/cloud-iam.md`, host-side in `skills/server/service-sandboxing.md` and `skills/server/api-token-security.md`. Its
 nemesis is convenience (wildcard policies, shared admin accounts, permissive defaults), which is why misconfiguration gets
-its own hunt (`checks/configuration-hardening.md`).
+its own hunt (`skills/code/configuration-hardening.md`).
 
 ### Defense in depth: why layers beat one strong wall
 
@@ -81,9 +81,9 @@ turn malicious. Defense in depth assumes every layer fails eventually and arrang
 last missed: parameterized queries behind validation behind a WAF, least-privilege DB accounts behind all of it, alerting
 watching the logs of everything. One way the analogy bends in your favor: unlike castle walls, software layers are cheap, so
 the economics favor stacking far more than five meters of stone ever did. The kit itself is shaped like the doctrine: audits
-find holes (`SKILL.md`, `SKILL-SERVER.md`), hardening shrinks the surface, detection engineering watches for exploitation
-anyway (`checks/blue-team-detection.md`), and incident response assumes even watchtowers miss
-(`checks/incident-response.md`, `checks/dfir-triage.md`). Audit → harden → detect → respond is defense in depth expressed as a workflow rather than a diagram.
+find holes (`SKILL-CODE.md`, `SKILL-SERVER.md`), hardening shrinks the surface, detection engineering watches for exploitation
+anyway (`skills/operations/blue-team-detection.md`), and incident response assumes even watchtowers miss
+(`skills/operations/incident-response.md`, `skills/operations/dfir-triage.md`). Audit → harden → detect → respond is defense in depth expressed as a workflow rather than a diagram.
 
 ### Fail securely vs fail open: what happens when the guard faints
 
@@ -92,8 +92,8 @@ config file fails to parse. **Fail closed** means deny when uncertain; **fail op
 in innocent clothes: a middleware that skips enforcement when its backing service is unreachable, a firewall that loads
 empty after a boot error, a feature flag defaulting to enabled. Attackers actively manufacture failure conditions (induce
 the timeout, send the malformed input) precisely to trip the fallback path. Build the habit of asking what every error
-handler around a security decision returns. The stance shows up in `checks/configuration-hardening.md` (TLS verification,
-debug modes, proxy defaults), `checks/server/firewall-edge.md` (default-deny posture), and `checks/crypto.md`'s insistence
+handler around a security decision returns. The stance shows up in `skills/code/configuration-hardening.md` (TLS verification,
+debug modes, proxy defaults), `skills/server/firewall-edge.md` (default-deny posture), and `skills/code/crypto.md`'s insistence
 that failed signature checks abort rather than warn.
 
 ### Assume-breach: why DETECT and IR exist even in perfect audits
@@ -102,9 +102,9 @@ Assume-breach accepts a humbling fact: some compromise will eventually succeed d
 zero-day, an insider, or a dependency published yesterday and weaponized tonight. The question shifts from "how do we make breach
 impossible" to "how fast do we notice, and how cheaply do we recover?" That is why this kit refuses to end at auditing.
 Detection engineering translates every vulnerability class the red-team modules find into log signals and alert thresholds
-(`checks/blue-team-detection.md`); DFIR provides the first-two-hours playbook for a suspected-compromised host
-(`checks/dfir-triage.md`); incident response covers the lifecycle through the lessons-feed-back step
-(`checks/incident-response.md`); backups exist because ransomware is a clock problem (`checks/server/backup-dr.md`). A team with great
+(`skills/operations/blue-team-detection.md`); DFIR provides the first-two-hours playbook for a suspected-compromised host
+(`skills/operations/dfir-triage.md`); incident response covers the lifecycle through the lessons-feed-back step
+(`skills/operations/incident-response.md`); backups exist because ransomware is a clock problem (`skills/server/backup-dr.md`). A team with great
 prevention and no detection learns of its breach from a ransom note or a customer. A team with assume-breach discipline
 learns of it from its own dashboards, hours earlier, while options remain.
 
@@ -141,7 +141,7 @@ db.execute("SELECT * FROM users WHERE name = '%s'" % request.args["q"])
 db.execute("SELECT * FROM users WHERE name = ?", (request.args["q"],))
 ```
 
-**In this kit:** `checks/injection.md` (slug INJ) owns the family (SQL, NoSQL, OS command, template, expression, LDAP,
+**In this kit:** `skills/code/injection.md` (slug INJ) owns the family (SQL, NoSQL, OS command, template, expression, LDAP,
 XPath, header/CRLF, log injection), with the full per-language sink matrix in §Patterns & Signatures and taint recipes in
 §Taint Tracing Guidance. Fix philosophy: separate data from code at the channel level, then replay the exact payload that
 worked before to prove it no longer does.
@@ -164,8 +164,8 @@ but CSP augments output encoding, never replaces it. CSRF's real fix is unguessa
 `SameSite=Lax/Strict` cookies and `Origin` checks, because attackers can cause cross-site submissions while reading nothing
 cross-origin.
 
-**In this kit:** `checks/web-client.md` (WEB) hunts all three XSS flavors, CSRF, clickjacking, unsafe `postMessage`
-handlers, DOM clobbering, and client-side storage misuse; header-level depth lives in `checks/configuration-hardening.md`.
+**In this kit:** `skills/code/web-client.md` (WEB) hunts all three XSS flavors, CSRF, clickjacking, unsafe `postMessage`
+handlers, DOM clobbering, and client-side storage misuse; header-level depth lives in `skills/code/configuration-hardening.md`.
 Fix philosophy: context-correct output encoding everywhere, cookies flagged `HttpOnly; Secure; SameSite`, and a CSP that
 assumes encoding will someday fail.
 
@@ -186,8 +186,8 @@ fixation; MFA checked once, then skipped forever by that session; logout that de
 invalidates the server session. JWTs need special care: accepting `alg: none`, trusting unsigned claims, or sharing one
 signing key across services turns tokens into self-service passports.
 
-**In this kit:** `checks/authn-session.md` (AUTHN) covers login, storage, reset, MFA, remember-me, session lifecycle,
-JWT/API-key handling; federation gets its own deep module, `checks/oauth-sso.md` (SSO): OAuth/OIDC/SAML flow misuse,
+**In this kit:** `skills/code/authn-session.md` (AUTHN) covers login, storage, reset, MFA, remember-me, session lifecycle,
+JWT/API-key handling; federation gets its own deep module, `skills/code/oauth-sso.md` (SSO): OAuth/OIDC/SAML flow misuse,
 `redirect_uri` validation, `state`/PKCE, signature verification. Fix philosophy: slow hashes, rate-limited guesses, expiring
 single-use tokens, sessions that rotate on elevation and die server-side.
 
@@ -206,7 +206,7 @@ vary the object identifier across two test principals; any cross-read or cross-w
 checks must run server-side on every route; hiding menu items is UI hygiene, not authorization. Multi-tenant systems add
 tenant scoping to the same pattern.
 
-**In this kit:** `checks/authz-access-control.md` (AUTHZ) hunts BFLA/BOLA, vertical and horizontal escalation, tenant-
+**In this kit:** `skills/code/authz-access-control.md` (AUTHZ) hunts BFLA/BOLA, vertical and horizontal escalation, tenant-
 isolation breaks, header/path bypasses. Fix philosophy: authorize on every request against central policy keyed to object
 owner/tenant (deny by default), and prove it with two test accounts.
 
@@ -226,9 +226,9 @@ role (confused deputy); trust policies accepting principals from any account inv
 access keys lose to instance/task roles wherever roles exist. Escalation paths chain; read-secrets plus write-to-config-
 store often equals admin.
 
-**In this kit:** `checks/cloud-iam.md` (IAM) recovers IAM posture from repo/IaC artifacts (wildcard policies, PassRole
-chains, CI OIDC scoping, IMDS hardening); host-side enforcement lands in `checks/server/kubernetes-cluster.md` and
-`checks/server/api-token-security.md`. Fix philosophy: roles over static keys, scopes over wildcards, and treat the metadata
+**In this kit:** `skills/code/cloud-iam.md` (IAM) recovers IAM posture from repo/IaC artifacts (wildcard policies, PassRole
+chains, CI OIDC scoping, IMDS hardening); host-side enforcement lands in `skills/server/kubernetes-cluster.md` and
+`skills/server/api-token-security.md`. Fix philosophy: roles over static keys, scopes over wildcards, and treat the metadata
 service as hostile-reachable because, from the attacker's chair, it is.
 
 ## Data exposure
@@ -251,8 +251,8 @@ validated IP or egress-proxy the fetch, allowlist schemes/hosts/ports, disable r
 service away from workload networks. Open redirects (CWE-601) share the plumbing: a `?next=` param going anywhere enables
 phishing and filter bypasses elsewhere.
 
-**In this kit:** `checks/ssrf-url-security.md` (SSRF) catalogs sinks across mainstream HTTP-client libraries, bypass
-taxonomy included, plus metadata-endpoint exposure; egress control pairs with `checks/server/firewall-edge.md`. Fix
+**In this kit:** `skills/code/ssrf-url-security.md` (SSRF) catalogs sinks across mainstream HTTP-client libraries, bypass
+taxonomy included, plus metadata-endpoint exposure; egress control pairs with `skills/server/firewall-edge.md`. Fix
 philosophy: allowlist and pin at fetch time; validate what you connect to, not what you were shown.
 
 ### Secrets exposure: passwords taped under the keyboard
@@ -270,8 +270,8 @@ hygiene: short-lived credentials fetched at runtime from a secrets manager, work
 ignored from commit zero, pre-commit scanning to stop the next leak. Redaction cuts both ways: this kit's reports mask
 secret values (first four characters + REDACTED) so the audit itself never becomes a leak.
 
-**In this kit:** `checks/secrets-data-exposure.md` (SECRETS) sweeps working tree, history, build output, and logs; host
-counterpart in `checks/server/host-secrets.md`; API PII over-exposure overlaps `checks/api-security.md`. Fix philosophy:
+**In this kit:** `skills/code/secrets-data-exposure.md` (SECRETS) sweeps working tree, history, build output, and logs; host
+counterpart in `skills/server/host-secrets.md`; API PII over-exposure overlaps `skills/code/api-security.md`. Fix philosophy:
 secrets belong in a manager and live briefly; anything static enough to commit is static enough to steal.
 
 ## Platform & infrastructure
@@ -292,7 +292,7 @@ magic bytes; store outside the webroot under randomized names; serve with forced
 `Content-Disposition: attachment` from a sandboxed domain (defusing stored-XSS-via-upload); strip archive members of absolute/parent paths before
 extraction; mind TOCTOU windows where the file is checked then re-opened by path, because a swapped symlink changes what's read.
 
-**In this kit:** `checks/file-handling.md` (FILE) covers traversal, LFI/RFI, upload/ download/delete flaws, Zip Slip,
+**In this kit:** `skills/code/file-handling.md` (FILE) covers traversal, LFI/RFI, upload/ download/delete flaws, Zip Slip,
 symlink races, storage-key confusion. Fix philosophy: never trust a filename, contain every resolved path, quarantine
 uploads until proven tame.
 
@@ -314,7 +314,7 @@ entities per parser version). Prototype pollution (CWE-1321) exploits recursive 
 `__proto__`/`constructor.prototype`; downstream gadgets turn weird into fatal. The universal fix is boring: never deserialize
 untrusted data with behavior-rich formats. JSON parsed to dumb data, schema-checked.
 
-**In this kit:** `checks/deserialization.md` (DESER) covers native serializers, XXE, YAML (`yaml.load` without
+**In this kit:** `skills/code/deserialization.md` (DESER) covers native serializers, XXE, YAML (`yaml.load` without
 `SafeLoader`), prototype pollution. Fix philosophy: dumb data in, schema-checked; if a rich format is unavoidable,
 integrity-protect the bytes end to end.
 
@@ -332,8 +332,8 @@ dumps (resource exhaustion meets data exposure). GraphQL adds introspection left
 resolvers missing object-level authz (field-flavored IDOR). Keys in URLs land in logs and referrers; WebSockets routinely
 skip the auth checks their HTTP handshake had; old versions rot with yesterday's bugs.
 
-**In this kit:** `checks/api-security.md` (API) covers mass assignment, rate/pagination caps, GraphQL/gRPC hygiene, key
-mishandling, WebSocket/SSE access control; counting races overlap `checks/business-logic-races.md`. Fix philosophy: explicit
+**In this kit:** `skills/code/api-security.md` (API) covers mass assignment, rate/pagination caps, GraphQL/gRPC hygiene, key
+mishandling, WebSocket/SSE access control; counting races overlap `skills/code/business-logic-races.md`. Fix philosophy: explicit
 field allowlists, server-enforced budgets on rates and response sizes, and assume every client reads the documentation with
 hostile intent.
 
@@ -352,9 +352,9 @@ headers or routing internal paths. Each item is small; chains of them are how in
 configs, containers, IaC, proxy rules; diff against a hardened baseline; treat every deviation as a finding needing
 justification, not the reverse.
 
-**In this kit:** `checks/configuration-hardening.md` (CONFIG) sweeps app/framework/ container/IaC/proxy defaults; host
-baselines in `checks/server/linux-baseline.md`, edge rules in `checks/server/firewall-edge.md`, TLS termination in
-`checks/server/tls-proxy.md`, tunnel specifics in `checks/server/cloudflared-tunnel.md`. Fix philosophy: hardened-by-default
+**In this kit:** `skills/code/configuration-hardening.md` (CONFIG) sweeps app/framework/ container/IaC/proxy defaults; host
+baselines in `skills/server/linux-baseline.md`, edge rules in `skills/server/firewall-edge.md`, TLS termination in
+`skills/server/tls-proxy.md`, tunnel specifics in `skills/server/cloudflared-tunnel.md`. Fix philosophy: hardened-by-default
 templates, deviations documented; configuration is code, reviewed like code.
 
 ### Protocol-level attacks: two postmen reading one letter differently
@@ -375,7 +375,7 @@ links and misrouted vhosts. Web cache poisoning needs an unkeyed input (a header
 response. Fixes are alignment: reject ambiguous length headers at the edge, pin one parsing standard end to end, treat
 `Host` as input, key caches on everything influential.
 
-**In this kit:** `checks/http-protocol.md` (PROTO) hunts desync, Host-header abuse, cache poisoning/deception, parameter
+**In this kit:** `skills/code/http-protocol.md` (PROTO) hunts desync, Host-header abuse, cache poisoning/deception, parameter
 pollution, spoofable edge headers, from repo and proxy configuration evidence. Fix philosophy: one HTTP-parser opinion
 across the whole chain; ambiguity rejected loudly at the edge, never resolved silently inside.
 
@@ -396,7 +396,7 @@ customers register those endpoint names; nothing binds the name to you anymore. 
 *before* removing the record, because cached answers keep pointing at your name until TTLs expire. Detection starts with
 inventory: extract every claimed hostname from repo/IaC artifacts, diff against live DNS, flag dangling targets.
 
-**In this kit:** `checks/dns-takeover.md` (DNS) does claimed-hostname inventory, dangling-record reasoning, provider
+**In this kit:** `skills/code/dns-takeover.md` (DNS) does claimed-hostname inventory, dangling-record reasoning, provider
 fingerprinting for authorized live verification, zone hygiene, TTL-aware decommission planning. Fix philosophy: decommission
 in reverse order of dependence: kill the claimable thing first, then the signpost.
 
@@ -422,8 +422,8 @@ provenance-less binaries dropped into repos. CI pipelines join the surface: work
 interpolated into `${{ }}` expressions, over-privileged tokens, unpinned action tags. Defenses layer: pinned versions with
 lockfile integrity, minimal build/publish tokens, allowlisted scripts, review gates sized to trust impact.
 
-**In this kit:** Two modules split the angles cleanly. `checks/supply-chain.md` (SUPPLY) audits manifests, lockfiles,
-vendored code, and CI definitions for accidental weakness. `checks/malicious-code.md` (MALCODE) hunts deliberate constructs
+**In this kit:** Two modules split the angles cleanly. `skills/code/supply-chain.md` (SUPPLY) audits manifests, lockfiles,
+vendored code, and CI definitions for accidental weakness. `skills/code/malicious-code.md` (MALCODE) hunts deliberate constructs
 (obfuscation, beacons, backdoors, install-time implants) statically, using a tabletop lab exercise instead of live
 detonation, scoring findings by trust impact rather than CVSS. Fix philosophy: minimize what you pull in, pin what remains,
 and grant build systems the suspicion you'd grant a stranger's USB stick.
@@ -447,8 +447,8 @@ callable cheaply and endlessly; metered third-party APIs hammered through your k
 enforced *before* parsing, timeouts and concurrency budgets per work unit, expensive jobs async'd into bounded queues with
 load-shedding.
 
-**In this kit:** `checks/denial-of-service.md` (DOS) combines static inspection of regex batteries, parsers, algorithms with
-bounded live probes; pagination abuse overlaps `checks/api-security.md`. Fix philosophy: every byte a client sends must meet
+**In this kit:** `skills/code/denial-of-service.md` (DOS) combines static inspection of regex batteries, parsers, algorithms with
+bounded live probes; pagination abuse overlaps `skills/code/api-security.md`. Fix philosophy: every byte a client sends must meet
 a pre-agreed budget (size, time, memory) enforced before the expensive work begins.
 
 ## Specialized surfaces
@@ -469,7 +469,7 @@ Logic abuse is broader: negative quantities, currency mismatches, timezone-bound
 counters keyed on resettable identifiers. Testing method: model the workflow as states and transitions, then attempt every
 transition out-of-order, repeated, with adversarial field values.
 
-**In this kit:** `checks/business-logic-races.md` (LOGIC) covers workflow bypass, price/ amount tampering, TOCTOU, time-
+**In this kit:** `skills/code/business-logic-races.md` (LOGIC) covers workflow bypass, price/ amount tampering, TOCTOU, time-
 based abuse, approval/referral flows. Fix philosophy: make the illegal state unrepresentable and the critical section atomic:
 correctness by structure, not hope.
 
@@ -491,7 +491,7 @@ unsigned or with attacker-chosen `alg`; webhook payloads trusted without HMAC ve
 entropy drawn from language-default PRNGs (CWE-338). Key management rounds it out: keys stored beside the data they protect
 protect nothing.
 
-**In this kit:** `checks/crypto.md` (CRYPTO) spans algorithm choice, mode/nonce misuse, key management, password hashing,
+**In this kit:** `skills/code/crypto.md` (CRYPTO) spans algorithm choice, mode/nonce misuse, key management, password hashing,
 randomness, TLS verification, JWT crypto, webhook signatures. Fix philosophy: don't design protocols; use vetted high-level
 primitives (AEAD + KDF APIs) with citable parameters, and treat any hand-rolled combination as a finding.
 
@@ -514,7 +514,7 @@ allocations never freed on attacker-churned paths exhaust RSS over hours. Rust: 
 `unsafe` blocks, `transmute`, and FFI edges require manual review equal to C; the language moves the risk to the border
 rather than abolishing it.
 
-**In this kit:** `checks/memory-safety.md` (MEM) inventories native code, ranks it by attacker reachability, audits
+**In this kit:** `skills/code/memory-safety.md` (MEM) inventories native code, ranks it by attacker reachability, audits
 parsers/copy sites/lifetime transitions, unsafe-Rust and FFI included. Fix philosophy: prefer memory-safe languages for new
 parsing surfaces; where unsafe persists, bound every copy with lengths from one trusted source and review `unsafe` like
 production crypto.
@@ -535,9 +535,9 @@ an account exists, CWE-204), absent throttling (CWE-307), codes short-but-long-l
 client-side. Magic links follow token law: high entropy, single-use, short TTL, issuer-bound. Hosted sending domains need
 aligned DKIM/SPF too; a misconfigured notification subdomain spoofs just fine.
 
-**In this kit:** `checks/email-sms.md` (MAIL) audits SPF/DKIM/DMARC evidence, sending infrastructure, inbound-mail
+**In this kit:** `skills/code/email-sms.md` (MAIL) audits SPF/DKIM/DMARC evidence, sending infrastructure, inbound-mail
 processing, verification/magic-link bypasses, OTP brute-force controls; account-takeover chains complete through
-`checks/authn-session.md` and `checks/oauth-sso.md`. Fix philosophy: authenticate outbound mail cryptographically, throttle
+`skills/code/authn-session.md` and `skills/code/oauth-sso.md`. Fix philosophy: authenticate outbound mail cryptographically, throttle
 and expire everything that grants access, answer enumeration probes identically regardless of truth.
 
 ### LLM/AI-specific: the injection lesson returns in a new costume
@@ -557,7 +557,7 @@ as HTML is XSS with extra steps; interpolating it into commands is injection aga
 prompts and retrieved PII extracted via clever asking. RAG authorization gaps: indexes ignoring document permissions; the
 vector store as IDOR with semantics. Cost abuse: unbounded token spend per request or session.
 
-**In this kit:** `checks/llm-ai.md` (LLM) audits integrations (direct/indirect prompt injection, output handling, tool
+**In this kit:** `skills/code/llm-ai.md` (LLM) audits integrations (direct/indirect prompt injection, output handling, tool
 agency, disclosure, RAG authz, cost abuse, plugin supply chain), citing OWASP LLM categories by name. Fix philosophy: treat
 the model as an untrusted interpreter behind a trust boundary; fence its powers with tool-level authorization, because the
 prompt itself can never be the fence.
@@ -580,7 +580,7 @@ protection, rate shaping. Client binaries leak: any embedded key is public, so e
 are writable attack surface (validate blob size/schema/sanity); LiveOps configs deserve signatures; UGC (maps, skins) is
 stored-XSS-with-textures, so sandbox and scan.
 
-**In this kit:** `checks/gaming-security.md` (GAME) covers simulation authority, movement/action validation, economy
+**In this kit:** `skills/code/gaming-security.md` (GAME) covers simulation authority, movement/action validation, economy
 integrity, leaderboards, IAP receipt flows, telemetry, protocol sessions, saves/LiveOps, UGC sandboxing, client-shipped
 secrets. Fix philosophy: the client proposes, the server disposes: every gameplay claim is a request, validated like any
 other untrusted input.
@@ -592,7 +592,7 @@ other untrusted input.
 To see how the machinery fits together, walk one fictional finding through its whole life on paper, using the real section
 names from `templates/finding-report.md`.
 
-**Step 1: discovery.** During a code audit, the agent dispatches `checks/injection.md` (INJ). Following §Taint Tracing
+**Step 1: discovery.** During a code audit, the agent dispatches `skills/code/injection.md` (INJ). Following §Taint Tracing
 Guidance, it traces the `q` parameter of `/api/search` from the request handler into a string-concatenated query executed in
 `app/db/queries.py:42`; §Patterns & Signatures confirms the sink shape. This is a candidate, not yet a finding.
 
@@ -633,11 +633,11 @@ band, saying why.
 **Step 4: remediation and verification.** The fix replaces interpolation with a parameterized query; the Fix Verification
 Plan then executes exactly as written: rerun the original PoC (expect rejection, no delay), add the GIVEN/WHEN/THEN
 regression tests, run the manual checklist including the negative test, and rerun the §Patterns & Signatures greps from
-`checks/injection.md` over the touched files. Only after all four does Fix Status move to `Verified-Fixed`.
+`skills/code/injection.md` over the touched files. Only after all four does Fix Status move to `Verified-Fixed`.
 
-**Step 5: the loop.** The finding enters tracking owned by `checks/vuln-mgmt-process.md` (VULN): prioritized against SLAs,
+**Step 5: the loop.** The finding enters tracking owned by `skills/operations/vuln-mgmt-process.md` (VULN): prioritized against SLAs,
 assigned, scheduled, verified, measured, with overdue reporting so nothing silently rots. Meanwhile the audit orchestrator's
-correlation phase (Phase 4 of `SKILL.md`) may chain this finding with others (say, a leaked database credential from
+correlation phase (Phase 4 of `SKILL-CODE.md`) may chain this finding with others (say, a leaked database credential from
 SECRETS) into one attack path with a combined severity. Chains are how medium findings become critical stories.
 
 ---
@@ -646,7 +646,7 @@ SECRETS) into one attack path with a combined severity. Chains are how medium fi
 
 Think of the kit as three operating identities: two proactive, one reactive.
 
-**Identity 1: `SKILL.md`, the code auditor (proactive).** Master orchestrator for source and IaC: ground rules
+**Identity 1: `SKILL-CODE.md`, the code auditor (proactive).** Master orchestrator for source and IaC: ground rules
 (authorization gate, evidence rule, redaction, read-only default), operating modes (full audit / targeted / quick pass / fix
 verification), a registry of the code-side check modules, phased execution (authorization → recon → attack-surface
 prioritization → module dispatch → correlation and chaining → executive summary), an opt-in fix-application phase gated by
@@ -654,29 +654,29 @@ diff-first approval, and the Determinism Protocol appendix that lets even a weak
 reviewable run.
 
 **Identity 2: `SKILL-SERVER.md`, the host auditor (proactive).** Same skeleton, host-flavored: over SSH it builds a
-`HOST-PROFILE.md` exposure map, then dispatches the twelve `checks/server/*` modules (baseline, firewall, TLS/proxy, API tokens,
+`HOST-PROFILE.md` exposure map, then dispatches the twelve `skills/server/*` modules (baseline, firewall, TLS/proxy, API tokens,
 sandboxing, patching, logging, host secrets, Kubernetes, database hardening, tunnels, backup/DR), with evidence collection
 mechanized by `tools/run-all-sweeps.sh` so the agent spends its judgment only on interpretation. It carries the same reactive
 escape hatch: incident-triage mode loads DFIR immediately and skips phasing.
 
 **Identity 3: the operations loop (reactive/ongoing).** The third identity is the cycle detect → triage → respond → learn.
-It is owned by `SKILL-OPERATIONS.md`, which coordinates four modules: `checks/blue-team-detection.md` (DETECT)
-turns every class the red-team modules find into log signals and alert thresholds; `checks/dfir-triage.md` (DFIR) is the
-first-hours forensic playbook for a suspected-compromised host; `checks/incident-response.md` (IR) audits whether you *have*
-response capability and runs the lifecycle when reality strikes; `checks/vuln-mgmt-process.md` (VULN) keeps every finding
+It is owned by `SKILL-OPERATIONS.md`, which coordinates four modules: `skills/operations/blue-team-detection.md` (DETECT)
+turns every class the red-team modules find into log signals and alert thresholds; `skills/operations/dfir-triage.md` (DFIR) is the
+first-hours forensic playbook for a suspected-compromised host; `skills/operations/incident-response.md` (IR) audits whether you *have*
+response capability and runs the lifecycle when reality strikes; `skills/operations/vuln-mgmt-process.md` (VULN) keeps every finding
 prioritized, remediated, verified, and measured over time. The master defines the operating rhythm: weekly sweeps,
 monthly metrics, quarterly audits, twice-yearly drills, and the reactive triggers that tell you which module to load.
 
 **Reading paths.**
 
-- **Newcomer:** this guide cover to cover, then `README.md`, then skim one module end to end; `checks/injection.md` is the
+- **Newcomer:** this guide cover to cover, then `README.md`, then skim one module end to end; `skills/code/injection.md` is the
   canonical specimen of the 12-section contract. Run a "quick pass" audit on a repo you own and read every artifact it
   produces.
-- **Backend developer:** `SKILL.md` Phases 1–3 for method, then your stack's modules (`checks/injection.md`,
-  `checks/authz-access-control.md`, `checks/authn-session.md`, `checks/api-security.md`), focusing on each module's §Remediation and
+- **Backend developer:** `SKILL-CODE.md` Phases 1–3 for method, then your stack's modules (`skills/code/injection.md`,
+  `skills/code/authz-access-control.md`, `skills/code/authn-session.md`, `skills/code/api-security.md`), focusing on each module's §Remediation and
   §Verification & Validation. Reuse the finding-template fields in your own PR descriptions.
 - **Ops/infrastructure:** `SKILL-SERVER.md` first, then `tools/README.md` (the sweep contract), then the twelve
-  `checks/server/*` modules paired with their sweeps. Finish with `checks/blue-team-detection.md`; logging is your
+  `skills/server/*` modules paired with their sweeps. Finish with `skills/operations/blue-team-detection.md`; logging is your
   superpower.
 - **Founder/manager (30 minutes):** this intro, Part 0, the "In plain terms" layer of Part 1, Part 2's vocabulary section,
   and `templates/summary-report.md`. Enough to read an audit summary intelligently and ask the two questions that matter:

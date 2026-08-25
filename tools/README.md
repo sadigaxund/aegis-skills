@@ -6,7 +6,7 @@ Sweep scripts remove improvisation from the **evidence-gathering** half of a
 server audit. Every run of `sweep-baseline.sh` on the same host produces the
 same sections in the same order with the same commands. The agent's judgment
 is spent ONLY on interpretation, which is governed by the matching check
-module (`checks/server/<module>.md`). Evidence collection is mechanical;
+module (`skills/server/<module>.md`). Evidence collection is mechanical;
 verdicts come from module rubrics.
 
 **Code-audit note:** only recon is scripted (`sweep-code-recon.sh`). Code

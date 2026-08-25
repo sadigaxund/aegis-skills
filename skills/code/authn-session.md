@@ -377,6 +377,8 @@ const hash = await argon2.hash(password, {type: argon2.argon2id, memoryCost: 194
 ```
 Enforce server-side policy: length >= 12 preferred (or >= 8 with composition), breached-password denylist, no forced periodic rotation. Migrate by wrapping legacy hashes and rehashing on next successful login.
 
+Breached-password screening concretely: query the Have I Been Pwned k-anonymity range API (`GET https://api.pwnedpasswords.com/range/{first 5 chars of SHA-1}`) server-side at registration and password change, comparing the full SHA-1 of the candidate; block matches, never send the full password off-host. Allow paste into password fields — blocking paste pushes users toward weaker memorable passwords and breaks password managers. Give users visibility into their active sessions with per-session terminate buttons; unexplained sessions are both a user-facing control and a detection signal.
+
 ### Session regeneration per stack
 | Stack | Call at login / privilege change |
 |---|---|

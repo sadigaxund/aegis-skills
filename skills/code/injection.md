@@ -55,6 +55,7 @@ The sink's **context grammar** determines the break-out sequence:
 5. Hunt second-order SQLi: values written safely, later concatenated elsewhere (reports, exports, admin tools, cron jobs).
 6. Inspect "parameterized" code for done-wrong variants: interpolating before `execute`, `.replace(":id", x)` placeholder substitution, IN-lists joined from raw values, LIMIT/OFFSET string-bound then fallback-concatenated.
 7. Record the DB dialect to predict stacked-query support and comment syntax (see dialect table below).
+8. Check Unicode handling on validation boundaries: normalize (`NFC`) before allow-list checks, or attackers slip NFD/fullwidth variants past a denylist that later collapse into dangerous characters downstream (same lesson as FILE's filename normalization, applied to every validated field).
 
 ### NoSQL
 

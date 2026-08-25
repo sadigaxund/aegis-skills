@@ -20,7 +20,7 @@ Audit secrets and sensitive material stored **on one Linux host** (or rendered o
 6. **Rotation posture** — detect "unchanged since forever" credential files as Needs-Review culture flags (not auto-findings).
 7. **Backup & snapshot hygiene** — unencrypted copies of secret-bearing dirs, dump placement, encryption presence.
 
-Out of scope (cross-references): token *storage design inside applications* and token-rotation mechanics → TOK module (`checks/server/api-token-security.md`, which owns the zero-downtime rotation runbook); secrets baked into container images or build layers → supply-chain module; network exposure of the services holding these secrets → FW/TLS modules; SELinux/AppArmor label analysis beyond noting its existence → SANDBOX module.
+Out of scope (cross-references): token *storage design inside applications* and token-rotation mechanics → TOK module (`skills/server/api-token-security.md`, which owns the zero-downtime rotation runbook); secrets baked into container images or build layers → supply-chain module; network exposure of the services holding these secrets → FW/TLS modules; SELinux/AppArmor label analysis beyond noting its existence → SANDBOX module.
 
 Operating rules:
 
@@ -257,7 +257,7 @@ For hosts managed as code, trace each secret along this flow and judge the sink:
 - **Propagation**: variable → template/render step → packaged artifact → deployed file; also direct `scp`/`rsync` of `.env` during deploys. The decisive attribute riding along is the **file resource's mode** — an otherwise perfect vault-fed pipeline that renders `mode: '0644'` produces a Critical finding.
 - **Sinks and judgment**: on-host files (mode decides), unit `Environment=` lines (any local user reads), container env injection (host `.env` perms decide pre-launch). A sink is compliant only when cred-bearing content lands owner-scoped (600) or group-scoped to a named service group (640) with a ≤750 parent directory.
 - **Rules**: one source maps to one designated sink; forbid staging copies into `/tmp` during deploy; require explicit modes on every file/template resource that touches credentials (`copy: ... mode: '0600'`) — never rely on umask luck; treat any secret ever committed as burned.
-- **Burned-secret rule (SECRETS code-module)**: deleting a credential from HEAD does not un-leak it — git history, forks, and clones retain it. Rotation is the only cure. Repo-side detection depth → `checks/secrets-data-exposure.md`; rotation mechanics → TOK module runbook.
+- **Burned-secret rule (SECRETS code-module)**: deleting a credential from HEAD does not un-leak it — git history, forks, and clones retain it. Rotation is the only cure. Repo-side detection depth → `skills/code/secrets-data-exposure.md`; rotation mechanics → TOK module runbook.
 - **Worked micro-trace**: compose `.env` committed → deployed beside `docker-compose.yml` mode 644 → any local account reads DB password → chain to database host. Trace back through `git log -p -- '**/.env*'` to scope which rotations are owed.
 
 ## Exploitation & Reproduction

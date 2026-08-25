@@ -19,7 +19,7 @@ Audit one host (or its config-as-code) for whether data can actually come back a
 7. **Recoverability evidence** — runbooks mentioning restore, drill history, defined RTO/RPO, completed recovery-order worksheet.
 8. **Ransomware resilience structure** — credential-plane separation between production and backup administration, immutability/offline tiers, delete-protection windows.
 
-Out of scope (cross-references): database engine hardening itself → DB (checks/server/db-server-hardening.md); secret contents and env-file permissions → HSECRET; log shipping and alert-pipeline plumbing → LOGMON (checks/server/logging-monitoring.md); TLS termination → TLS; firewall reachability proofs → FW.
+Out of scope (cross-references): database engine hardening itself → DB (skills/server/db-server-hardening.md); secret contents and env-file permissions → HSECRET; log shipping and alert-pipeline plumbing → LOGMON (skills/server/logging-monitoring.md); TLS termination → TLS; firewall reachability proofs → FW.
 
 Operating rules:
 
@@ -297,7 +297,7 @@ Borg alternative shapes: `borg init --encryption=repokey ssh://backup@nas.exampl
 
 ### 2. Alert-on-failure + suspicious-success hook
 
-Reuse the LOGMON exit-code→notify pattern (checks/server/logging-monitoring.md):
+Reuse the LOGMON exit-code→notify pattern (skills/server/logging-monitoring.md):
 
 ```bash
 if ! /usr/local/bin/offsite-backup.sh >>/var/log/offsite-backup.log 2>&1; then

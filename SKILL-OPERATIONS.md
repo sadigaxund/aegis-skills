@@ -4,7 +4,7 @@ description: >
   Orchestrator for the reactive and continuous side of security: scheduled
   sweeps, detection engineering, alert triage, incident response, forensic
   triage, vulnerability tracking, and drills. Owns the operating rhythm that
-  keeps findings from the two audit masters (SKILL.md, SKILL-SERVER.md)
+  keeps findings from the two audit masters (SKILL-CODE.md, SKILL-SERVER.md)
   from decaying.
 category: security
 version: 1.0.0
@@ -20,7 +20,7 @@ Identity split across the three masters:
 
 | Master | Question it answers | Mode |
 |---|---|---|
-| SKILL.md | What bugs are in the software? | proactive, per-run |
+| SKILL-CODE.md | What bugs are in the software? | proactive, per-run |
 | SKILL-SERVER.md | How exposed/hardened are the machines? | proactive, per-run |
 | **SKILL-OPERATIONS.md** | **Are we watching, responding, improving?** | continuous / reactive |
 
@@ -39,14 +39,14 @@ redaction, fixed vocabulary) plus two operations-specific ones:
 
 | Slug | Module | Role in the loop |
 |---|---|---|
-| DETECT | checks/blue-team-detection.md | Detection coverage per vulnerability class; structured event logging; alert thresholds; purple-team replay validation |
-| IR | checks/incident-response.md | Lifecycle playbooks: readiness audit + containment scenarios keyed to finding classes |
-| DFIR | checks/dfir-triage.md | First-60–120-min compromised-host triage; volatile capture; rebuild-vs-investigate frame |
-| VULN | checks/vuln-mgmt-process.md | The tracking loop: prioritize, SLAs, exceptions, metrics, cadences |
+| DETECT | skills/operations/blue-team-detection.md | Detection coverage per vulnerability class; structured event logging; alert thresholds; purple-team replay validation |
+| IR | skills/operations/incident-response.md | Lifecycle playbooks: readiness audit + containment scenarios keyed to finding classes |
+| DFIR | skills/operations/dfir-triage.md | First-60–120-min compromised-host triage; volatile capture; rebuild-vs-investigate frame |
+| VULN | skills/operations/vuln-mgmt-process.md | The tracking loop: prioritize, SLAs, exceptions, metrics, cadences |
 
 Shared modules owned by other masters but used here: LOGMON
-(checks/server/logging-monitoring.md — telemetry plumbing when wiring
-detections), DR canaries (checks/server/backup-dr.md §6), SUPPLY scanner
+(skills/server/logging-monitoring.md — telemetry plumbing when wiring
+detections), DR canaries (skills/server/backup-dr.md §6), SUPPLY scanner
 commands (dependency advisories feed FIND), sweeps toolkit
 (tools/run-all-sweeps.sh — doubles as post-rebuild verification).
 
@@ -58,7 +58,7 @@ commands (dependency advisories feed FIND), sweeps toolkit
 |---|---|---|
 | Weekly | Run sweeps on hosts; glance at distro security notices + dependency advisories | tools/run-all-sweeps.sh, SUPPLY §FIND |
 | Monthly | 30-min metrics review: open-by-severity, MTTR, exceptions expiring, coverage freshness | VULN §metrics |
-| Quarterly | Full code audit (SKILL.md) + host audit (SKILL-SERVER.md); immutability drill | both masters, DR §6 |
+| Quarterly | Full code audit (SKILL-CODE.md) + host audit (SKILL-SERVER.md); immutability drill | both masters, DR §6 |
 | Twice yearly | Restore drill + IR tabletop | DR, IR tabletop kit |
 | On demand | Targeted audit when new endpoint/service/dep class lands | relevant slug only |
 
@@ -98,3 +98,6 @@ ledger optional here; the VULN tracker is the source of truth.
 Same Appendix-C discipline applies verbatim: alerts get verdicts from the
 DETECT rubric, incidents get severities from the IR SEV matrix, triage notes
 cite the query/output that justified them. No vibes-based closures.
+
+Coverage gate: before closing a loop cycle, verify COVERAGE.md rows for
+detection/response/tracking still map to live modules and current cadences.

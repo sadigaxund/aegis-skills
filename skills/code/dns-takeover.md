@@ -356,6 +356,8 @@ example.com.        IN CAA 0 iodef "mailto:security@example.com"
 legacy-parked.example.com. IN CAA 0 issue ";"
 ```
 
+**DNSSEC on your own zones** (adjacent hardening, not takeover prevention): sign authoritative zones (`algorithm 13` ECDSAP256SHA256 is the common modern choice) and publish DS records at the registrar. DNSSEC protects resolution integrity against cache poisoning on paths you serve; it does nothing against dangling CNAMEs, so treat it as defense-in-depth alongside — never instead of — the inventory and reclaim discipline above.
+
 ### Monitoring Sweep (read-only concept + cron sketch)
 
 Run an hourly read-only sweep that re-resolves every inventoried hostname, fingerprints responses against the marker table, writes a report, and diffs against last sweep state:

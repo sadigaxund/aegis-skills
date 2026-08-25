@@ -1,7 +1,7 @@
 # Aegis Skills
 
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![Check modules](https://img.shields.io/badge/check_modules-39-2ea44f)](#the-check-modules)
+[![Check modules](https://img.shields.io/badge/check_modules-40-2ea44f)](#the-check-modules)
 [![Orchestrators](https://img.shields.io/badge/orchestrators-3-blueviolet)](#whats-inside)
 [![Runtime](https://img.shields.io/badge/runtime-bash_%2B_grep-lightgrey)](#requirements)
 
@@ -23,20 +23,22 @@ standard Unix tooling.
 
 ## What's inside
 
-Three orchestrators divide the work. Each is an entry point you hand to an agent.
+Three orchestrators divide the work. Each is an entry point you hand to an agent, and each
+owns one folder under `skills/`.
 
 | Orchestrator | Question it answers | Modules |
 |---|---|---|
-| [SKILL.md](SKILL.md) | What bugs are in the software? | 23 code & IaC audits |
-| [SKILL-SERVER.md](SKILL-SERVER.md) | How exposed are my machines? | 12 Linux host audits |
-| [SKILL-OPERATIONS.md](SKILL-OPERATIONS.md) | Are we watching, responding, improving? | 4 operations-loop modules |
+| [SKILL-CODE.md](SKILL-CODE.md) | What bugs are in the software? | `skills/code/` (24 modules) |
+| [SKILL-SERVER.md](SKILL-SERVER.md) | How exposed are my machines? | `skills/server/` (12 modules) |
+| [SKILL-OPERATIONS.md](SKILL-OPERATIONS.md) | Are we watching, responding, improving? | `skills/operations/` (4 modules) |
 
 Supporting files: `templates/` (mandatory report formats), `tools/` (13 read-only evidence
-sweep scripts plus a runner), and [GUIDE.md](GUIDE.md) (human-readable concept guide).
+sweep scripts plus a runner), [GUIDE.md](GUIDE.md) (human-readable concept guide), and
+[COVERAGE.md](COVERAGE.md) (standards-to-modules completeness matrix).
 
 ## The check modules
 
-### Code and application audits (`checks/`, owned by SKILL.md)
+### Code and application audits (`skills/code/`, owned by SKILL-CODE.md)
 
 **Input handling and code execution**
 
@@ -95,8 +97,9 @@ sweep scripts plus a runner), and [GUIDE.md](GUIDE.md) (human-readable concept g
 | LLM | llm-ai.md | Prompt injection, tool-use abuse, RAG leakage, model cost abuse |
 | DNS | dns-takeover.md | Subdomain takeover, dangling records |
 | GAME | gaming-security.md | Client-trust violations, economy dupes, receipt fraud, leaderboard forgery |
+| BAAS | baas-platform.md | Supabase RLS gaps, Firebase rules, preview-deployment exposure, payment-webhook integrity, CMS hygiene |
 
-### Linux server audits (`checks/server/`, owned by SKILL-SERVER.md)
+### Linux server audits (`skills/server/`, owned by SKILL-SERVER.md)
 
 | Slug | Module | Covers |
 |---|---|---|
@@ -124,7 +127,7 @@ sweep scripts plus a runner), and [GUIDE.md](GUIDE.md) (human-readable concept g
 
 Every module follows the same 12-section contract, from ripgrep-ready signatures through
 curl-based reproduction steps to remediation diffs and fix-verification plans. See
-[SKILL.md §Registry](SKILL.md) for trigger conditions and priorities, and
+[SKILL-CODE.md §Registry](SKILL-CODE.md) for trigger conditions and priorities, and
 [GUIDE.md](GUIDE.md) for plain-language explanations of each class.
 
 ## Quick start
@@ -134,7 +137,7 @@ curl-based reproduction steps to remediation diffs and fix-verification plans. S
 Point your agent at this repository with a prompt like:
 
 ```text
-Read SKILL.md fully, then execute a full security audit of <path-to-target-repo>.
+Read SKILL-CODE.md fully, then execute a full security audit of <path-to-target-repo>.
 Authorization: I own this code. Static analysis only.
 ```
 
@@ -183,7 +186,7 @@ agent. `<timestamp>` is the folder name step 2 printed, like `sweep-evidence-202
 rsync -a user@host:/opt/aegis-skills/sweep-evidence-<timestamp>/ ./evidence/
 ```
 
-Give each report to the agent together with its matching `checks/server/<module>.md`.
+Give each report to the agent together with its matching `skills/server/<module>.md`.
 
 ## What you get per audit
 
@@ -231,7 +234,7 @@ time. Current: v1.0.0.
 ## Extending
 
 New modules follow the 12-section skeleton and register in their orchestrator's registry;
-see Appendix B in `SKILL.md` for the authoring spec. New sweeps must satisfy
+see Appendix B in `SKILL-CODE.md` for the authoring spec. New sweeps must satisfy
 `tools/README.md`. Design rule for additions: a basic agent following the letter of the
 module must still produce a correct result, so prefer literal commands over prose and
 downgrade uncertainty instead of guessing.

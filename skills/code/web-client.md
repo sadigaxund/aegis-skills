@@ -21,6 +21,7 @@ owasp: A03:2021 – Injection
 - DOM clobbering gadgets and client-side open redirect via location manipulation (server-side redirects belong to the SSRF module).
 - Client-side template injection: AngularJS `$compile`, Vue runtime templates, Handlebars/Mustache/lodash compile-from-string.
 - Post-authentication stored dangers: admin-panel field rendering, filename rendering (SVG upload payload delivery is covered by the FILE module).
+- Subresource Integrity: every `<script src>`/`<link rel=stylesheet>` pointing at third-party origins carries `integrity="sha384-..."` + `crossorigin`; a compromised CDN must not become script execution. Missing SRI on vendor assets = flag (first-party same-origin assets exempt).
 
 ### Out of Scope / Cross-references
 | Topic | Owner module |

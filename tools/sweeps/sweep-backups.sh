@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-backups.sh — evidence sweep for checks/server/backup-dr.md (DRB)
+# sweep-backups.sh — evidence sweep for skills/server/backup-dr.md (DRB)
 # STRICTLY READ-ONLY, fully OFFLINE. Observes jobs/scripts/archives only —
 # never runs, triggers, dry-runs, restores or mutates any backup mechanism.
 set -u

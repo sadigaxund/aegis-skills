@@ -3,7 +3,7 @@
 # Contract: sweeps are STRICTLY READ-ONLY evidence collectors. No mutations,
 # no installs, no restarts, no network probes unless the script says so inline.
 # They exist so auditing agents gather IDENTICAL evidence every run and only
-# spend judgment on interpretation (see checks/server/*.md for interpretation).
+# spend judgment on interpretation (see skills/server/*.md for interpretation).
 # shellcheck shell=bash
 
 SWEEP_SLUG="UNSET"
@@ -50,6 +50,6 @@ rootwarn(){ [ "$(id -u)" = "0" ] || note "[ROOT] full fidelity requires root —
 
 finish_sweep(){
   printf '\n# END SWEEP=%s\n' "$SWEEP_SLUG"
-  printf '# Interpretation: load the matching checks/<module>.md — verdicts live there,\n'
+  printf '# Interpretation: load the matching skills/code/<module>.md — verdicts live there,\n'
   printf '# not here. This script only guarantees identical evidence per run.\n'
 }

@@ -17,7 +17,7 @@ Audit one host's database estate (or its config-as-code) across four engines, in
 5. **MongoDB pass** — authorization enabled, bindIp scope, SCRAM mechanism posture, localhost-exception closure, at-rest encryption honesty (Enterprise feature vs disk-level alternative).
 6. **Backup-adjacent surface & app-side connection hygiene** — dump-job credentials on disk (pointers), least-privilege app users, per-service user separation, connection-string secret location.
 
-Out of scope (cross-references): firewall ruleset design and reachability proofs → FW; TLS termination/proxy edge → TLS; systemd sandboxing and container runtime → SANDBOX; secret contents in env files and key perms → HSECRET; audit rules/log shipping → LOGMON; application-level authorization logic such as row-level-security policy design → AUTHZ (checks/authz-access-control.md); token lifecycle → TOK; backup job design and restore testing → BACKUP-DR (checks/server/backup-dr.md when present).
+Out of scope (cross-references): firewall ruleset design and reachability proofs → FW; TLS termination/proxy edge → TLS; systemd sandboxing and container runtime → SANDBOX; secret contents in env files and key perms → HSECRET; audit rules/log shipping → LOGMON; application-level authorization logic such as row-level-security policy design → AUTHZ (skills/code/authz-access-control.md); token lifecycle → TOK; backup job design and restore testing → BACKUP-DR (skills/server/backup-dr.md when present).
 
 Operating rules:
 

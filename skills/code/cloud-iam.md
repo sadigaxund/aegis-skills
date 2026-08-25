@@ -159,6 +159,12 @@ Work the checklist in order; AWS items A-G are the priority sweep, H-I the secon
 39. Service-principal/SaaS consent abuse surface: inventory OAuth grants and service principals holding broad delegated permissions or tenant-wide admin consent, with who consented and when.
 40. Serverless execution-role least-privilege: per-function execution policies (Lambda-style) — wildcard `Action`/`Resource` on a shared execution role is the finding shape.
 
+### N. Account separation, IaC scanning & provider detection
+
+41. Production accounts/subscriptions/projects separated from dev/staging with distinct credentials and limited cross-account paths; a single identity that can touch both prod and CI is the escalation highway.
+42. IaC scanned by policy-as-code tooling before apply: Checkov or tfsec (now part of Trivy) for Terraform, OPA/Conftest for structured config — presence check plus whether findings actually gate anything; scanners that run but never block are dashboards, not controls.
+43. Provider-native threat detection enabled and routing somewhere watched: GuardDuty (AWS), Defender for Cloud / Microsoft Defender for Cloud plans (Azure), Security Command Center (GCP). Enabled-but-unread counts as PARTIAL.
+
 ## Where To Look
 
 | Artifact | Path hints | Why it matters |

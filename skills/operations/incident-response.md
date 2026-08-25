@@ -21,7 +21,7 @@ This module deviates from the red-team template on purpose. It is not vulnerabil
 | Exploitation & Reproduction | Tabletop exercise procedures (simulated, explicitly non-destructive) |
 | Severity Assessment | Incident-severity matrix SEV1–SEV4, NOT vulnerability CVSS |
 
-Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. Cross-references assume sibling modules by slug: TOK (`checks/server/api-token-security.md`), SUPPLY (`checks/supply-chain.md`), DR (`checks/server/backup-dr.md`), LOGMON (`checks/server/logging-monitoring.md`), DETECT (`checks/blue-team-detection.md`). The host-forensics deep-dive (DFIR) is a planned companion; until it exists in your copy, treat this module's evidence-preservation steps plus the sweep scripts under `tools/sweeps/` as authoritative for triage-time forensics.
+Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. Cross-references assume sibling modules by slug: TOK (`skills/server/api-token-security.md`), SUPPLY (`skills/code/supply-chain.md`), DR (`skills/server/backup-dr.md`), LOGMON (`skills/server/logging-monitoring.md`), DETECT (`skills/operations/blue-team-detection.md`). The host-forensics deep-dive (DFIR) is a planned companion; until it exists in your copy, treat this module's evidence-preservation steps plus the sweep scripts under `tools/sweeps/` as authoritative for triage-time forensics.
 
 ## Scope & Objectives
 
@@ -123,6 +123,13 @@ Cross-ref DR module's verification results: recent restore test date, RPO/RTO nu
 ### R8. Pre-staged tooling and inventories (feeds Phase 1)
 
 Asset-inventory currency (see Preparation), sweep scripts runnable (`tools/run-all-sweeps.sh` executes clean on a representative host), severity/paging matrix adopted from DETECT, out-of-band admin path (R3) linked into the playbook itself.
+
+### R9. External reporting channel exists
+
+A `security.txt` at `/.well-known/security.txt` (Contact, Expires, Policy fields) and a
+stated coordinated-disclosure policy somewhere linkable, so researchers report instead of
+posting. Missing channel = findings arrive via public posts. Template fields: Contact:
+mailto:, Expires: <date ≤12mo>, Policy: <link>.
 
 ## Where To Look
 
@@ -584,6 +591,6 @@ Audit-time traps that make readiness LOOK present:
 - NIST Cybersecurity Framework — Respond/Recover function mapping stated in frontmatter: https://www.nist.gov/cyberframework
 - SANS *Incident Handler's Handbook* (SANS IR handbook) — phase checklists and handler discipline: https://www.sans.org/white-papers/incident-handlers-handbook/
 - CISA #StopRansomware Guide / ransomware checklist — scenario-specific response checklist pattern (containment-before-recovery ordering): https://www.cisa.gov/stopransomware
-- Sibling modules: TOK `checks/server/api-token-security.md` (rotation runbook), SUPPLY `checks/supply-chain.md` (dependency incidents), DR `checks/server/backup-dr.md` (restore proof), LOGMON `checks/server/logging-monitoring.md` (evidence sources), DETECT `checks/blue-team-detection.md` (alert-to-page wiring), DB `checks/server/db-server-hardening.md` (Postgres logging), HSECRET `checks/server/host-secrets.md` (rotation inventories), SECRETS `checks/secrets-data-exposure.md` (leak hunting)
+- Sibling modules: TOK `skills/server/api-token-security.md` (rotation runbook), SUPPLY `skills/code/supply-chain.md` (dependency incidents), DR `skills/server/backup-dr.md` (restore proof), LOGMON `skills/server/logging-monitoring.md` (evidence sources), DETECT `skills/operations/blue-team-detection.md` (alert-to-page wiring), DB `skills/server/db-server-hardening.md` (Postgres logging), HSECRET `skills/server/host-secrets.md` (rotation inventories), SECRETS `skills/code/secrets-data-exposure.md` (leak hunting)
 - Tooling: `tools/run-all-sweeps.sh`, `tools/sweeps/` — validation sweeps reused as triage collectors and recovery gates
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-cloudflared.sh — evidence sweep for checks/server/cloudflared-tunnel.md (TNL)
+# sweep-cloudflared.sh — evidence sweep for skills/server/cloudflared-tunnel.md (TNL)
 # STRICTLY READ-ONLY and fully OFFLINE: filesystem + systemd introspection only,
 # zero network actions anywhere in this sweep. Tunnel tokens are live secrets:
 # every unit/config surface prints through redact() — raw tokens never appear.
