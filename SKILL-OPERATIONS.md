@@ -39,14 +39,14 @@ redaction, fixed vocabulary) plus two operations-specific ones:
 
 | Slug | Module | Role in the loop |
 |---|---|---|
-| DETECT | skills/operations/blue-team-detection.md | Detection coverage per vulnerability class; structured event logging; alert thresholds; purple-team replay validation |
-| IR | skills/operations/incident-response.md | Lifecycle playbooks: readiness audit + containment scenarios keyed to finding classes |
-| DFIR | skills/operations/dfir-triage.md | First-60–120-min compromised-host triage; volatile capture; rebuild-vs-investigate frame |
-| VULN | skills/operations/vuln-mgmt-process.md | The tracking loop: prioritize, SLAs, exceptions, metrics, cadences |
+| DETECT | skills/operations/blue-team-detection/SKILL.md | Detection coverage per vulnerability class; structured event logging; alert thresholds; purple-team replay validation |
+| IR | skills/operations/incident-response/SKILL.md | Lifecycle playbooks: readiness audit + containment scenarios keyed to finding classes |
+| DFIR | skills/operations/dfir-triage/SKILL.md | First-60–120-min compromised-host triage; volatile capture; rebuild-vs-investigate frame |
+| VULN | skills/operations/vuln-mgmt-process/SKILL.md | The tracking loop: prioritize, SLAs, exceptions, metrics, cadences |
 
 Shared modules owned by other masters but used here: LOGMON
-(skills/server/logging-monitoring.md — telemetry plumbing when wiring
-detections), DR canaries (skills/server/backup-dr.md §6), SUPPLY scanner
+(skills/server/logging-monitoring/SKILL.md — telemetry plumbing when wiring
+detections), DR canaries (skills/server/backup-dr/SKILL.md §6), SUPPLY scanner
 commands (dependency advisories feed FIND), sweeps toolkit
 (tools/run-all-sweeps.sh — doubles as post-rebuild verification).
 

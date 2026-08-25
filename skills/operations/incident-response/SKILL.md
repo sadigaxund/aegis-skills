@@ -21,7 +21,7 @@ This module deviates from the red-team template on purpose. It is not vulnerabil
 | Exploitation & Reproduction | Tabletop exercise procedures (simulated, explicitly non-destructive) |
 | Severity Assessment | Incident-severity matrix SEV1–SEV4, NOT vulnerability CVSS |
 
-Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. Cross-references assume sibling modules by slug: TOK (`skills/server/api-token-security.md`), SUPPLY (`skills/code/supply-chain.md`), DR (`skills/server/backup-dr.md`), LOGMON (`skills/server/logging-monitoring.md`), DETECT (`skills/operations/blue-team-detection.md`). The host-forensics deep-dive (DFIR) is a planned companion; until it exists in your copy, treat this module's evidence-preservation steps plus the sweep scripts under `tools/sweeps/` as authoritative for triage-time forensics.
+Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. Cross-references assume sibling modules by slug: TOK (`skills/server/api-token-security/SKILL.md`), SUPPLY (`skills/code/supply-chain/SKILL.md`), DR (`skills/server/backup-dr/SKILL.md`), LOGMON (`skills/server/logging-monitoring/SKILL.md`), DETECT (`skills/operations/blue-team-detection/SKILL.md`). The host-forensics deep-dive (DFIR) is a planned companion; until it exists in your copy, treat this module's evidence-preservation steps plus the sweep scripts under `tools/sweeps/` as authoritative for triage-time forensics.
 
 ## Scope & Objectives
 
@@ -606,6 +606,6 @@ Audit-time traps that make readiness LOOK present:
 - NIST Cybersecurity Framework — Respond/Recover function mapping stated in frontmatter: https://www.nist.gov/cyberframework
 - SANS *Incident Handler's Handbook* (SANS IR handbook) — phase checklists and handler discipline: https://www.sans.org/white-papers/incident-handlers-handbook/
 - CISA #StopRansomware Guide / ransomware checklist — scenario-specific response checklist pattern (containment-before-recovery ordering): https://www.cisa.gov/stopransomware
-- Sibling modules: TOK `skills/server/api-token-security.md` (rotation runbook), SUPPLY `skills/code/supply-chain.md` (dependency incidents), DR `skills/server/backup-dr.md` (restore proof), LOGMON `skills/server/logging-monitoring.md` (evidence sources), DETECT `skills/operations/blue-team-detection.md` (alert-to-page wiring), DB `skills/server/db-server-hardening.md` (Postgres logging), HSECRET `skills/server/host-secrets.md` (rotation inventories), SECRETS `skills/code/secrets-data-exposure.md` (leak hunting)
+- Sibling modules: TOK `skills/server/api-token-security/SKILL.md` (rotation runbook), SUPPLY `skills/code/supply-chain/SKILL.md` (dependency incidents), DR `skills/server/backup-dr/SKILL.md` (restore proof), LOGMON `skills/server/logging-monitoring/SKILL.md` (evidence sources), DETECT `skills/operations/blue-team-detection/SKILL.md` (alert-to-page wiring), DB `skills/server/db-server-hardening/SKILL.md` (Postgres logging), HSECRET `skills/server/host-secrets/SKILL.md` (rotation inventories), SECRETS `skills/code/secrets-data-exposure/SKILL.md` (leak hunting)
 - Tooling: `tools/run-all-sweeps.sh`, `tools/sweeps/` — validation sweeps reused as triage collectors and recovery gates
 

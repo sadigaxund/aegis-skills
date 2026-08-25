@@ -36,6 +36,20 @@ Supporting files: `templates/` (mandatory report formats), `tools/` (13 read-onl
 sweep scripts plus a runner), [GUIDE.md](GUIDE.md) (human-readable concept guide), and
 [COVERAGE.md](COVERAGE.md) (standards-to-modules completeness matrix).
 
+### Install as agent skills
+
+Every module follows the open [agentskills.io](https://agentskills.io) format
+(`<name>/SKILL.md`), so the kit installs directly into Claude Code, OpenCode, Cursor,
+Codex, Windsurf and 40+ compatible agents:
+
+```bash
+npx skills add sadigaxund/aegis-skills                        # all 40 modules
+npx skills add sadigaxund/aegis-skills -s injection -s AUTHN  # pick modules
+```
+
+The three orchestrator files stay at the repository root as entry-point documents; read
+them in the agent chat instead of installing.
+
 ## The check modules
 
 ### Code and application audits (`skills/code/`, owned by SKILL-CODE.md)
@@ -186,7 +200,7 @@ agent. `<timestamp>` is the folder name step 2 printed, like `sweep-evidence-202
 rsync -a user@host:/opt/aegis-skills/sweep-evidence-<timestamp>/ ./evidence/
 ```
 
-Give each report to the agent together with its matching `skills/server/<module>.md`.
+Give each report to the agent together with its matching `skills/server/<name>/SKILL.md`.
 
 ## What you get per audit
 
@@ -229,7 +243,7 @@ written rubrics with CVSS vectors.
 Both orchestrators carry a `version:` frontmatter field. Bump the minor version when
 adding or changing modules, the patch version for copy edits, and tag the commit
 (`vX.Y.Z`). Audit runs record the version they executed, so posture can be diffed over
-time. Current: v1.0.0.
+time. Current: v1.2.0.
 
 ## Extending
 

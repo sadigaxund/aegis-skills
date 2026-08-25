@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-k8s.sh — evidence sweep for skills/server/kubernetes-cluster.md (K8S)
+# sweep-k8s.sh — evidence sweep for skills/server/kubernetes-cluster/SKILL.md (K8S)
 # STRICTLY NON-MUTATING: every kubectl call is a read (get/config/auth can-i)
 # and auto-skips when kubectl is absent or RBAC denies it. No cluster writes.
 set -u

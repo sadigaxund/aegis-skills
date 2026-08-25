@@ -50,6 +50,6 @@ rootwarn(){ [ "$(id -u)" = "0" ] || note "[ROOT] full fidelity requires root —
 
 finish_sweep(){
   printf '\n# END SWEEP=%s\n' "$SWEEP_SLUG"
-  printf '# Interpretation: load the matching skills/code/<module>.md — verdicts live there,\n'
-  printf '# not here. This script only guarantees identical evidence per run.\n'
+  printf '# Interpretation: load the matching skills/<domain>/<name>/SKILL.md — verdicts live\n'
+  printf '# there, not here. This script only guarantees identical evidence per run.\n'
 }

@@ -123,60 +123,60 @@ and fix-verification plans.
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| INJ | skills/code/injection.md | SQLi, NoSQLi, command injection, SSTI, eval-family, LDAP/XPath, JNDI/log4shell-style lookups, CRLF/header injection | Any DB, shell-out, template rendering, or dynamic evaluation exists | P1 |
-| FILE | skills/code/file-handling.md | Path traversal, unsafe upload/download, LFI/RFI, archive extraction (zip-slip), symlink attacks, file parsing | Any file I/O touching user-controlled names/content | P2 |
-| DESER | skills/code/deserialization.md | Unsafe deserialization (pickle/Java/.NET/YAML), XXE, prototype pollution, object injection | Any deserialization of untrusted data, XML processing, deep-merge APIs | P2 |
-| MEM | skills/code/memory-safety.md | Buffer overflows, UAF, integer overflow/truncation, format strings, uninitialized memory, Rust unsafe blocks; leak & failure-pattern catalog | C/C++/Rust (unsafe) code present | P1 if network-reachable native code, else P3 |
+| INJ | skills/code/injection/SKILL.md | SQLi, NoSQLi, command injection, SSTI, eval-family, LDAP/XPath, JNDI/log4shell-style lookups, CRLF/header injection | Any DB, shell-out, template rendering, or dynamic evaluation exists | P1 |
+| FILE | skills/code/file-handling/SKILL.md | Path traversal, unsafe upload/download, LFI/RFI, archive extraction (zip-slip), symlink attacks, file parsing | Any file I/O touching user-controlled names/content | P2 |
+| DESER | skills/code/deserialization/SKILL.md | Unsafe deserialization (pickle/Java/.NET/YAML), XXE, prototype pollution, object injection | Any deserialization of untrusted data, XML processing, deep-merge APIs | P2 |
+| MEM | skills/code/memory-safety/SKILL.md | Buffer overflows, UAF, integer overflow/truncation, format strings, uninitialized memory, Rust unsafe blocks; leak & failure-pattern catalog | C/C++/Rust (unsafe) code present | P1 if network-reachable native code, else P3 |
 
 ### Domain: identity & access
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| AUTHN | skills/code/authn-session.md | Login flaws, credential handling, session management, JWT, MFA, password reset, account enumeration | Any authentication present | P1 |
-| AUTHZ | skills/code/authz-access-control.md | IDOR/BOLA, missing function-level checks, privilege escalation, tenant isolation, admin surface exposure | Multiple roles/resources/tenants exist | P1 |
-| SSO | skills/code/oauth-sso.md | OAuth2/OIDC flows, PKCE, redirect_uri validation, id_token/JWT validation, SAML signature wrapping, session bridging/account linking | Any federated login/SSO integration present | P1 |
+| AUTHN | skills/code/authn-session/SKILL.md | Login flaws, credential handling, session management, JWT, MFA, password reset, account enumeration | Any authentication present | P1 |
+| AUTHZ | skills/code/authz-access-control/SKILL.md | IDOR/BOLA, missing function-level checks, privilege escalation, tenant isolation, admin surface exposure | Multiple roles/resources/tenants exist | P1 |
+| SSO | skills/code/oauth-sso/SKILL.md | OAuth2/OIDC flows, PKCE, redirect_uri validation, id_token/JWT validation, SAML signature wrapping, session bridging/account linking | Any federated login/SSO integration present | P1 |
 
 ### Domain: web surface & protocols
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| WEB | skills/code/web-client.md | XSS (reflected/stored/DOM), CSRF, clickjacking, postMessage, client-side template injection, browser storage misuse | Any HTML/JS rendered, SPA, or browser-facing responses | P1 |
-| SSRF | skills/code/ssrf-url-security.md | SSRF, open redirects, URL validation failures, cloud metadata exposure, webhook abuse | App fetches user-influenced URLs or redirects based on input | P1 |
-| PROTO | skills/code/http-protocol.md | Request smuggling (CL.TE/TE.CL/H2), host-header attacks, cache poisoning/deception, HTTP parameter pollution | Proxied internet-facing app; front-end topology artifacts in repo | P1 |
-| API | skills/code/api-security.md | Mass assignment, rate limiting absence, GraphQL/gRPC specifics, schema/docs exposure, versioning & shadow endpoints | HTTP API surface exists (REST/GraphQL/gRPC) | P2 |
+| WEB | skills/code/web-client/SKILL.md | XSS (reflected/stored/DOM), CSRF, clickjacking, postMessage, client-side template injection, browser storage misuse | Any HTML/JS rendered, SPA, or browser-facing responses | P1 |
+| SSRF | skills/code/ssrf-url-security/SKILL.md | SSRF, open redirects, URL validation failures, cloud metadata exposure, webhook abuse | App fetches user-influenced URLs or redirects based on input | P1 |
+| PROTO | skills/code/http-protocol/SKILL.md | Request smuggling (CL.TE/TE.CL/H2), host-header attacks, cache poisoning/deception, HTTP parameter pollution | Proxied internet-facing app; front-end topology artifacts in repo | P1 |
+| API | skills/code/api-security/SKILL.md | Mass assignment, rate limiting absence, GraphQL/gRPC specifics, schema/docs exposure, versioning & shadow endpoints | HTTP API surface exists (REST/GraphQL/gRPC) | P2 |
 
 ### Domain: data, secrets & crypto
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| SECRETS | skills/code/secrets-data-exposure.md | Hardcoded credentials, secret sprawl, sensitive data in logs/errors/responses/repos, PII mishandling | Always applicable | P1 |
-| CRYPTO | skills/code/crypto.md | Weak algorithms/modes, IV/nonce reuse, hardcoded keys, insecure randomness, password hashing failures, certificate validation bypass | Any crypto, hashing, token generation, TLS usage | P2 (P1 if payments/auth tokens) |
-| MAIL | skills/code/email-sms.md | SPF/DKIM/DMARC posture, email header injection, verification/magic-link flows, OTP design, SMS pumping fraud | App sends email/SMS or has OTP/verification flows | P2 |
+| SECRETS | skills/code/secrets-data-exposure/SKILL.md | Hardcoded credentials, secret sprawl, sensitive data in logs/errors/responses/repos, PII mishandling | Always applicable | P1 |
+| CRYPTO | skills/code/crypto/SKILL.md | Weak algorithms/modes, IV/nonce reuse, hardcoded keys, insecure randomness, password hashing failures, certificate validation bypass | Any crypto, hashing, token generation, TLS usage | P2 (P1 if payments/auth tokens) |
+| MAIL | skills/code/email-sms/SKILL.md | SPF/DKIM/DMARC posture, email header injection, verification/magic-link flows, OTP design, SMS pumping fraud | App sends email/SMS or has OTP/verification flows | P2 |
 
 ### Domain: logic, availability & platform
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| LOGIC | skills/code/business-logic-races.md | Workflow bypass, price/quantity tampering, TOCTOU, race conditions, idempotency gaps, coupon/referral abuse | Money, quotas, counters, multi-step flows, or state mutations exist | P2 |
-| DOS | skills/code/denial-of-service.md | ReDoS, unbounded allocation/loops, decompression bombs, algorithmic complexity attacks, expensive-query amplification | Public input parsed with regex/compression/pagination | P2 |
-| CONFIG | skills/code/configuration-hardening.md | Debug/prod misconfig, CORS, security headers, cookie flags, TLS settings, default creds, exposed admin/debug endpoints, container/k8s/IaC hardening | Always applicable | P2 |
+| LOGIC | skills/code/business-logic-races/SKILL.md | Workflow bypass, price/quantity tampering, TOCTOU, race conditions, idempotency gaps, coupon/referral abuse | Money, quotas, counters, multi-step flows, or state mutations exist | P2 |
+| DOS | skills/code/denial-of-service/SKILL.md | ReDoS, unbounded allocation/loops, decompression bombs, algorithmic complexity attacks, expensive-query amplification | Public input parsed with regex/compression/pagination | P2 |
+| CONFIG | skills/code/configuration-hardening/SKILL.md | Debug/prod misconfig, CORS, security headers, cookie flags, TLS settings, default creds, exposed admin/debug endpoints, container/k8s/IaC hardening | Always applicable | P2 |
 
 ### Domain: supply chain & integrity
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| SUPPLY | skills/code/supply-chain.md | Vulnerable/frozen dependencies, typosquatting risk, install scripts, CI/CD pipeline flaws, artifact/base-image integrity | Dependency manifests or CI config exist | P3 |
-| MALCODE | skills/code/malicious-code.md | Deliberate-malice detection: obfuscation chains, webhook/beacon exfil indicators, hidden auth-bypass routes, install-script/build.rs implants, IDE/CI-task backdoors, vendored-binary triage, verdict discipline (Benign/Suspicious/Likely-malicious) | Always applicable to repos with dependencies; mandatory after supply-chain suspicion | P2 (P1 when compromise suspected) |
+| SUPPLY | skills/code/supply-chain/SKILL.md | Vulnerable/frozen dependencies, typosquatting risk, install scripts, CI/CD pipeline flaws, artifact/base-image integrity | Dependency manifests or CI config exist | P3 |
+| MALCODE | skills/code/malicious-code/SKILL.md | Deliberate-malice detection: obfuscation chains, webhook/beacon exfil indicators, hidden auth-bypass routes, install-script/build.rs implants, IDE/CI-task backdoors, vendored-binary triage, verdict discipline (Benign/Suspicious/Likely-malicious) | Always applicable to repos with dependencies; mandatory after supply-chain suspicion | P2 (P1 when compromise suspected) |
 
 ### Domain: specialized surfaces
 
 | Slug | Module | Covers | Load when (trigger) | Default priority |
 |---|---|---|---|---|
-| IAM | skills/code/cloud-iam.md | AWS/GCP/Azure IAM from IaC: wildcard policies, trust policies, PassRole chains, public buckets, encryption flags, metadata enforcement, CI OIDC trust | Terraform/CloudFormation/CDK or cloud SDK config in repo | P1 when cloud-hosted |
-| LLM | skills/code/llm-ai.md | Prompt injection (direct/indirect), insecure output handling, excessive agency/tool abuse, RAG tenant leakage, model cost abuse, disclosure | Any LLM/AI feature in codebase | P1 when AI features present |
-| DNS | skills/code/dns-takeover.md | Subdomain takeover, dangling records, wildcard exposure, claimed-domain inventory, CAA hardening | Public-facing domains managed via repo/IaC | P2 |
-| GAME | skills/code/gaming-security.md | Server-authority violations, movement/action validation, economy dupes & IAP receipt fraud, leaderboard integrity, anti-cheat telemetry design, UGC sandboxing, client-secret exposure | Game/multiplayer backends present | P1 when game services exist |
-| BAAS | skills/code/baas-platform.md | Supabase RLS gaps, Firebase rules, connection-string DB platforms, Vercel/Netlify preview exposure, payment-webhook integrity, CMS hygiene | Supabase/Firebase/Neon/Railway/Vercel/Netlify/CMS artifacts in repo | P1 when managed platforms present |
+| IAM | skills/code/cloud-iam/SKILL.md | AWS/GCP/Azure IAM from IaC: wildcard policies, trust policies, PassRole chains, public buckets, encryption flags, metadata enforcement, CI OIDC trust | Terraform/CloudFormation/CDK or cloud SDK config in repo | P1 when cloud-hosted |
+| LLM | skills/code/llm-ai/SKILL.md | Prompt injection (direct/indirect), insecure output handling, excessive agency/tool abuse, RAG tenant leakage, model cost abuse, disclosure | Any LLM/AI feature in codebase | P1 when AI features present |
+| DNS | skills/code/dns-takeover/SKILL.md | Subdomain takeover, dangling records, wildcard exposure, claimed-domain inventory, CAA hardening | Public-facing domains managed via repo/IaC | P2 |
+| GAME | skills/code/gaming-security/SKILL.md | Server-authority violations, movement/action validation, economy dupes & IAP receipt fraud, leaderboard integrity, anti-cheat telemetry design, UGC sandboxing, client-secret exposure | Game/multiplayer backends present | P1 when game services exist |
+| BAAS | skills/code/baas-platform/SKILL.md | Supabase RLS gaps, Firebase rules, connection-string DB platforms, Vercel/Netlify preview exposure, payment-webhook integrity, CMS hygiene | Supabase/Firebase/Neon/Railway/Vercel/Netlify/CMS artifacts in repo | P1 when managed platforms present |
 
 > **Moved to `SKILL-OPERATIONS.md`:** the reactive/continuous modules DETECT,
 > IR, DFIR, VULN. They are not audits — they own detection engineering,

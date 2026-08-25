@@ -75,20 +75,20 @@ Finding IDs use slug prefix `SRV-<MODULE>` e.g. `SRV-FW-001`, `SRV-TLS-003`.
 
 | Slug | Module | Covers | Default priority |
 |---|---|---|---|
-| BASE | skills/server/linux-baseline.md | Users/sudo/PAM, sshd hardening, sysctl network stack, SUID/perms audit, time sync | P1 |
-| FW | skills/server/firewall-edge.md | Default-deny firewall incl. egress, IPv6 parity, fail2ban, binding/exposure audit, admin-plane isolation | P1 |
-| TLS | skills/server/tls-proxy.md | Reverse proxy + TLS termination hardening, HSTS, limits/timeouts, admin-path shielding | P1 |
-| TOK | skills/server/api-token-security.md | API-token auth lifecycle: design, hashed storage, transport, scoping, rotation, revocation, rate limits, leak runbook | P1 when token auth present |
-| SANDBOX | skills/server/service-sandboxing.md | systemd hardening directives, seccomp/AppArmor, non-root services, docker.sock risks | P2 |
-| PATCH | skills/server/updates-patching.md | Unattended upgrades, EOL detection, package/service minimization | P2 |
-| LOGMON | skills/server/logging-monitoring.md | auditd rules, log shipping/integrity, integrity monitoring, alert thresholds, triage quickstart | P2 |
-| HSECRET | skills/server/host-secrets.md | Env files, /etc perms, world-readable keys/certs, creds in unit files, backup encryption | P1 |
-| K8S | skills/server/kubernetes-cluster.md | RBAC/escalation primitives, PSA labels, NetworkPolicy posture, securityContext sweeps, NodePort/ingress exposure | P1 when Kubernetes present |
-| DB | skills/server/db-server-hardening.md | PostgreSQL pg_hba/scram/TLS, MySQL auth+FILE-priv, Redis ACL/binding, MongoDB auth, app-user least privilege | P1 when database engines present |
-| TUNNEL | skills/server/cloudflared-tunnel.md | Tunnel token/creds protection, ingress precision, origin double-binding bypass, edge WAF/Access checklist, real-IP trust | P1 when cloudflared present |
-| DR | skills/server/backup-dr.md | Backup inventory gaps, destination tiering 3-2-1-1-0, encryption/key custody, restore drills, RTO/RPO worksheets | P2 |
-| DFIR | skills/operations/dfir-triage.md | First-60–120-minute triage of a suspected-compromised Linux host/K8s node: volatile capture off-host, session forensics, persistence sweep (cron/units/init hooks), webshell & malware hunting, containment gates | Reactive — load during incidents; not part of routine audit flow |
-| IR | skills/operations/incident-response.md | Organization-level IR capability audit: playbooks, roles & on-call, severity/paging matrix, asset-inventory currency, tabletop/drill evidence, recovery gates reusing run-all-sweeps | P3 |
+| BASE | skills/server/linux-baseline/SKILL.md | Users/sudo/PAM, sshd hardening, sysctl network stack, SUID/perms audit, time sync | P1 |
+| FW | skills/server/firewall-edge/SKILL.md | Default-deny firewall incl. egress, IPv6 parity, fail2ban, binding/exposure audit, admin-plane isolation | P1 |
+| TLS | skills/server/tls-proxy/SKILL.md | Reverse proxy + TLS termination hardening, HSTS, limits/timeouts, admin-path shielding | P1 |
+| TOK | skills/server/api-token-security/SKILL.md | API-token auth lifecycle: design, hashed storage, transport, scoping, rotation, revocation, rate limits, leak runbook | P1 when token auth present |
+| SANDBOX | skills/server/service-sandboxing/SKILL.md | systemd hardening directives, seccomp/AppArmor, non-root services, docker.sock risks | P2 |
+| PATCH | skills/server/updates-patching/SKILL.md | Unattended upgrades, EOL detection, package/service minimization | P2 |
+| LOGMON | skills/server/logging-monitoring/SKILL.md | auditd rules, log shipping/integrity, integrity monitoring, alert thresholds, triage quickstart | P2 |
+| HSECRET | skills/server/host-secrets/SKILL.md | Env files, /etc perms, world-readable keys/certs, creds in unit files, backup encryption | P1 |
+| K8S | skills/server/kubernetes-cluster/SKILL.md | RBAC/escalation primitives, PSA labels, NetworkPolicy posture, securityContext sweeps, NodePort/ingress exposure | P1 when Kubernetes present |
+| DB | skills/server/db-server-hardening/SKILL.md | PostgreSQL pg_hba/scram/TLS, MySQL auth+FILE-priv, Redis ACL/binding, MongoDB auth, app-user least privilege | P1 when database engines present |
+| TUNNEL | skills/server/cloudflared-tunnel/SKILL.md | Tunnel token/creds protection, ingress precision, origin double-binding bypass, edge WAF/Access checklist, real-IP trust | P1 when cloudflared present |
+| DR | skills/server/backup-dr/SKILL.md | Backup inventory gaps, destination tiering 3-2-1-1-0, encryption/key custody, restore drills, RTO/RPO worksheets | P2 |
+| DFIR | skills/operations/dfir-triage/SKILL.md | First-60–120-minute triage of a suspected-compromised Linux host/K8s node: volatile capture off-host, session forensics, persistence sweep (cron/units/init hooks), webshell & malware hunting, containment gates | Reactive — load during incidents; not part of routine audit flow |
+| IR | skills/operations/incident-response/SKILL.md | Organization-level IR capability audit: playbooks, roles & on-call, severity/paging matrix, asset-inventory currency, tabletop/drill evidence, recovery gates reusing run-all-sweeps | P3 |
 
 Skip rules mirror the code skillset: skip only with recorded reason in HOST-PROFILE.md.
 

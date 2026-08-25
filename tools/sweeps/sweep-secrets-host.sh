@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-secrets-host.sh — evidence sweep for skills/server/host-secrets.md (HSEC)
+# sweep-secrets-host.sh — evidence sweep for skills/server/host-secrets/SKILL.md (HSEC)
 # STRICTLY READ-ONLY. Every secret-bearing surface pipes through redact;
 # file CONTENTS of credential stores are never dumped — metadata/perms only.
 set -u

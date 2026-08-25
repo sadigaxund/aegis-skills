@@ -39,9 +39,9 @@ In scope:
 Out of scope (cross-references, no duplication):
 
 - Dynamic execution/detonation of suspects (sandbox selection, network simulation) → dedicated dynamic-analysis category; this module stops at quarantine hand-off.
-- Dependency version/vulnerability hygiene, lockfile-drift mechanics, registry-confusion preconditions, CI workflow-injection mechanics → `skills/code/supply-chain.md` (SUPPLY). Where this module says "review the postinstall scripts of ALL deps," SUPPLY carries the inventory command.
+- Dependency version/vulnerability hygiene, lockfile-drift mechanics, registry-confusion preconditions, CI workflow-injection mechanics → `skills/code/supply-chain/SKILL.md` (SUPPLY). Where this module says "review the postinstall scripts of ALL deps," SUPPLY carries the inventory command.
 - TLS/certificate configuration quality itself → CRYPTO module; this module only flags verification-disabled flags sitting next to suspicious egress.
-- Leaked credentials as such (a harvested key's storage hygiene) → `skills/code/secrets-data-exposure.md`.
+- Leaked credentials as such (a harvested key's storage hygiene) → `skills/code/secrets-data-exposure/SKILL.md`.
 
 Objectives: produce findings with `file:line` evidence; classify each hit Benign-explained / Suspicious-needs-human / Likely-malicious-evidence; preserve any likely-malicious artifact plus hash before removal; never auto-delete.
 
@@ -584,7 +584,7 @@ Scope discipline kills most noise before triage: run source-dir scans against au
 - Sigstore: artifact signing and verification — <https://www.sigstore.dev/>
 - Cargo Book: Build Scripts (audit target, not boilerplate) — <https://doc.rust-lang.org/cargo/reference/build-scripts.html>
 
-Cross-module companions: dependency inventory, lockfile-diff mechanics, workflow injection, provenance verification → `skills/code/supply-chain.md` (SUPPLY); TLS configuration quality → CRYPTO module; leaked-credential storage hygiene → `skills/code/secrets-data-exposure.md`.
+Cross-module companions: dependency inventory, lockfile-diff mechanics, workflow injection, provenance verification → `skills/code/supply-chain/SKILL.md` (SUPPLY); TLS configuration quality → CRYPTO module; leaked-credential storage hygiene → `skills/code/secrets-data-exposure/SKILL.md`.
 
 
 

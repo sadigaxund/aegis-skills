@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-tls-proxy.sh — evidence sweep for skills/server/tls-proxy.md (TLS)
+# sweep-tls-proxy.sh — evidence sweep for skills/server/tls-proxy/SKILL.md (TLS)
 # STRICTLY READ-ONLY.
 # NETWORK SCOPE NOTE — the ONLY network actions in this sweep are LOOPBACK-ONLY:
 #   [TLS-06] openssl s_client probes to 127.0.0.1 on locally-listening 443/8443

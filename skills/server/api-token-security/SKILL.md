@@ -21,7 +21,7 @@ Audit every stage of the token lifecycle for one internet-exposed HTTP API that 
 9. **Logging & monitoring** — safe fields, never-log-full-token rule, anomaly alerting.
 10. **Client hygiene & host sprawl** — distribution guidance, and where tokens hide on the host (bridge to HSECRET).
 
-Out of scope (cross-references): JWT structure, algorithms, `none`/weak-secret validation → AUTHN (`skills/code/authn-session.md`); CSRF consequences of cookie-carried credentials → WEB (`skills/code/web-client.md`); general API abuse, pagination/enumeration, unauthenticated-endpoint hardening → API (`skills/code/api-security.md`); TLS termination and header stripping at the edge → TLS (`skills/server/tls-proxy.md`); secret contents in files/repos → SECRETS (`skills/code/secrets-data-exposure.md`); volumetric thresholds → DoS (`skills/code/denial-of-service.md`). Where this playbook names a logging-monitoring module, apply its alert-routing guidance when that module exists in your copy.
+Out of scope (cross-references): JWT structure, algorithms, `none`/weak-secret validation → AUTHN (`skills/code/authn-session/SKILL.md`); CSRF consequences of cookie-carried credentials → WEB (`skills/code/web-client/SKILL.md`); general API abuse, pagination/enumeration, unauthenticated-endpoint hardening → API (`skills/code/api-security/SKILL.md`); TLS termination and header stripping at the edge → TLS (`skills/server/tls-proxy/SKILL.md`); secret contents in files/repos → SECRETS (`skills/code/secrets-data-exposure/SKILL.md`); volumetric thresholds → DoS (`skills/code/denial-of-service/SKILL.md`). Where this playbook names a logging-monitoring module, apply its alert-routing guidance when that module exists in your copy.
 
 Operating rules:
 
@@ -94,7 +94,7 @@ Required format properties (Low severity when absent, but always reported):
 - Type prefix identifying secret family and environment: `sk_live_`, `pat_`, `ghp_` style. Enables secret-scanning tools, visual triage in logs, and safe prefix logging.
 - Trailing checksum (e.g., 8 chars of `SHA-256(body)` base64url) so mistyped tokens fail locally instead of generating auth traffic and enabling typo-slurping on the wire.
 
-Forbidden bases — flag any token derived from or containing: user IDs, email addresses, timestamps, sequential counters, hostnames/MACs, or `JWT` signed with `none`/weak symmetric secrets (verify the last one in AUTHN, `skills/code/authn-session.md`; from this module treat "JWT accepted as bearer credential" as a pointer finding, not a duplicate audit).
+Forbidden bases — flag any token derived from or containing: user IDs, email addresses, timestamps, sequential counters, hostnames/MACs, or `JWT` signed with `none`/weak symmetric secrets (verify the last one in AUTHN, `skills/code/authn-session/SKILL.md`; from this module treat "JWT accepted as bearer credential" as a pointer finding, not a duplicate audit).
 
 ### 2. Server-Side Storage (the Classic Fatal Flaw)
 
@@ -116,9 +116,9 @@ Verdict rules:
 
 ### 3. Transmission Rules
 
-- TLS-only: the API must refuse token-bearing requests on plain HTTP. Edge evidence cross-refs TLS (`skills/server/tls-proxy.md`); app-side, confirm no code path honors `X-Forwarded-Proto: http` bypasses.
+- TLS-only: the API must refuse token-bearing requests on plain HTTP. Edge evidence cross-refs TLS (`skills/server/tls-proxy/SKILL.md`); app-side, confirm no code path honors `X-Forwarded-Proto: http` bypasses.
 - Carriage: `Authorization: Bearer` header is the default-correct choice (RFC 6750). Custom headers (`X-API-Key`) are acceptable when consistently enforced. **Query-string carriage (`?access_token=`/`?api_key=`) is a High finding**: it lands in access logs, browser history, `Referer` headers on any outbound link, and intermediary devices. If legacy clients force it, demand the log-redaction mitigation in Remediation and a deprecation clock.
-- Cookie carriage: tokens in cookies inherit the browser CSRF model (cross-ref WEB, `skills/code/web-client.md`: SameSite, CSRF tokens, no wildcard-domain cookies). For machine APIs this is usually a design smell; report as Medium with CSRF cross-ref unless browser flows genuinely require it.
+- Cookie carriage: tokens in cookies inherit the browser CSRF model (cross-ref WEB, `skills/code/web-client/SKILL.md`: SameSite, CSRF tokens, no wildcard-domain cookies). For machine APIs this is usually a design smell; report as Medium with CSRF cross-ref unless browser flows genuinely require it.
 
 ### 4. Scoping & Privilege Model
 
@@ -158,7 +158,7 @@ SELECT max(last_used_at) AS stale_active FROM api_tokens WHERE revoked_at IS NUL
 
 - Every authenticated request must be attributable to a key, and every key must have a quota: burst limit (token-bucket, absorbs retries) and sustained limit (requests/minute and/or day). Absence → Medium; absence on write/admin endpoints → High.
 - Semantics: exceed returns `429` with `Retry-After` (seconds) — verify headers in code/docs; silent connection drops or 500s are findings.
-- Unauthenticated endpoints (login, token mint, signup) need their own stricter buckets keyed by IP+identifier, distinct from per-key limits (cross-ref API `skills/code/api-security.md` and DoS `skills/code/denial-of-service.md`).
+- Unauthenticated endpoints (login, token mint, signup) need their own stricter buckets keyed by IP+identifier, distinct from per-key limits (cross-ref API `skills/code/api-security/SKILL.md` and DoS `skills/code/denial-of-service/SKILL.md`).
 - Edge limiting (nginx `limit_req`) may complement but must key on something stable per client — see Remediation for the `$http_authorization` caveat.
 
 ### 8. Key-Enumeration Resistance
@@ -175,7 +175,7 @@ SELECT max(last_used_at) AS stale_active FROM api_tokens WHERE revoked_at IS NUL
 
 ### 10. Client-Side Hygiene for Tokens You Distribute
 
-- Public docs and quickstarts must show environment-variable loading, never inline literals; sample code containing plausible tokens gets flagged even when fake, because users copy it verbatim into repos (cross-ref SECRETS `skills/code/secrets-data-exposure.md`).
+- Public docs and quickstarts must show environment-variable loading, never inline literals; sample code containing plausible tokens gets flagged even when fake, because users copy it verbatim into repos (cross-ref SECRETS `skills/code/secrets-data-exposure/SKILL.md`).
 - Webhook signing secrets get the same lifecycle as tokens: CSPRNG generation, hash-at-rest, prefix identification, rotation with dual acceptance, constant-time HMAC verification. Brief here; depth in SECRETS.
 - Distribution channel: tokens displayed once at creation; support tickets/email containing live tokens = High finding (goes into third-party mail stores).
 
@@ -186,7 +186,7 @@ Tokens you already issued tend to accumulate outside the token service:
 - App config files: `.env`, `application.yml`, `settings.py` constants, JSON configs under `/opt/<app>` — check permissions (`600`, owned by service user) and content.
 - systemd unit files: `Environment=` lines embed secrets in world-readable units; any local user can read them via the unit file itself or `systemctl show <unit> -p Environment` (unit properties are not gated by file DACs for typical installs). `/proc/<pid>/environ` is restricted to the owning user (or root) — so the exposure differs: unit-file `Environment=` leaks to *all* local users; process environ only to same-uid/root. Prefer `EnvironmentFile=` with a `600` root-owned or service-user-owned file, or a secret manager.
 - Shell histories: operators doing `export API_TOKEN=...` leave credentials in `~/.bash_history`; check root and service-user histories during the host sweep.
-- Full depth (dump hunting, CI artifacts, image layers) → HSECRET `skills/code/secrets-data-exposure.md`.
+- Full depth (dump hunting, CI artifacts, image layers) → HSECRET `skills/code/secrets-data-exposure/SKILL.md`.
 
 ## Where To Look
 
@@ -594,8 +594,8 @@ git grep -qIn "timingSafeEqual\|compare_digest" -- server/ src/              # c
 
 - **mTLS certificate auth replacing tokens.** Client certs are a different authenticator model; do not demand token hashing/prefixes. Still verify the analogous lifecycle: a CRL/OCSP path that actually shortens trust on compromise, cert rotation runbook, and CN/SAN mapping to scopes. If CRL/OCSP is unreachable at runtime, that is the real finding.
 - **Internal-only APIs behind VPN/mesh.** Token weaknesses stand, but severity downgrades for exposure-dependent anchors (transport, enumeration, rate limits): document the network boundary as the compensating control, downgrade one level max for storage findings — plaintext stays at least High because insiders and backups exist.
-- **Opaque session cookies misread as API tokens.** Browser session cookies (`connect.sid`, `sessionid`, framework defaults) belong to the web-session model — audit them under AUTHN/WEB (`skills/code/authn-session.md`, `skills/code/web-client.md`), not here. Do not file "token stored plaintext" against a server-side session store keyed by random cookie id.
-- **JWTs mistaken for opaque tokens.** If the "API token" is structurally a JWT (three dot-separated segments), its risks are signature/validation risks audited by AUTHN (`skills/code/authn-session.md`); from this module only carry over the transport/scoping/logging checks.
+- **Opaque session cookies misread as API tokens.** Browser session cookies (`connect.sid`, `sessionid`, framework defaults) belong to the web-session model — audit them under AUTHN/WEB (`skills/code/authn-session/SKILL.md`, `skills/code/web-client/SKILL.md`), not here. Do not file "token stored plaintext" against a server-side session store keyed by random cookie id.
+- **JWTs mistaken for opaque tokens.** If the "API token" is structurally a JWT (three dot-separated segments), its risks are signature/validation risks audited by AUTHN (`skills/code/authn-session/SKILL.md`); from this module only carry over the transport/scoping/logging checks.
 - **Encrypted-at-rest token columns.** Reversible encryption is a mitigation claim, not innocence: verify key custody before accepting a downgrade below High (see Check 2 verdict rules).
 
 ## References
@@ -609,7 +609,7 @@ git grep -qIn "timingSafeEqual\|compare_digest" -- server/ src/              # c
 - CWE-522 Insufficiently Protected Credentials: <https://cwe.mitre.org/data/definitions/522.html>
 - CWE-307 Improper Restriction of Excessive Authentication Attempts: <https://cwe.mitre.org/data/definitions/307.html>
 
-Internal cross-references: JWT/session deep-dive → `skills/code/authn-session.md`; CSRF consequences of cookie-carried credentials → `skills/code/web-client.md`; API-wide abuse controls → `skills/code/api-security.md`; host-side secret sprawl → `skills/code/secrets-data-exposure.md`; edge TLS enforcement → `skills/server/tls-proxy.md`; volumetric thresholds → `skills/code/denial-of-service.md`.
+Internal cross-references: JWT/session deep-dive → `skills/code/authn-session/SKILL.md`; CSRF consequences of cookie-carried credentials → `skills/code/web-client/SKILL.md`; API-wide abuse controls → `skills/code/api-security/SKILL.md`; host-side secret sprawl → `skills/code/secrets-data-exposure/SKILL.md`; edge TLS enforcement → `skills/server/tls-proxy/SKILL.md`; volumetric thresholds → `skills/code/denial-of-service/SKILL.md`.
 
 
 

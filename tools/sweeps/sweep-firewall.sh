@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-firewall.sh — evidence sweep for skills/server/firewall-edge.md (FW)
+# sweep-firewall.sh — evidence sweep for skills/server/firewall-edge/SKILL.md (FW)
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 . "$HERE/sweep-lib.sh"

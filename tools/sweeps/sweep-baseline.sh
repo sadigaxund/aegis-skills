@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-baseline.sh — evidence sweep for skills/server/linux-baseline.md (BASE)
+# sweep-baseline.sh — evidence sweep for skills/server/linux-baseline/SKILL.md (BASE)
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 . "$HERE/sweep-lib.sh"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sweep-sandbox.sh — evidence sweep for skills/server/service-sandboxing.md (SBX)
+# sweep-sandbox.sh — evidence sweep for skills/server/service-sandboxing/SKILL.md (SBX)
 # STRICTLY READ-ONLY: observes processes/units/containers; no docker mutations,
 # no MAC changes, no cron edits. Daemon-denied paths degrade to [cmd-failed]/notes.
 set -u

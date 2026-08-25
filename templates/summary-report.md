@@ -81,7 +81,7 @@ Quick wins list (high impact : low effort ratio): {{IDs}}
 
 | Check slug | Module file | Ran? | Files reviewed (approx) | Findings | Notes (skip reason / limitations) |
 |---|---|---|---|---|---|
-| INJ | skills/code/injection.md | yes/no | | | |
+| INJ | skills/code/injection/SKILL.md | yes/no | | | |
 
 ## Limitations & Out-of-Scope
 

@@ -27,4 +27,4 @@ for s in "$HERE"/sweep-*.sh; do
 done
 echo "# DONE overall=$overall"
 echo "# NEXT: hand each $EV/<name>.txt to the agent together with its matching"
-echo "# skills/server/<module>.md — findings are produced from module rubrics, not raw output."
+echo "# skills/server/<name>/SKILL.md — findings are produced from module rubrics, not raw output."

@@ -24,7 +24,7 @@ other module produces. Section meanings are remapped as follows:
 | Remediation | Building missing stages, in dependency order |
 | Severity Assessment | The priority-adjustment bands and SLA table themselves |
 
-Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. It sits downstream of both orchestrators — `SKILL-CODE.md` (code slugs) and `SKILL-SERVER.md` (host slugs) — and borrows incident-side vocabulary from IR (`skills/operations/incident-response.md`). It produces findings only about the program itself.
+Empty `cwe` array is intentional: this module audits process capability, not a code-level weakness class. It sits downstream of both orchestrators — `SKILL-CODE.md` (code slugs) and `SKILL-SERVER.md` (host slugs) — and borrows incident-side vocabulary from IR (`skills/operations/incident-response/SKILL.md`). It produces findings only about the program itself.
 
 ## Scope & Objectives
 
@@ -461,6 +461,6 @@ Program-audit traps that make maturity LOOK present:
 - FIRST Exploit Prediction Scoring System (EPSS) — published probability-of-exploitation scores: https://www.first.org
 - FIRST Common Vulnerability Scoring System (CVSS) specification — the base-severity vocabulary used by finding reports: https://www.first.org
 - Orchestrators: `SKILL-CODE.md` Section 4 registry (code slugs, Phase 4 dedup rule, Phase 6 fix protocol); `SKILL-SERVER.md` Section 3 registry (SRV slugs, Phase 6 hardening application)
-- Sibling modules: SUPPLY `skills/code/supply-chain.md` (dependency-scanner command matrix — pointer only, not duplicated here), PATCH `skills/server/updates-patching.md`, DETECT `skills/operations/blue-team-detection.md` (P1–P4 paging rubric: alert urgency, distinct from this module's remediation priority), IR `skills/operations/incident-response.md` (when a tracked finding becomes a live incident), DR `skills/server/backup-dr.md` (drill-cadence model)
+- Sibling modules: SUPPLY `skills/code/supply-chain/SKILL.md` (dependency-scanner command matrix — pointer only, not duplicated here), PATCH `skills/server/updates-patching/SKILL.md`, DETECT `skills/operations/blue-team-detection/SKILL.md` (P1–P4 paging rubric: alert urgency, distinct from this module's remediation priority), IR `skills/operations/incident-response/SKILL.md` (when a tracked finding becomes a live incident), DR `skills/server/backup-dr/SKILL.md` (drill-cadence model)
 - Templates: `templates/finding-report.md` (severity rubric, statuses, Fix Verification Plan mandate, `Fix Status` transitions); `templates/target-profile.md` (inventory seed artifact)
 - Tooling: `tools/run-all-sweeps.sh`, `tools/sweeps/sweep-code-recon.sh`, `tools/sweeps/sweep-patching.sh`, `tools/README.md` sweep contract
