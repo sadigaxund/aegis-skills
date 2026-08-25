@@ -1,3 +1,4 @@
-.GUIDE.md.swp
 *.swp
+.GUIDE.md.swp
+checklist*.md
 sweep-evidence-*/

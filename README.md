@@ -248,8 +248,8 @@ exactly where your weaknesses are.
 
 ## Credits and license
 
-Domain inspiration came from reading the surfaces of
-[mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills);
-all content here was written natively for this playbook's accuracy contract. Licensed
-Apache-2.0 ([LICENSE](LICENSE)). Security tooling: use only against systems you own or are
-authorized to test.
+Project layout and some domain surfaces were inspired by browsing
+[mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills).
+Every module here was written natively for this playbook's format and accuracy contract.
+Licensed Apache-2.0 ([LICENSE](LICENSE)). Security tooling: use only against systems you own
+or are authorized to test.

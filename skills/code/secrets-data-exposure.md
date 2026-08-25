@@ -349,6 +349,8 @@ repos:
       - id: gitleaks
 ```
 
+Plus the platform-side gate: GitHub **push protection** enabled org-wide blocks pushes containing recognized secret formats before they land in history at all — pre-commit hooks only protect people who installed them.
+
 ```bash
 gitleaks detect --source . --redact --report-path leaks.json   # full history scan
 trufflehog git file://. --only-verified                        # verifies liveness with providers where supported

@@ -491,6 +491,8 @@ cd / && rm -rf /tmp/malcode-lab /tmp/aegis-canary-hit
 
 Confirm removal, then record the drill (date, operator, stages fired) in your verification log — see Verification & Validation VV4.
 
+Vetting gate for NEW dependencies before they enter the tree: OpenSSF Scorecard for maintainer/Build-provenance risk signals, Socket-style behavioral scanners for install-time and runtime anomalies, plus the SUPPLY module's lockfile-diff review. A dependency with no scorecard data AND install scripts AND recent maintainer change is a quarantine-and-review, not a routine add.
+
 ## Remediation
 
 ### Response ladder per verdict class

@@ -14,7 +14,7 @@ Detect misconfiguration findings that arise from insecure defaults left unchange
 2. **Exposed admin/debug/actuator endpoints** — Spring Boot Actuator, Django debug toolbar, Laravel Telescope/_ignition, phpMyAdmin/Adminer, swagger-ui, monitoring consoles, `.git`/`.env` served from webroot, directory listings.
 3. **CORS misconfiguration** — origin reflection with credentials, wildcards, `null` origin, overbroad subdomain matching, per-route divergence.
 4. **Missing/weak security response headers** — CSP, HSTS, `X-Content-Type-Options`, `X-Frame-Options`, Referrer-Policy, Permissions-Policy.
-5. **Cookie/session flags** — `Secure`, `HttpOnly`, `SameSite` per framework session store.
+5. **Cookie/session flags** — `Secure`, `HttpOnly`, `SameSite` per framework session store; name prefixes `__Host-` (forces Secure, `Path=/`, no Domain) and `__Secure-` where the framework supports them — enforce-by-construction instead of flag-checking.
 6. **TLS configuration** — legacy protocols, weak cipher strings, disabled certificate validation between internal services.
 7. **Container/orchestration/IaC** — root containers, privileged pods, docker.sock mounts, missing pod securityContext, default-allow networks, public buckets, `0.0.0.0/0` on admin ports, wildcard IAM.
 8. **Default credentials & seeds** — known passwords in compose files, seed-created admin users, vendor defaults referenced in configs/docs.

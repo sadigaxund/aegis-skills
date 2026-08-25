@@ -309,6 +309,12 @@ Config paths vary by distro and install method; detect rather than assume. Effec
 - Logs: `/var/log/mongodb/mongod.log`.
 - IaC: helm `values.yaml` (`auth.enabled`, `replicaSetKey`), compose `- MONGO_INITDB_ROOT_PASSWORD` env leaks.
 
+### Elasticsearch / OpenSearch
+
+- Security plugin enabled and auth ON (x-pack security / opensearch-security) — anonymous cluster access or unauth `9200` answering `GET /` with cluster metadata is the finding.
+- Bound to private interface; never `0.0.0.0` on an internet-reachable box (classic exposed-ES ransomware target).
+- TLS on HTTP and transport layers where the version supports it; dedicated users per service, no shared superuser-equivalent roles.
+
 ### Repo-wide locations (all engines)
 
 Glob for rendered artifacts: `**/pg_hba.conf*`, `**/*.cnf`, `**/redis*.conf`, `**/mongod.conf`, `docker-compose*.yml`, `*.tf`, `kustomize/**`, `charts/*/values*.yaml`. Judge *rendered output*, not template intent — a Jinja default can silently differ from prod reality.

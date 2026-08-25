@@ -389,6 +389,7 @@ Emphasize static/local proof; network-gated steps are marked explicitly.
 ### Pinning Policies Per Ecosystem
 
 - npm/yarn/pnpm: ship `package-lock.json`/lockfile; install in CI and prod with `npm ci`; set `"save-exact": true` or use exact versions for direct deps of applications.
+- Hash-locked installs where the ecosystem supports them: `pip install --require-hashes -r requirements.txt` (hashed requirements file), `cargo build --locked`, `go mod verify` — a changed transitive dep becomes a build failure instead of a silent update.
 - Python: pin transitively in deployed contexts — `flask==3.0.3`, generated via `pip freeze` or lock tools (`poetry.lock`, `uv.lock`); never bare names in prod requirements.
 - Go: commit `go.mod` + `go.sum`; verify with `go mod verify`.
 - Gradle: enable locking:
@@ -486,6 +487,13 @@ jobs:
 - Name artifacts uniquely per producing job; treat downloaded artifacts as untrusted input downstream.
 - Key caches on content digests rather than attacker-influenced strings; audit restore-key fallbacks.
 - Generate SBOMs into release artifacts using syft or cyclonedx-cli, and sign artifacts/images with cosign.
+
+### GitHub organization settings audit (where the code and the credentials meet)
+
+- Enforce 2FA for all org members; base repository permissions set to read/none — write is granted per-repo, not org-wide.
+- Audit-log streaming exported to external storage; a log only the suspect can delete is not evidence.
+- Automation uses fine-grained personal tokens or deploy keys scoped per repo — classic PATs with full `repo` scope are shared-house-keys.
+- Third-party OAuth applications allow-list reviewed quarterly; each installed app lists exactly what it can read.
 
 ## Verification & Validation
 

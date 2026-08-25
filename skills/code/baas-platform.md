@@ -132,6 +132,14 @@ Work platform by platform. A finding is complete only when it names the failing 
 - **wp-config hygiene.** Unique salts/auth keys defined (no placeholder phrases); `WP_DEBUG` false in production; debug log must not be web-readable.
 - **Admin surface.** `/wp-admin` and `wp-login.php` should be protected with MFA and/or rate limiting. Path obscurity (renamed login) is a minor, honest note only — it is not a control.
 
+### Serverless functions (Lambda / Cloud Functions / Workers)
+
+- **One IAM role per function.** A shared execution role turns any single function's compromise into fleet-wide reach; wildcard resources (`Resource: "*"`, `"Action": "*"`, broad service wildcards) in a function role are the finding shape — scope each role to exactly that function's inputs and outputs.
+- **Every event source is untrusted input.** API Gateway requests, S3 event records, queue messages, scheduled triggers: payloads arrive attacker-influenced no matter how internal the wiring looks. Validate schema and identity inside the handler boundary; never trust the invoking platform to have screened the payload.
+- **Limits AND concurrency caps.** Timeout and memory settings bound one invocation; concurrency/reserved-capacity settings bound the bill. Cost-based DoS is a real category: one viral bug fanning out into unlimited concurrent executions becomes a five-figure invoice overnight.
+- **Function URLs / HTTP triggers require auth.** Default-invoke function URLs and public HTTP triggers are the accidental-exposure classic: verify every trigger authenticates (IAM-signed requests or an authenticating gateway in front) — "no public invoke by accident" is a checklist item, not an assumption.
+- **Secrets fetched from the platform secrets store at cold start.** Initialization reads them from the managed secrets/parameter store; never baked into deployment packages, bundled layers, or artifact-shipped env snapshots.
+
 ## Where To Look
 
 ### Supabase

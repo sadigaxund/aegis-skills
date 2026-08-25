@@ -21,7 +21,7 @@ Audit every code path where the server issues an outbound network request whose 
 | Redirect-following amplification | Allowlist checked on the original URL, then 3xx hops followed to internal/metadata hosts unvalidated | CWE-918 |
 | DNS-rebinding TOCTOU | Hostname resolved once during validation, resolved again (or re-resolved) at connect time to an attacker-controlled private address | CWE-350, CWE-918 |
 | Blind/timing SSRF | Response body not returned, but reachability of arbitrary hosts proven via timing, error differentials, or out-of-band callbacks | CWE-918 |
-| Cloud metadata exposure | Fetch surface reaches `169.254.169.254` / `metadata.google.internal`; IMDSv1 vs v2 gate differences determine exploitability | CWE-918 |
+| Cloud metadata exposure | Fetch surface reaches `169.254.169.254` / `fd00:ec2::254` (AWS IPv6 metadata) / `metadata.google.internal`; IMDSv1 vs v2 gate differences determine exploitability | CWE-918 |
 | Orchestration/internal service exposure | k8s API via `KUBERNETES_SERVICE_HOST`, Docker socket via scheme abuse, Redis/RabbitMQ/actuator probing through the fetch primitive | CWE-918 |
 | Open redirect (server-set Location) | `Location:` header built from `next=`/`returnTo=` input; allowlists defeated by `//evil.com`, `\evil.com`, suffix matches, `@` credentials | CWE-601 |
 | Client-side redirect primitives | `<meta http-equiv="refresh">`, `location = userInput`, `location.replace(userInput)` emitted from server templates | CWE-601 |

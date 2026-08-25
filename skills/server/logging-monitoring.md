@@ -133,6 +133,7 @@ Verify each row has a live source. "Source absent" rows are findings ranked by e
 | Service crash / restart loop | systemd unit state | `journalctl -u UNIT` | ≥N restarts/15min yes |
 | Web/app auth failures & 5xx | nginx/app logs | app error/auth log dir | Spikes yes |
 | Time changes | auditd `-k time-change` | audit.log | Unexpected yes |
+| Logging-stopped silence | collector-side freshness check | central log store | NO events from a host for >N hours (baseline-dependent) = alert; attackers strip logs first, so silence is itself a signal |
 | Binary/config drift | AIDE / osquery | aide report · osqueryd log | Unexpected yes |
 
 Two traps: (a) the auth stream can be nuked by minimal rsyslog configs (Section 2) even while sshd dutifully emits events — verify end-to-end with the test message in Verification V1; (b) firewall drop-logging may be deliberately off to save disk — that is a Low finding here, but its PRESENCE feeds the FW module's rate-limited design, so cross-check both ways.

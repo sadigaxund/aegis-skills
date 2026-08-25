@@ -140,6 +140,9 @@ Work through the seven groups in order; each check names its evidence source and
 2. Adversary-in-the-middle phish kits proxy real login pages and harvest session cookies, defeating basic OTP/TOTP MFA — this drives the WebAuthn/FIDO2 recommendation (factor hierarchy -> AUTHN module).
 3. QR-code phishing ("quishing"): malicious QR images in emails bypass URL-scanning mail filters; include in awareness and gateway-policy notes.
 4. Malicious auto-forwarding rules on compromised mailboxes: post-compromise hygiene check — flag absence of forwarding-rule audit/alerting guidance for hosted mailboxes.
+5. Payment-detail change requests (bank account, payout destination) verified out-of-band via a known channel, plus dual approval — BEC is a process failure before it is a technical one.
+6. Domain lockdown for non-sending properties: every parked/auxiliary domain you own publishes `v=spf1 -all`, DMARC `p=reject` with `rua`, and a null MX — silence is the spoofing target.
+7. Publish MTA-STS and TLS-RPT records alongside SPF/DKIM/DMARC: enforce SMTP TLS and gain visibility into failing/intercepted mail paths.
 
 ### Master Flow Table
 

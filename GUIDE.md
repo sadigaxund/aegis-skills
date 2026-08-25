@@ -692,6 +692,23 @@ milestone.
 
 ---
 
+## Quick self-assessment
+
+Ten yes/no questions. Any "no" points at a module here that deserves your next hour.
+
+- [ ] Every privileged account has phishing-resistant MFA and no password reuse.
+- [ ] Nothing internet-facing sits unpatched on a known critical CVE for more than days.
+- [ ] No secrets live in code, images, or client bundles, and leaked ones get detected and rotated fast.
+- [ ] All queries are parameterized, all output encoded, every endpoint authorizes the specific object.
+- [ ] No database, cache, admin panel, or storage bucket is reachable from the internet without auth.
+- [ ] Backups are immutable, offsite, encrypted, and actually restored from recently.
+- [ ] Central logs exist that an attacker on one host cannot erase, and someone gets alerted on what matters.
+- [ ] Everyone knows how to report a suspicious email or device, without fear.
+- [ ] You could rotate every credential and revoke every session within hours.
+- [ ] You know every asset you own and who answers for it.
+
+Miss mapping: Q1/Q9 → AUTHN + TOK; Q2 → PATCH; Q3 → SECRETS; Q4 → INJ + WEB; Q5 → BAAS + DB + FW; Q6 → DR; Q7 → LOGMON + DETECT; Q8/Q10 → IR + VULN.
+
 ## Part 4: Glossary
 
 One line each, alphabetical-ish. Terms the modules lean on hardest.

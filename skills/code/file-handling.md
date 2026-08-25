@@ -118,7 +118,7 @@ Consequence: a filter that rejects `../` is bypassed by `%2e%2e%2f` if it runs *
    - `Path.Combine(dir, file.FileName)` in ASP.NET Core with raw client name.
    - Unicode normalization asymmetries: client sends NFC/NFD or fullwidth lookalikes that survive filters but collapse differently on the target FS.
 4. Determine the landing directory: inside webroot? Inside a dir served with script handlers? Writable by the app user AND listable? Check for missing deny rules for `.htaccess`, `.user.ini`, `web.config`, `.config` uploads — overwriting these changes handler mappings (Apache `AddType`, PHP `.user.ini` auto_prepend).
-5. Check image pipelines: if images are accepted, is there re-encoding (Pillow save, sharp convert, ImageMagick with policy hardening)? Re-encoding destroys embedded payloads; passthrough storage preserves them (polyglot GIFAR concept — GIF header + script content).
+5. Check image pipelines: if images are accepted, is there re-encoding (Pillow save, sharp convert, ImageMagick with policy hardening)? Re-encoding destroys embedded payloads; passthrough storage preserves them (polyglot GIFAR concept — GIF header + script content). ImageMagick installs get a hardened `policy.xml` explicitly disabling the coder classes behind ImageTragick: `<policy domain="coder" rights="none" pattern="MVG"/>` and the same for `MSL`, `URL`, `FILE`, `EPHEMERAL` (path `/etc/ImageMagick-6/policy.xml` or the v7 equivalent).
 6. Check size limits enforced BEFORE buffering/streaming to disk, and per-file + total quota enforcement.
 7. Verify uploaded files are not made executable: mode bits (0600/0640 expected), mount flags (`noexec` in docker-compose/systemd mounts), container layer writable-by-app separation.
 

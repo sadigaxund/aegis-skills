@@ -512,6 +512,21 @@ Run cadence: quarterly minimum, rotate scenarios so all five classes are exercis
 
 Building missing Half-A capability, ordered so each step enables the next. Every item names its R-finding and produces an artifact.
 
+**B0. Offboarding checklist (same-day) — standing insider-risk control.** Leavers with live access are a slow-motion incident; HR paperwork is not access revocation. Fill-in checklist:
+
+```text
+[ ] SSO/account disabled                        same day, effective immediately
+[ ] SSH keys removed from all hosts             + authorized_keys sweep across fleet
+[ ] API tokens / service accounts revoked       (TOK leak runbook applies)
+[ ] Cloud IAM keys and active sessions revoked
+[ ] Shared secrets this person knew ROTATED     (removing their access ≠ un-knowing a secret)
+[ ] Removed from repos/org, CI, SaaS tools,
+    VPN profiles, DNS/registrar, package registries
+[ ] Server-side sessions killed                 (not just cookie deletion)
+[ ] Device wiped/inspected on return            (cross-ref DFIR if anything odd)
+Executed by: ________  date: ________  spot-checked by: ________
+```
+
 **B1. Write the playbook skeleton first (fixes R1).** Do not start with prose; start by copying this module's fill-in-ready blocks — intake form, SEV matrix, first-hour checklist, scenario grid, postmortem skeleton — into the wiki and populating brackets. A 60% playbook that exists beats a perfect one that doesn't. Version it; date it; link it from DETECT alert payloads.
 
 **B2. Build the contact tree + OOB channel (R2).** Roster from current on-call tool config; add personal-contact column; create the out-of-band thread/bridge NOW while nothing is wrong; print it; put a copy in the password-manager emergency vault. Review calendar reminder: every 6 months.

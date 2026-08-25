@@ -438,6 +438,8 @@ V3. Negative/regression battery
 - Health from allowed CIDR: from a jump host INSIDE an allowlisted range: `ssh bastion 'curl -s -o /dev/null -w %{http_code} https://HOST/admin/'` → 200/401-with-valid-creds flow intact. A 403 from INSIDE the allowed range means your `deny all;` landed before the allows — the F3 ordering bug.
 - Uploads still fit: `curl -sS -o /dev/null -w '%{http_code}\n' -F f=@legit-file.bin https://HOST/upload` → not 413; then `truncate -s 64M /tmp/opencode/big.bin` and repeat → 413 proves the cap.
 - Unknown host still rejected: repeat R4 → still exit 52/000.
+
+V4. External graders as spot-checks (public endpoints only): SSL Labs and `testssl.sh ./testssl.sh HOST:443` — aim for A/A+ with no protocol/cipher/chain warnings; retest after every TLS change. Third-party tooling, informational scoring: the config you audited remains the source of truth.
 - Config clean: `nginx -t` → syntax ok, no unintended warnings (a deprecation note for old-vs-new http2 syntax is benign but record it).
 
 V4. HSTS staged rollout (mandatory sequencing)
