@@ -1,5 +1,5 @@
 ---
-name: authn-session-checks
+name: aegis-authn-session
 description: Detect authentication and session management failures across login, password storage, password reset, MFA, session lifecycle, JWT/OAuth/API-key handling, remember-me, and session storage.
 category_slug: AUTHN
 cwe: [CWE-287, CWE-384, CWE-613, CWE-620, CWE-640, CWE-307, CWE-521, CWE-798, CWE-204]

@@ -1,5 +1,5 @@
 ---
-name: crypto-checks
+name: aegis-crypto
 description: Detects cryptographic failures including weak/legacy algorithms, cipher-mode and nonce misuse, broken key management, weak password hashing, insecure randomness, disabled TLS verification, JWT crypto misconfiguration, encoding masquerading as encryption, and missing webhook signature verification.
 category_slug: CRYPTO
 cwe: [CWE-327, CWE-326, CWE-321, CWE-323, CWE-328, CWE-329, CWE-330, CWE-331, CWE-338, CWE-340, CWE-347, CWE-295, CWE-297, CWE-354, CWE-208, CWE-759, CWE-760, CWE-916]

@@ -1,5 +1,5 @@
 ---
-name: server-updates-patching
+name: aegis-updates-patching
 description: Audits Linux server patch discipline and attack-surface minimization — distro EOL posture, pending security updates, unattended-update automation, reboot debt, unused services, legacy protocols, kernel-module hardening, and host runtime currency.
 category_slug: PATCH
 cwe: [CWE-1104]

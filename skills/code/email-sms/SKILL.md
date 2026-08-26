@@ -1,5 +1,5 @@
 ---
-name: email-sms-checks
+name: aegis-email-sms
 description: Audit playbook module for email and SMS/OTP flows, covering outbound spoofing protection evidence (SPF/DKIM/DMARC artifacts), sending-infrastructure and notification-content injection, inbound-mail processing attack surface, verification and magic-link bypasses, and OTP/SMS brute-force, enumeration, and abuse controls.
 category_slug: MAIL
 cwe: [CWE-93, CWE-203, CWE-307, CWE-345, CWE-640]

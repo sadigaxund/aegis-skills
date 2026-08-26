@@ -1,5 +1,5 @@
 ---
-name: server-firewall-edge
+name: aegis-firewall-edge
 description: Audits host firewall state and network-edge exposure on Linux hosts — listener inventory and wildcard bindings, nftables/iptables/ufw/firewalld default-deny design, egress filtering, IPv6 parity, L4 rate limiting, admin-plane isolation, Docker NAT bypass, and cloud security-group reconciliation — with read-only evidence commands and hardened reference rulesets.
 category_slug: FW
 cwe: [CWE-16, CWE-284]

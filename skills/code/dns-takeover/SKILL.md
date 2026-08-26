@@ -1,5 +1,5 @@
 ---
-name: dns-takeover-checks
+name: aegis-dns-takeover
 description: Audit playbook module for DNS attack surface and subdomain takeover (CWE-350), covering claimed-hostname inventory extraction from repo/IaC artifacts, dangling-record reasoning from decommission asymmetry, provider claim-table fingerprinting for authorized live verification, zone-hygiene review, and TTL-aware safe-decommission remediation.
 category_slug: DNS
 cwe: [CWE-350]

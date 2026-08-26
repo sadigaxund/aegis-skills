@@ -1,5 +1,5 @@
 ---
-name: cloudflared-tunnel-hardening
+name: aegis-cloudflared-tunnel-hardening
 description: Audits Cloudflare Tunnel (cloudflared) deployments for daemon credential exposure, imprecise ingress rules, origin double-binding that bypasses edge protections, spoofable visitor-IP trust, and unverifiable-from-host edge-layer controls — with read-only sweeps, interview checklists, and hardened reference configs.
 category_slug: TUNNEL
 cwe: [CWE-16, CWE-284]

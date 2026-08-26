@@ -1,5 +1,5 @@
 ---
-name: http-protocol-checks
+name: aegis-http-protocol
 description: Audit playbook module for detecting HTTP protocol-level attack surface in proxied internet-facing applications - request smuggling/desync, Host-header abuse, web cache poisoning/deception, parameter pollution, spoofable edge headers, and connection-semantics abuse - from repository configuration evidence.
 category_slug: PROTO
 cwe: [CWE-444]

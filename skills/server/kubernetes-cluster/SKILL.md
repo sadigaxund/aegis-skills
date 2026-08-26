@@ -1,5 +1,5 @@
 ---
-name: kubernetes-cluster-hardening
+name: aegis-kubernetes-cluster-hardening
 description: Audits Kubernetes cluster security posture across API server access, RBAC blast radius, admission control, workload securityContexts, NetworkPolicy coverage, secrets handling, and ingress/exposure surface, with read-only sweeps for live clusters and config-as-code repositories.
 category_slug: K8S
 cwe: [CWE-250, CWE-284, CWE-732]

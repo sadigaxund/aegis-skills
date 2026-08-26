@@ -1,5 +1,5 @@
 ---
-name: blue-team-detection
+name: aegis-blue-team-detection
 description: Detection-engineering companion that converts every vulnerability class this playbook's red-team modules can find into mandatory log signals, alert thresholds, and purple-team-validated detections so defenders catch both exploitation attempts and successful compromises.
 category_slug: DETECT
 cwe: [CWE-778]

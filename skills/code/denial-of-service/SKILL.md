@@ -1,5 +1,5 @@
 ---
-name: denial-of-service-checks
+name: aegis-denial-of-service
 description: Detects application-layer denial-of-service and resource-exhaustion flaws (ReDoS regexes, unbounded parsing and allocation, quadratic algorithms, pagination abuse, event-loop blocking, cache/log fill, third-party cost amplification) via static inspection plus bounded live probes.
 category_slug: DOS
 cwe: [CWE-400, CWE-1333, CWE-409]

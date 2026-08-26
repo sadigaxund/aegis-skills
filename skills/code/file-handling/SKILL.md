@@ -1,5 +1,5 @@
 ---
-name: file-handling-checks
+name: aegis-file-handling
 description: Audit playbook module for detecting path traversal, LFI/RFI, unsafe file upload/download/delete, Zip Slip and archive attacks, symlink/TOCTOU races, and storage-key confusion via static taint tracing and authorized reproduction.
 category_slug: FILE
 cwe: [CWE-22, CWE-434, CWE-23]

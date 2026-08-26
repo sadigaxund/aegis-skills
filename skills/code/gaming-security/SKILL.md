@@ -1,5 +1,5 @@
 ---
-name: gaming-security-checks
+name: aegis-gaming-security
 description: Audit playbook module for video-game and multiplayer-service backends, hunting client-trust violations in simulation authority, movement and action validation, economy integrity, leaderboards, in-app purchases, anti-cheat telemetry, game-protocol sessions, cloud saves and LiveOps config, UGC sandboxing, and secrets shipped inside client binaries.
 category_slug: GAME
 cwe: [CWE-602, CWE-345, CWE-20]

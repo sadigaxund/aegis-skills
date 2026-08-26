@@ -1,5 +1,5 @@
 ---
-name: baas-platform-checks
+name: aegis-baas-platform
 description: Audits Backend-as-a-Service and managed-platform configuration - Supabase RLS, Firebase security rules, connection-string databases, serverless host exposure, payment-webhook integrity, and managed CMS posture - for broken-access-control footguns that expose or corrupt production data.
 category_slug: BAAS
 cwe: [CWE-284, CWE-16]

@@ -1,5 +1,5 @@
 ---
-name: server-tls-proxy
+name: aegis-tls-proxy
 description: Hardening-audit module for reverse-proxy edges and TLS termination (nginx primary; Caddy, HAProxy, Apache secondary) covering inventory, protocol/cipher posture, HSTS and edge headers, request limits, admin-path shielding, proxy-to-app hop trust, and ACME renewal hygiene.
 category_slug: TLS
 cwe: [CWE-16, CWE-319]

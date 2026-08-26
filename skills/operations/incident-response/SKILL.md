@@ -1,5 +1,5 @@
 ---
-name: incident-response-lifecycle
+name: aegis-incident-response-lifecycle
 description: Dual-purpose incident-response module that audits whether an organization actually possesses IR capability and provides the phase-by-phase execution playbook that turns this skillset's audit findings into operational readiness when a real incident hits.
 category_slug: IR
 cwe: []

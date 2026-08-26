@@ -1,5 +1,5 @@
 ---
-name: deserialization-checks
+name: aegis-deserialization
 description: Detect unsafe deserialization of untrusted data (native serializers, XXE, YAML, prototype pollution) across all major languages.
 category_slug: DESER
 cwe: [CWE-502, CWE-611, CWE-1321]

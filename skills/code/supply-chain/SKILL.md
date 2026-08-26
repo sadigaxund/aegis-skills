@@ -1,5 +1,5 @@
 ---
-name: supply-chain-checks
+name: aegis-supply-chain
 description: Audits dependency manifests, lockfiles, vendored code, and CI/CD definitions for supply-chain weaknesses such as vulnerable or unmaintained components, resolution drift, typosquat and install-script exposure, registry-confusion preconditions, and workflow injection.
 category_slug: SUPPLY
 cwe: [CWE-1104, CWE-494]

@@ -1,5 +1,5 @@
 ---
-name: dfir-triage-linux
+name: aegis-dfir-triage-linux
 description: First-60-120-minute DFIR triage for a suspected-compromised Linux host or Kubernetes node - volatile capture, session forensics, persistence and webshell sweeps, and the rebuild-versus-investigate decision.
 category_slug: DFIR
 cwe: []

@@ -1,5 +1,5 @@
 ---
-name: server-backup-dr
+name: aegis-backup-dr
 description: Audits backup hygiene and disaster-recovery readiness for Linux hosts — job inventory and coverage-gap analysis, destination tiering against the 3-2-1-1-0 pattern, encryption and key-custody posture, restore documentation and drill evidence, and ransomware resilience — using read-only discovery sweeps, fill-in RTO/RPO and recovery-order worksheets, and remediation skeletons.
 category_slug: DR
 cwe: [CWE-16]

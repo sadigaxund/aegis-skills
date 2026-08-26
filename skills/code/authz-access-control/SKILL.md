@@ -1,5 +1,5 @@
 ---
-name: authz-access-control-checks
+name: aegis-authz-access-control
 description: Detects broken function-level and object-level authorization (BFLA/BOLA), vertical and horizontal privilege escalation, tenant-isolation failures, path/header bypasses, and unsafe delegation across mainstream web frameworks and APIs.
 category_slug: AUTHZ
 cwe: [CWE-284, CWE-285, CWE-639, CWE-862, CWE-863, CWE-1220]

@@ -1,5 +1,5 @@
 ---
-name: malicious-code-checks
+name: aegis-malicious-code
 description: Hunts deliberately malicious constructs — obfuscated payloads, exfil beacons, backdoor routes, install-time implants, and provenance-less vendored blobs — across source trees, dependencies, build scripts, and repo-local automation.
 category_slug: MALCODE
 cwe: [CWE-506, CWE-507]

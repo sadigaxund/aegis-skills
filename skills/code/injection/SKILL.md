@@ -1,5 +1,5 @@
 ---
-name: injection-checks
+name: aegis-injection
 description: Audit playbook module for detecting and remediating the full injection family (SQL, NoSQL, OS command, template, code/expression, LDAP, XPath, header/CRLF/log) via static taint tracing and authorized reproduction.
 category_slug: INJ
 cwe: [CWE-89, CWE-78, CWE-74, CWE-77, CWE-90, CWE-94, CWE-95, CWE-117, CWE-564, CWE-643, CWE-917, CWE-943, CWE-1336]

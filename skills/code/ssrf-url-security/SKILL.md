@@ -1,5 +1,5 @@
 ---
-name: ssrf-url-security-checks
+name: aegis-ssrf-url-security
 description: Audit playbook module for server-side request forgery (CWE-918) and open-redirect failures (CWE-601), covering user-influenced URLs fetched by servers, sink catalogs across all mainstream HTTP client libraries, redirect/DNS/parser filter bypasses, cloud metadata and orchestration-endpoint exposure, and allowlist-plus-pinning remediations.
 category_slug: SSRF
 cwe: [CWE-918, CWE-601]

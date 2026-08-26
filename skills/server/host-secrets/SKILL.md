@@ -1,5 +1,5 @@
 ---
-name: server-host-secrets
+name: aegis-host-secrets
 description: Inventories and hardens secrets stored on a Linux host — env and config files, systemd environments, cron and history leakage, SSH/TLS/signing key material, database credential chains, environment-variable boundaries, rotation posture, and backup hygiene — with read-only evidence commands and exact hardened end states.
 category_slug: HSECRET
 cwe: [CWE-732, CWE-312]

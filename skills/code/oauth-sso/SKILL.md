@@ -1,5 +1,5 @@
 ---
-name: oauth-sso-checks
+name: aegis-oauth-sso
 description: Deep-audit checks for OAuth 2.0, OIDC, and SAML federation covering flow misuse, redirect_uri validation, state and PKCE handling, token and assertion verification, IdP-side misconfiguration, and session-bridging flaws up to account takeover.
 category_slug: SSO
 cwe: [CWE-352, CWE-287, CWE-601, CWE-347]

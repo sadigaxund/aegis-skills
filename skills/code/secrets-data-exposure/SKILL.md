@@ -1,5 +1,5 @@
 ---
-name: secrets-data-exposure-checks
+name: aegis-secrets-data-exposure
 description: Detects hardcoded credentials, secrets leaked into VCS history and build artifacts, runtime information disclosure, PII over-exposure in APIs and logs, and cleartext sensitive data at rest.
 category_slug: SECRETS
 cwe: [CWE-798, CWE-259, CWE-321, CWE-200, CWE-209, CWE-532, CWE-540, CWE-615, CWE-538, CWE-359, CWE-312, CWE-313, CWE-489, CWE-522]

@@ -1,5 +1,5 @@
 ---
-name: api-security-checks
+name: aegis-api-security
 description: Audit playbook module for API-specific security failures covering mass assignment, missing rate limits and pagination caps, GraphQL/gRPC misconfiguration, REST hygiene gaps, API key mishandling, and WebSocket/SSE access-control defects across all mainstream web frameworks.
 category_slug: API
 cwe: [CWE-915, CWE-770, CWE-799, CWE-306, CWE-862, CWE-639, CWE-200, CWE-400, CWE-798, CWE-346, CWE-942]

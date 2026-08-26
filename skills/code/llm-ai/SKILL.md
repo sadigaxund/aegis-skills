@@ -1,5 +1,5 @@
 ---
-name: llm-ai-checks
+name: aegis-llm-ai
 description: Audit playbook module for application-code LLM integrations covering direct and indirect prompt injection, insecure output handling, excessive tool agency, sensitive-information disclosure, RAG authorization gaps, model cost abuse, and model/plugin supply-chain risk.
 category_slug: LLM
 cwe: [CWE-74, CWE-200, CWE-400]

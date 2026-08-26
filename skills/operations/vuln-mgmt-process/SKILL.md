@@ -1,5 +1,5 @@
 ---
-name: vulnerability-management-process
+name: aegis-vulnerability-management-process
 description: Defines the recurring vulnerability-management loop that consumes this skillset's audit outputs and keeps every finding prioritized, remediated, verified, and measured over time for small teams.
 category_slug: VULN
 cwe: []

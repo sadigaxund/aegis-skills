@@ -1,5 +1,5 @@
 ---
-name: server-service-sandboxing
+name: aegis-service-sandboxing
 description: Audit Linux service and process containment covering root-running units, systemd sandboxing directives, MAC system status, container escape surfaces, and root-writable cron chains.
 category_slug: SANDBOX
 cwe: [CWE-250, CWE-269]

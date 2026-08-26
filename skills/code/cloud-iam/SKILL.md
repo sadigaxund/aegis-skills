@@ -1,5 +1,5 @@
 ---
-name: cloud-iam-checks
+name: aegis-cloud-iam
 description: Audit playbook module for cloud IAM and identity misconfiguration recovered from repository and IaC artifacts - wildcard policies, confused-deputy trust policies, unconstrained iam:PassRole chains, instance/task-role versus long-lived-key posture, S3/KMS/secrets-store misconfiguration, GCP and Azure role-binding defects, privilege-escalation path reasoning, IMDS hardening, and CI/CD OIDC federation scoping.
 category_slug: IAM
 cwe: [CWE-250, CWE-284]

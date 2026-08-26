@@ -1,5 +1,5 @@
 ---
-name: web-client-checks
+name: aegis-web-client
 description: Detects and remediates browser-facing web vulnerabilities including reflected, stored, and DOM-based XSS, CSRF, clickjacking, unsafe postMessage handling, client-side storage misuse, DOM clobbering, client-side open redirects, and client-side template injection across React, Vue, Angular, Svelte, jQuery/vanilla JS, and major server-template stacks.
 category_slug: WEB
 cwe: [CWE-79, CWE-80, CWE-83, CWE-116, CWE-94, CWE-312, CWE-346, CWE-352, CWE-601, CWE-922, CWE-1021]

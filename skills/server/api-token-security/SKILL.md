@@ -1,5 +1,5 @@
 ---
-name: server-api-token-security
+name: aegis-api-token-security
 description: Audits the full lifecycle of bearer/API tokens protecting an internet-exposed HTTP API — minting entropy and format, hash-only server storage, transport rules, scoping, expiry and rotation, revocation, per-key rate limits, and log hygiene — with read-only evidence commands and hardened reference implementations.
 category_slug: TOK
 cwe: [CWE-522, CWE-307]

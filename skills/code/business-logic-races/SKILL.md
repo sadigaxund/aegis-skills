@@ -1,5 +1,5 @@
 ---
-name: business-logic-races-checks
+name: aegis-business-logic-races
 description: Audit playbook module for business logic flaws and race conditions covering workflow and state-machine bypass, price and amount tampering, check-then-act TOCTOU races, time-based logic abuse, limit counting defects, approval-flow weaknesses, and referral or gift-system abuse across all mainstream languages and frameworks.
 category_slug: LOGIC
 cwe: [CWE-362, CWE-367, CWE-20, CWE-639]

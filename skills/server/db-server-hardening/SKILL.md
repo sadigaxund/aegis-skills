@@ -1,5 +1,5 @@
 ---
-name: db-server-hardening
+name: aegis-db-server-hardening
 description: Audits database server hardening for PostgreSQL, MySQL/MariaDB, Redis, and MongoDB — network placement and binding, transport encryption, authentication configuration, role/account hygiene, and dangerous-command surface — with read-only inspection commands, hardened config blocks, and post-fix verification steps.
 category_slug: DB
 cwe: [CWE-16, CWE-284]

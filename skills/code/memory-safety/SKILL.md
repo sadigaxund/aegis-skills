@@ -1,5 +1,5 @@
 ---
-name: memory-safety-checks
+name: aegis-memory-safety
 description: Detects memory-safety defects in native code (C/C++/Objective-C and unsafe Rust/FFI boundaries) including buffer overflows and overreads, out-of-bounds index math, integer truncation and overflow in size handling, use-after-free and double-free, format-string misuse, uninitialized reads, and dangerous string-copy sinks.
 category_slug: MEM
 cwe: [CWE-120, CWE-416, CWE-190, CWE-134]

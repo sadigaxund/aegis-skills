@@ -1,5 +1,5 @@
 ---
-name: configuration-hardening-checks
+name: aegis-configuration-hardening
 description: Audit repositories for insecure defaults and hardening gaps across debug modes, exposed admin and actuator surfaces, CORS, security headers, cookie flags, TLS, containers, IaC, default credentials, and reverse proxies.
 category_slug: CONFIG
 cwe: [CWE-16, CWE-1188]

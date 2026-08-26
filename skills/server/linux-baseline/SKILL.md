@@ -1,5 +1,5 @@
 ---
-name: server-linux-baseline
+name: aegis-linux-baseline
 description: Audits Linux OS baseline hardening across accounts/sudo, sshd, PAM/password policy, kernel sysctl, filesystem permissions, boot/disk, and time sync, with exact read-only checks, hardened config blocks, and post-fix verification commands.
 category_slug: BASE
 cwe: [CWE-16, CWE-250, CWE-732]

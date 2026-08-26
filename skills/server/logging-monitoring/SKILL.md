@@ -1,5 +1,5 @@
 ---
-name: server-logging-monitoring
+name: aegis-logging-monitoring
 description: Audits Linux logging, monitoring and intrusion detection on servers — journald persistence, rsyslog coverage and rotation, auditd baseline rules, file-integrity monitoring, off-host shipping, retention and out-of-band alerting — with read-only evidence commands, hardened reference configs, and an incident-triage quickstart.
 category_slug: LOGMON
 cwe: [CWE-778, CWE-223]
