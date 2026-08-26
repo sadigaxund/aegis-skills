@@ -6,7 +6,7 @@
   "description": "Defensive-security audit playbooks executed by AI coding agents: application vulnerabilities, Linux server hardening, detection engineering, incident response.",
   "plugins": [
     {
-      "name": "aegis-skills",
+      "name": "aegis",
       "displayName": "Aegis Skills",
       "source": "./",
       "description": "40 defensive-security audit playbooks for codebases and Linux servers: injection, XSS/CSRF, authz/IDOR, SSRF, secrets, deserialization, business logic, ReDoS, cloud IAM, LLM/AI, BaaS misconfig, memory safety, server hardening, Kubernetes, databases, tunnels, backups, detection engineering, incident response, DFIR triage.",
@@ -69,5 +69,8 @@
         "./skills/server/updates-patching"
       ]
     }
-  ]
+  ],
+  "renames": {
+    "aegis-skills": "aegis"
+  }
 }

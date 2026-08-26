@@ -51,7 +51,7 @@ Claude Code users can alternatively install it as a plugin:
 
 ```text
 /plugin marketplace add AS-FOSS/aegis-skills
-/plugin install aegis-skills@aegis
+/plugin install aegis@aegis
 ```
 
 The three orchestrator files stay at the repository root as entry-point documents; read
