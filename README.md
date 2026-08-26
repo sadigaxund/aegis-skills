@@ -47,6 +47,13 @@ npx skills add AS-FOSS/aegis-skills                        # all 40 modules
 npx skills add AS-FOSS/aegis-skills -s injection -s AUTHN  # pick modules
 ```
 
+Claude Code users can alternatively install it as a plugin:
+
+```text
+/plugin marketplace add AS-FOSS/aegis-skills
+/plugin install aegis-skills@aegis
+```
+
 The three orchestrator files stay at the repository root as entry-point documents; read
 them in the agent chat instead of installing.
 

@@ -1,0 +1,73 @@
+{
+  "name": "aegis",
+  "owner": {
+    "name": "AS-FOSS"
+  },
+  "description": "Defensive-security audit playbooks executed by AI coding agents: application vulnerabilities, Linux server hardening, detection engineering, incident response.",
+  "plugins": [
+    {
+      "name": "aegis-skills",
+      "displayName": "Aegis Skills",
+      "source": "./",
+      "description": "40 defensive-security audit playbooks for codebases and Linux servers: injection, XSS/CSRF, authz/IDOR, SSRF, secrets, deserialization, business logic, ReDoS, cloud IAM, LLM/AI, BaaS misconfig, memory safety, server hardening, Kubernetes, databases, tunnels, backups, detection engineering, incident response, DFIR triage.",
+      "version": "1.3.0",
+      "author": {
+        "name": "AS-FOSS"
+      },
+      "homepage": "https://github.com/AS-FOSS/aegis-skills",
+      "repository": "https://github.com/AS-FOSS/aegis-skills",
+      "license": "Apache-2.0",
+      "category": "Security",
+      "keywords": [
+        "security",
+        "audit",
+        "appsec",
+        "hardening",
+        "incident-response",
+        "owasp"
+      ],
+      "skills": [
+        "./skills/code/api-security",
+        "./skills/code/authn-session",
+        "./skills/code/authz-access-control",
+        "./skills/code/baas-platform",
+        "./skills/code/business-logic-races",
+        "./skills/code/cloud-iam",
+        "./skills/code/configuration-hardening",
+        "./skills/code/crypto",
+        "./skills/code/denial-of-service",
+        "./skills/code/deserialization",
+        "./skills/code/dns-takeover",
+        "./skills/code/email-sms",
+        "./skills/code/file-handling",
+        "./skills/code/gaming-security",
+        "./skills/code/http-protocol",
+        "./skills/code/injection",
+        "./skills/code/llm-ai",
+        "./skills/code/malicious-code",
+        "./skills/code/memory-safety",
+        "./skills/code/oauth-sso",
+        "./skills/code/secrets-data-exposure",
+        "./skills/code/ssrf-url-security",
+        "./skills/code/supply-chain",
+        "./skills/code/web-client",
+        "./skills/operations/blue-team-detection",
+        "./skills/operations/dfir-triage",
+        "./skills/operations/incident-response",
+        "./skills/operations/vuln-mgmt-process",
+        "./skills/server/api-token-security",
+        "./skills/server/backup-dr",
+        "./skills/server/cloudflared-tunnel",
+        "./skills/server/db-server-hardening",
+        "./skills/server/firewall-edge",
+        "./skills/server/host-secrets",
+        "./skills/server/kubernetes-cluster",
+        "./skills/server/linux-baseline",
+        "./skills/server/logging-monitoring",
+        "./skills/server/service-sandboxing",
+        "./skills/server/tls-proxy",
+        "./skills/server/updates-patching"
+      ]
+    }
+  ]
+}
