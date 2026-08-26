@@ -43,8 +43,8 @@ Every module follows the open [agentskills.io](https://agentskills.io) format
 Codex, Windsurf and 40+ compatible agents:
 
 ```bash
-npx skills add sadigaxund/aegis-skills                        # all 40 modules
-npx skills add sadigaxund/aegis-skills -s injection -s AUTHN  # pick modules
+npx skills add AS-FOSS/aegis-skills                        # all 40 modules
+npx skills add AS-FOSS/aegis-skills -s injection -s AUTHN  # pick modules
 ```
 
 The three orchestrator files stay at the repository root as entry-point documents; read
@@ -183,7 +183,7 @@ Three steps. In every command below, replace `user@host` with your server login 
 local clone of this repository (`./` means "this folder"). Pick whichever line fits:
 
 ```bash
-git clone https://github.com/sadigaxund/aegis-skills /opt/aegis-skills   # host has git access? run it there
+git clone https://github.com/AS-FOSS/aegis-skills /opt/aegis-skills   # host has git access? run it there
 rsync -a --exclude .git ./ user@host:/opt/aegis-skills/                  # otherwise push the folder from here
 ```
 
